@@ -29,7 +29,7 @@ function DVisitUs() {
         {data.map(
           (d) =>
             d.type === "about_us" && (
-              <Text fontSize={"xs"} width={"100%"}>
+              <Text textAlign={"justify"} fontSize={"s"} width={"100%"}>
                 {d.content}
               </Text>
             )
@@ -48,7 +48,7 @@ function DVisitUs() {
             <Text width={"100%"}>Alte Straubinger Str. 33</Text>
             <Text width={"100%"}>93055 Regensburg</Text>
             <Text marginTop={"10px"} width={"100%"}>
-              Buslinien : 10 5 30
+              Buslinien : 10 30
             </Text>
             <Text width={"100%"}>Haltstelle : Zuckerfabrikstraße</Text>
           </VStack>

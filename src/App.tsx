@@ -61,10 +61,8 @@ function App() {
         <Section bg="white">
           <DKontakt />
         </Section>
-        <Section margin={false} bg="white">
-          <DFooter />
-        </Section>
       </VStack>
+      <DFooter />
     </ChakraProvider>
   );
 }
