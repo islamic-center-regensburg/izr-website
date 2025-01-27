@@ -16,6 +16,7 @@ import '@fontsource/tajawal/500.css'; // Medium weight
 import '@fontsource/tajawal/700.css'; // Bold weight
 
 import { extendTheme } from "@chakra-ui/react";
+import IZRApp from "./components/IZRApp";
 
 const theme = extendTheme({
   fonts: {
@@ -48,6 +49,9 @@ function App() {
         </Section>{" "}
         <Section bg="white">
           <DPrayerTimes />
+        </Section>{" "}
+        <Section bg="white">
+          <IZRApp />
         </Section>{" "}
         <Section bg="white">
           <DEvents />

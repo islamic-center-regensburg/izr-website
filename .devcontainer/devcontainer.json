@@ -21,7 +21,8 @@
     },
     "vscode": {
         "extensions": [
-            "forbeslindesay.forbeslindesay-taskrunner"
+            "forbeslindesay.forbeslindesay-taskrunner",
+            "dsznajder.es7-react-js-snippets"
         ]
     }
     },
