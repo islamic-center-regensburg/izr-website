@@ -25,6 +25,7 @@ function DFooter() {
           <Icon as={FaApple} boxSize={6} color="white" _hover={{ opacity: 0.8 }} />
         </Link>
       </HStack>
+
       <Text lineHeight={"3"} >Islamisches Zentrum Regensburg ©</Text>
       <Text lineHeight={"3"} >Developed by</Text>
       <Text lineHeight={"3"} >medaminbl</Text>

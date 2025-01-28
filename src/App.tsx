@@ -17,6 +17,9 @@ import '@fontsource/tajawal/700.css'; // Bold weight
 
 import { extendTheme } from "@chakra-ui/react";
 import IZRApp from "./components/IZRApp";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+
 
 const theme = extendTheme({
   fonts: {
@@ -37,36 +40,47 @@ function App() {
       setFontSize("xm");
     }
   }, [isMobile, isTablet, isDesktop]);
+
   return (
     <ChakraProvider theme={theme}>
-      <VStack gap={0} width={"100vw"} fontSize={fontSize}>
-        <NavBar />
-        <Section margin={false} bg="white">
-          <DStatement />
-        </Section>{" "}
-        <Section bg="white">
-          <VisitUs />
-        </Section>{" "}
-        <Section bg="white">
-          <DPrayerTimes />
-        </Section>{" "}
-        <Section bg="white">
-          <IZRApp />
-        </Section>{" "}
-        <Section bg="white">
-          <DEvents />
-        </Section>{" "}
-        <Section bg="white">
-          <DBlog />
-        </Section>
-        <Section bg="white">
-          <DSpenden />
-        </Section>
-        <Section bg="white">
-          <DKontakt />
-        </Section>
-      </VStack>
-      <DFooter />
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <VStack gap={0} width={"100vw"} fontSize={fontSize}>
+                <NavBar />
+                <Section margin={false} bg="white">
+                  <DStatement />
+                </Section>
+                <Section bg="white">
+                  <VisitUs />
+                </Section>
+                <Section bg="white">
+                  <DPrayerTimes />
+                </Section>
+                <Section bg="white">
+                  <IZRApp />
+                </Section>
+                <Section bg="white">
+                  <DEvents />
+                </Section>
+                <Section bg="white">
+                  <DBlog />
+                </Section>
+                <Section bg="white">
+                  <DSpenden />
+                </Section>
+                <Section bg="white">
+                  <DKontakt />
+                </Section>
+              </VStack>
+            }
+          />
+          <Route path="/privacy-policy" element={<VStack gap={0} width={"100vw"} fontSize={fontSize}> <NavBar /> <PrivacyPolicy /></VStack>} />
+        </Routes>
+        <DFooter />
+      </Router>
     </ChakraProvider>
   );
 }
