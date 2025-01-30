@@ -19,6 +19,7 @@ import { extendTheme } from "@chakra-ui/react";
 import IZRApp from "./components/IZRApp";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import PrayerTimesTable from "./components/PrayerTimesTable";
 
 
 const theme = extendTheme({
@@ -58,6 +59,9 @@ function App() {
                 </Section>
                 <Section bg="white">
                   <DPrayerTimes />
+                </Section>
+                <Section bg="white">
+                  <PrayerTimesTable />
                 </Section>
                 <Section bg="white">
                   <IZRApp />
