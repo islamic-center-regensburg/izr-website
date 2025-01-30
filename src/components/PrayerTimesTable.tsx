@@ -21,6 +21,14 @@ import {
     useBreakpointValue,
 } from "@chakra-ui/react";
 import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
+declare module "jspdf" {
+    interface jsPDF {
+        autoTable: (options: any) => jsPDF;
+    }
+}
 
 interface DateInput {
     d: number;
@@ -89,6 +97,44 @@ const PrayerTimesTable: React.FC = () => {
         setLoading(false);
     };
 
+    const downloadPDF = (prayerTimes: PrayerTimesData) => {
+        const doc = new jsPDF();
+        const columns = ["Datum", "Hijri", "Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+        const rows = Object.keys(prayerTimes).map((date) => [
+            prayerTimes[date].Datum,
+            prayerTimes[date].Hijri,
+            prayerTimes[date].Fajr,
+            prayerTimes[date].Dhuhr,
+            prayerTimes[date].Asr,
+            prayerTimes[date].Maghrib,
+            prayerTimes[date].Isha,
+        ]);
+        doc.autoTable({
+            head: [columns],
+            body: rows,
+        });
+        doc.save("prayer_times.pdf");
+    };
+
+    const downloadCSV = (prayerTimes: PrayerTimesData) => {
+        const headers = ["Datum", "Hijri", "Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+        const rows = Object.keys(prayerTimes).map((date) => [
+            prayerTimes[date].Datum,
+            prayerTimes[date].Hijri,
+            prayerTimes[date].Fajr,
+            prayerTimes[date].Dhuhr,
+            prayerTimes[date].Asr,
+            prayerTimes[date].Maghrib,
+            prayerTimes[date].Isha,
+        ]);
+        const csvContent = [headers, ...rows].map((row) => row.join(",")).join("\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "prayer_times.csv";
+        link.click();
+    };
+
     return (
         <VStack width="100%">
             <Heading width="100%">Gebetszeiten Berechnen</Heading>
@@ -108,14 +154,15 @@ const PrayerTimesTable: React.FC = () => {
                         <Input type="number" name="end_date.y" placeholder="Year" onChange={handleChange} defaultValue={2025} />
                     </FormControl>
                 </Stack>
-                <Button mt={4} colorScheme="blue" onClick={fetchPrayerTimes}>
+
+                <Button marginX={2} mt={4} onClick={fetchPrayerTimes}>
                     Berechnen
                 </Button>
-                <Button mt={4} colorScheme="blue" onClick={fetchPrayerTimes}>
+                <Button marginX={2} mt={4} onClick={() => prayerTimes && downloadPDF(prayerTimes)}>
                     PDF Herunterladen
                 </Button>
-                <Button mt={4} colorScheme="blue" onClick={fetchPrayerTimes}>
-                    Excel Herunterladen
+                <Button marginX={2} mt={4} onClick={() => prayerTimes && downloadCSV(prayerTimes)}>
+                    CSV Herunterladen
                 </Button>
 
                 {loading && <Spinner mt={4} />}
@@ -129,10 +176,9 @@ const PrayerTimesTable: React.FC = () => {
                 {prayerTimes && (
                     <Box width="100%" mt={6}>
                         {isMobile ? (
-                            // Mobile View: Vertical Layout
-                            <VStack spacing={4} align="stretch">
+                            <VStack maxH={"200vh"} spacing={4} align="stretch">
                                 {Object.keys(prayerTimes).map((date) => (
-                                    <Box key={date} p={4} borderWidth={1} borderRadius={8} boxShadow="md">
+                                    <Box key={date} p={4} borderWidth={1} borderRadius={8} >
                                         <Heading size="sm">{prayerTimes[date].Datum}</Heading>
                                         <VStack align="start" mt={2}>
                                             <Box><strong>Hijri:</strong> {prayerTimes[date].Hijri}</Box>
@@ -146,7 +192,6 @@ const PrayerTimesTable: React.FC = () => {
                                 ))}
                             </VStack>
                         ) : (
-                            // Desktop View: Table Layout
                             <Table variant="simple">
                                 <Thead>
                                     <Tr>

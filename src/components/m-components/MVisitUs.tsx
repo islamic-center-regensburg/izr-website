@@ -1,5 +1,5 @@
 import { HStack, VStack, Image, Heading, Text } from "@chakra-ui/react";
-import location from "../../assets/location.png";
+import location from "../../assets/izr.png";
 import { colors } from "../../theme";
 import logo from "../../assets/IZRLOGOROUND.png";
 import Skeleton from "../Skeleton";
@@ -56,7 +56,7 @@ function MVisitUs() {
         <Image
           src={location}
           width={"100%"}
-          height={"317px"}
+          height={"100%px"}
           borderRadius={"10px"}
         ></Image>
       </VStack>

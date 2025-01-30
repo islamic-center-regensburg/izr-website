@@ -1,5 +1,5 @@
 import { HStack, VStack, Image, Heading, Text } from "@chakra-ui/react";
-import location from "../../assets/location.png";
+import location from "../../assets/izr.png";
 import { colors } from "../../theme";
 import logo from "../../assets/IZRLOGOROUND.png";
 import useFetchStatments from "../../hooks/useFetchStatments";
@@ -19,6 +19,7 @@ function DVisitUs() {
       alignItems={"end"}
       justifyContent={"space-between"}
     >
+      
       <VStack>
         <Heading width={"100%"} fontSize={"3xl"} fontWeight={"semibold"}>
           Besuchen Sie uns
@@ -36,6 +37,7 @@ function DVisitUs() {
         )}
 
         <HStack width={"100%"}>
+          
           <VStack>
             <Heading
               marginTop={"30px"}
@@ -58,7 +60,7 @@ function DVisitUs() {
       <Image
         src={location}
         width={"392px"}
-        height={"317px"}
+        height={"100%"}
         borderRadius={"10px"}
       ></Image>
     </HStack>

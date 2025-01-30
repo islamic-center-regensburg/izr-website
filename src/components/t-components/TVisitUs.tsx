@@ -1,5 +1,5 @@
 import { HStack, VStack, Image, Heading, Text } from "@chakra-ui/react";
-import location from "../../assets/location.png";
+import location from "../../assets/izr.png";
 import { colors } from "../../theme";
 import logo from "../../assets/IZRLOGOROUND.png";
 import useFetchStatments from "../../hooks/useFetchStatments";
@@ -58,7 +58,7 @@ function TVisitUs() {
         <Image
           src={location}
           width={"392px"}
-          height={"317px"}
+          height={"100%"}
           borderRadius={"10px"}
         ></Image>
       </HStack>
