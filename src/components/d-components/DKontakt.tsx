@@ -1,10 +1,12 @@
-import { VStack, Heading, HStack, Text } from "@chakra-ui/react";
+import { VStack, Heading, HStack, Text, SimpleGrid, GridItem} from "@chakra-ui/react";
 import useFetchUsers from "../../hooks/useFetchUsers";
 import Skeleton from "../Skeleton";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import useResponsiveBreakpoints from "../../hooks/useResponsiveBreakpoints";
 
 function DKontakt() {
+  const { isMobile, isTablet} = useResponsiveBreakpoints();
   const roles = {
     staff: "Vorstand",
     manager: "Vertretung",
@@ -25,24 +27,26 @@ function DKontakt() {
   return (
     <VStack id="contact">
       <Heading width={"100%"}>Kontakt</Heading>
-      <HStack
+      <SimpleGrid
         scrollBehavior={"smooth"}
         padding={"20px"}
         overflow={"scroll"}
         overflowY="hidden"
-        maxW={"100%"}
-        borderRight={"1px solid lightgray"}
-        borderLeft={"1px solid lightgray"}
+        width={"100%"}
+        columns={isMobile ? 1 : isTablet ? 2 : 3} spacing={10}
+        justifyContent={"center"}
+        alignItems={"center"}
       >
         {users?.map((user) => (
+          <GridItem>
           <VStack
-            minW={"300px"}
-            minH={"500px"}
+            width={"100%"}
+            // minH={"500px"}
             backgroundColor={"white"}
             color={"black"}
             padding={"20px"}
             borderRadius={"10px"}
-            shadow={"0px 0px 10px 2px lightgrey"}
+            shadow={"0px 0px 10px 1px lightgrey"}
             justifyContent={"center"}
           >
             {user.roles.map((role) => (
@@ -71,8 +75,9 @@ function DKontakt() {
               </Text>
             ))}
           </VStack>
+          </GridItem>
         ))}
-      </HStack>
+      </SimpleGrid>
     </VStack>
   );
 }
