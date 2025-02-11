@@ -142,16 +142,16 @@ const PrayerTimesTable: React.FC = () => {
                 <Stack flexDir={isMobile ? "column" : "row"} alignItems="flex-start" justifyContent="start">
                     <FormControl>
                         <FormLabel>Startdatum</FormLabel>
-                        <Input type="number" name="start_date.d" placeholder="Day" onChange={handleChange} defaultValue={1} />
-                        <Input type="number" name="start_date.m" placeholder="Month" onChange={handleChange} defaultValue={1} />
-                        <Input type="number" name="start_date.y" placeholder="Year" onChange={handleChange} defaultValue={2025} />
+                        <Input marginY={2} type="number" name="start_date.d" placeholder="Day" onChange={handleChange} defaultValue={1} />
+                        <Input marginY={2} type="number" name="start_date.m" placeholder="Month" onChange={handleChange} defaultValue={1} />
+                        <Input marginY={2} type="number" name="start_date.y" placeholder="Year" onChange={handleChange} defaultValue={2025} />
                     </FormControl>
 
                     <FormControl>
                         <FormLabel>Enddatum</FormLabel>
-                        <Input type="number" name="end_date.d" placeholder="Day" onChange={handleChange} defaultValue={31} />
-                        <Input type="number" name="end_date.m" placeholder="Month" onChange={handleChange} defaultValue={12} />
-                        <Input type="number" name="end_date.y" placeholder="Year" onChange={handleChange} defaultValue={2025} />
+                        <Input marginY={2} type="number" name="end_date.d" placeholder="Day" onChange={handleChange} defaultValue={31} />
+                        <Input marginY={2} type="number" name="end_date.m" placeholder="Month" onChange={handleChange} defaultValue={12} />
+                        <Input marginY={2} type="number" name="end_date.y" placeholder="Year" onChange={handleChange} defaultValue={2025} />
                     </FormControl>
                 </Stack>
 
