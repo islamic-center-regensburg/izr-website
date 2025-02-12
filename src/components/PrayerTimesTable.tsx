@@ -136,9 +136,9 @@ const PrayerTimesTable: React.FC = () => {
     };
 
     return (
-        <VStack width="100%">
+        <VStack width={!isMobile ? "100%" : "90%"}>
             <Heading width="100%">Gebetszeiten Berechnen</Heading>
-            <Container overflow="scroll" shadow="0px 0px 10px 1px lightgrey" borderRadius={10} maxW="container.xl" width="100%" py={6}>
+            <Container overflow="scroll"  borderRadius={10} maxW="container.xl" width="100%" py={6}>
                 <Stack flexDir={isMobile ? "column" : "row"} alignItems="flex-start" justifyContent="start">
                     <FormControl>
                         <FormLabel>Startdatum</FormLabel>
@@ -174,7 +174,7 @@ const PrayerTimesTable: React.FC = () => {
                 )}
 
                 {prayerTimes && (
-                    <Box width="100%" mt={6}>
+                    <Box mt={6}>
                         {isMobile ? (
                             <VStack maxH={"200vh"} spacing={4} align="stretch">
                                 {Object.keys(prayerTimes).map((date) => (

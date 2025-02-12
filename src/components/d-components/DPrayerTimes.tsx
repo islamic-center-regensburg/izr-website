@@ -36,7 +36,7 @@ function DPrayerTimes() {
           <Tbody>
             <Tr>
               <Td>Fajr</Td>
-              <Td>{data.prayerTimes?.Fajr}</Td>
+              <Td fontWeight={"bold"} >{data.prayerTimes?.Fajr}</Td>
               <Td>
                 {data.prayerSettings?.fajr
                   ? "nach " + data.prayerSettings?.fajr + " min"
@@ -45,7 +45,7 @@ function DPrayerTimes() {
             </Tr>
             <Tr>
               <Td>Dhuhr</Td>
-              <Td>{data.prayerTimes?.Dhuhr}</Td>
+              <Td fontWeight={"bold"} >{data.prayerTimes?.Dhuhr}</Td>
               <Td>
                 {data.prayerSettings?.dhuhr
                   ? "nach " + data.prayerSettings?.dhuhr + " min"
@@ -54,7 +54,7 @@ function DPrayerTimes() {
             </Tr>
             <Tr>
               <Td>Asr</Td>
-              <Td>{data.prayerTimes?.Asr}</Td>
+              <Td fontWeight={"bold"} >{data.prayerTimes?.Asr}</Td>
               <Td>
                 {data.prayerSettings?.asr
                   ? "nach " + data.prayerSettings?.asr + " min"
@@ -63,7 +63,7 @@ function DPrayerTimes() {
             </Tr>
             <Tr>
               <Td>Maghrib</Td>
-              <Td>{data.prayerTimes?.Maghrib}</Td>
+              <Td fontWeight={"bold"} >{data.prayerTimes?.Maghrib}</Td>
               <Td>
                 {data.prayerSettings?.maghrib
                   ? "nach " + data.prayerSettings?.maghrib + " min"
@@ -72,7 +72,7 @@ function DPrayerTimes() {
             </Tr>{" "}
             <Tr>
               <Td>Isha</Td>
-              <Td>{data.prayerTimes?.Isha}</Td>
+              <Td fontWeight={"bold"} >{data.prayerTimes?.Isha}</Td>
               <Td>
                 {data.prayerSettings?.isha
                   ? "nach " + data.prayerSettings?.isha + " min"
@@ -81,7 +81,7 @@ function DPrayerTimes() {
             </Tr>
             <Tr>
               <Td>Jumaa</Td>
-              <Td>{data.prayerTimes?.Jumaa}</Td>
+              <Td fontWeight={"bold"} >{data.prayerTimes?.Jumaa}</Td>
               <Td>
                 {data.prayerSettings?.jumaa
                   ? "nach " + data.prayerSettings?.jumaa + " min"
