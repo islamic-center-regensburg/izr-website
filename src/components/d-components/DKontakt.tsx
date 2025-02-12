@@ -1,4 +1,4 @@
-import { VStack, Heading, HStack, Text, SimpleGrid, GridItem} from "@chakra-ui/react";
+import { VStack, Heading, Text, SimpleGrid, GridItem} from "@chakra-ui/react";
 import useFetchUsers from "../../hooks/useFetchUsers";
 import Skeleton from "../Skeleton";
 import "slick-carousel/slick/slick.css";
