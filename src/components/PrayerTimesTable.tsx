@@ -41,6 +41,7 @@ interface PrayerTimesData {
         Datum: string;
         Hijri: string;
         Fajr: string;
+        Shuruq: string;
         Dhuhr: string;
         Asr: string;
         Maghrib: string;
@@ -99,11 +100,12 @@ const PrayerTimesTable: React.FC = () => {
 
     const downloadPDF = (prayerTimes: PrayerTimesData) => {
         const doc = new jsPDF();
-        const columns = ["Datum", "Hijri", "Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+        const columns = ["Datum", "Hijri", "Fajr", "Shuruq", "Dhuhr", "Asr", "Maghrib", "Isha"];
         const rows = Object.keys(prayerTimes).map((date) => [
             prayerTimes[date].Datum,
             prayerTimes[date].Hijri,
             prayerTimes[date].Fajr,
+            prayerTimes[date].Shuruq,
             prayerTimes[date].Dhuhr,
             prayerTimes[date].Asr,
             prayerTimes[date].Maghrib,
@@ -117,11 +119,12 @@ const PrayerTimesTable: React.FC = () => {
     };
 
     const downloadCSV = (prayerTimes: PrayerTimesData) => {
-        const headers = ["Datum", "Hijri", "Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+        const headers = ["Datum", "Hijri", "Fajr", "Shuruq", "Dhuhr", "Asr", "Maghrib", "Isha"];
         const rows = Object.keys(prayerTimes).map((date) => [
             prayerTimes[date].Datum,
             prayerTimes[date].Hijri,
             prayerTimes[date].Fajr,
+            prayerTimes[date].Shuruq,
             prayerTimes[date].Dhuhr,
             prayerTimes[date].Asr,
             prayerTimes[date].Maghrib,
@@ -138,7 +141,7 @@ const PrayerTimesTable: React.FC = () => {
     return (
         <VStack width={!isMobile ? "100%" : "90%"}>
             <Heading width="100%">Gebetszeiten Berechnen</Heading>
-            <Container overflow="scroll"  borderRadius={10} maxW="container.xl" width="100%" py={6}>
+            <Container overflow="scroll" borderRadius={10} maxW="container.xl" width="100%" py={6}>
                 <Stack flexDir={isMobile ? "column" : "row"} alignItems="flex-start" justifyContent="start">
                     <FormControl>
                         <FormLabel>Startdatum</FormLabel>
@@ -183,6 +186,7 @@ const PrayerTimesTable: React.FC = () => {
                                         <VStack align="start" mt={2}>
                                             <Box><strong>Hijri:</strong> {prayerTimes[date].Hijri}</Box>
                                             <Box><strong>Fajr:</strong> {prayerTimes[date].Fajr}</Box>
+                                            <Box><strong>Shuruq:</strong> {prayerTimes[date].Shuruq}</Box>
                                             <Box><strong>Dhuhr:</strong> {prayerTimes[date].Dhuhr}</Box>
                                             <Box><strong>Asr:</strong> {prayerTimes[date].Asr}</Box>
                                             <Box><strong>Maghrib:</strong> {prayerTimes[date].Maghrib}</Box>
@@ -198,6 +202,7 @@ const PrayerTimesTable: React.FC = () => {
                                         <Th>Datum</Th>
                                         <Th>Hijri</Th>
                                         <Th>Fajr</Th>
+                                        <Th>Shuruq</Th>
                                         <Th>Dhuhr</Th>
                                         <Th>Asr</Th>
                                         <Th>Maghrib</Th>
@@ -210,6 +215,7 @@ const PrayerTimesTable: React.FC = () => {
                                             <Td>{prayerTimes[date].Datum}</Td>
                                             <Td>{prayerTimes[date].Hijri}</Td>
                                             <Td>{prayerTimes[date].Fajr}</Td>
+                                            <Td>{prayerTimes[date].Shuruq}</Td>
                                             <Td>{prayerTimes[date].Dhuhr}</Td>
                                             <Td>{prayerTimes[date].Asr}</Td>
                                             <Td>{prayerTimes[date].Maghrib}</Td>
