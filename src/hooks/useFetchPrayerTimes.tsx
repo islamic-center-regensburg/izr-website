@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// Define the interface for the NextPrayer object
-interface NextPrayer {
-  prayer: string;
-  time: string;
-}
+
 
 // Define the main interface based on the provided primary API response
 interface PrayerTimes {
@@ -18,9 +14,8 @@ interface PrayerTimes {
   Asr: string;
   Maghrib: string;
   Isha: string;
-  Ramadan: string;
   Jumaa: string;
-  NextPrayer: NextPrayer;
+  Tarawih?: string;
 }
 
 // Define the interface for the additional settings data

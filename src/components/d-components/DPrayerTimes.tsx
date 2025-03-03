@@ -73,11 +73,13 @@ function DPrayerTimes() {
             <Tr>
               <Td>Isha</Td>
               <Td fontWeight={"bold"} >{data.prayerTimes?.Isha}</Td>
-              <Td>
+              {!data.prayerTimes?.Tarawih && <Td>
                 {data.prayerSettings?.isha
                   ? "nach " + data.prayerSettings?.isha + " min"
                   : "nach Adhan"}
-              </Td>
+              </Td>}
+              {data.prayerTimes?.Tarawih && <Td>vor Tarawih
+              </Td>}
             </Tr>
             <Tr>
               <Td>Jumaa</Td>
@@ -88,6 +90,13 @@ function DPrayerTimes() {
                   : "nach Adhan"}
               </Td>
             </Tr>
+            {data.prayerTimes?.Tarawih && <Tr>
+              <Td>Tarawih</Td>
+              <Td fontWeight={"bold"} >{data.prayerTimes?.Tarawih}</Td>
+              <Td>
+                direkt nach Isha
+              </Td>
+            </Tr>}
           </Tbody>
         </Table>
       </TableContainer>
