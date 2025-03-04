@@ -14,16 +14,16 @@ function DEvents() {
       <Heading width={"100%"}>Veranstaltungen</Heading>
       {events?.map((event) => (
         <VStack marginBottom={events?.length > 1 ? "55px" : ""}>
-          <Heading width={"100%"} fontSize={"2xl"}>
+          <Heading width={"100%"} fontSize={"3xl"}>
             {event.title}
           </Heading>
-          <Text>{event.description}</Text>
           <Image
             borderRadius={"10px"}
             shadow={"0px 0px 10px 4px lightgrey"}
             marginTop={"20px"}
             src={isMobile ? event.flyer : event.flyerTV}
           />
+          {/* <Text width={"100%"}>{formatText(event.description)}</Text> */}
         </VStack>
       ))}
     </VStack>
