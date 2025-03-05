@@ -19,6 +19,10 @@ import {
     Heading,
     Stack,
     useBreakpointValue,
+    HStack,
+    Radio,
+    RadioGroup,
+    Select,
 } from "@chakra-ui/react";
 import axios from "axios";
 import jsPDF from "jspdf";
@@ -30,11 +34,6 @@ declare module "jspdf" {
     }
 }
 
-interface DateInput {
-    d: number;
-    m: number;
-    y: number;
-}
 
 interface PrayerTimesData {
     [date: string]: {
@@ -51,46 +50,33 @@ interface PrayerTimesData {
 
 const PrayerTimesTable: React.FC = () => {
     const isMobile = useBreakpointValue({ base: true, md: false });
-    const [formData, setFormData] = useState<{
-        city_name: string;
-        start_date: DateInput;
-        end_date: DateInput;
-        lat: number;
-        lng: number;
-        method: number;
-    }>({
-        city_name: "Regensburg",
-        start_date: { d: 1, m: 1, y: 2025 },
-        end_date: { d: 31, m: 12, y: 2025 },
-        lat: 49.007734,
-        lng: 12.102841,
-        method: 10,
-    });
-
     const [prayerTimes, setPrayerTimes] = useState<PrayerTimesData | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [calendarType, setCalendarType] = useState("gregorian");
+    const [periodType, setPeriodType] = useState("annual");
+    const [year, setYear] = useState(2025);
+    const [month, setMonth] = useState("1");
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        if (name.includes("start_date") || name.includes("end_date")) {
-            const [field, key] = name.split(".");
-            if (field === "start_date" || field === "end_date") {
-                setFormData((prev) => ({
-                    ...prev,
-                    [field]: { ...prev[field], [key as keyof DateInput]: parseInt(value) },
-                }));
-            }
-        } else {
-            setFormData({ ...formData, [name]: parseFloat(value) || value });
-        }
-    };
+    const gregorianMonths = [
+        "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"
+    ];
+
+    const hijriMonths = [
+        "Muharram", "Safar", "Rabi' al-awwal", "Rabi' al-thani", "Jumada al-awwal", "Jumada al-thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhul-Qa'dah", "Dhul-Hijjah"
+    ];
+
 
     const fetchPrayerTimes = async () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.post<PrayerTimesData>("https://izr-cloud.online/calculTimes/", formData);
+            const formData = {
+                hijri: calendarType !== "gregorian",
+                value: periodType === "anual" ? year : month,
+                period: periodType
+            }
+            const response = await axios.post<PrayerTimesData>("https://izr-cloud.online/prayer-times", formData);
             setPrayerTimes(response.data);
         } catch (err) {
             setError("Failed to fetch data. Please try again.");
@@ -142,21 +128,39 @@ const PrayerTimesTable: React.FC = () => {
         <VStack width={!isMobile ? "100%" : "90%"}>
             <Heading width="100%">Gebetszeiten Berechnen</Heading>
             <Container overflow="scroll" borderRadius={10} maxW="container.xl" width="100%" py={6}>
-                <Stack flexDir={isMobile ? "column" : "row"} alignItems="flex-start" justifyContent="start">
-                    <FormControl>
-                        <FormLabel>Startdatum</FormLabel>
-                        <Input marginY={2} type="number" name="start_date.d" placeholder="Day" onChange={handleChange} defaultValue={1} />
-                        <Input marginY={2} type="number" name="start_date.m" placeholder="Month" onChange={handleChange} defaultValue={1} />
-                        <Input marginY={2} type="number" name="start_date.y" placeholder="Year" onChange={handleChange} defaultValue={2025} />
-                    </FormControl>
+                <Stack flexDirection={isMobile ? "column" : "row"} marginBottom={10}>
+                    <RadioGroup onChange={setCalendarType} value={calendarType}>
+                        <HStack spacing={4}>
+                            <Radio value="gregorian">Gregorianisch</Radio>
+                            <Radio value="hijri">Hijri</Radio>
+                        </HStack>
+                    </RadioGroup>
 
-                    <FormControl>
-                        <FormLabel>Enddatum</FormLabel>
-                        <Input marginY={2} type="number" name="end_date.d" placeholder="Day" onChange={handleChange} defaultValue={31} />
-                        <Input marginY={2} type="number" name="end_date.m" placeholder="Month" onChange={handleChange} defaultValue={12} />
-                        <Input marginY={2} type="number" name="end_date.y" placeholder="Year" onChange={handleChange} defaultValue={2025} />
-                    </FormControl>
+                    <RadioGroup onChange={setPeriodType} value={periodType}>
+                        <HStack spacing={4}>
+                            <Radio value="annual">Jährlich</Radio>
+                            <Radio value="monthly">Monatlich</Radio>
+                        </HStack>
+                    </RadioGroup>
+
+
                 </Stack>
+                {periodType === "annual" && (
+                    <FormControl>
+                        <FormLabel>{calendarType === "hijri" ? "Hijri Jahr eingeben" : "Gregorianisches Jahr eingeben"}</FormLabel>
+                        <Input type="number" value={year} onChange={(e) => setYear(parseInt(e.target.value))} />
+                    </FormControl>
+                )}
+                {periodType === "monthly" && (
+                    <FormControl>
+                        <FormLabel>{calendarType === "hijri" ? "Hijri Monate" : "Gregorianische Monate"}</FormLabel>
+                        <Select value={month} onChange={(e) => { setMonth(e.target.value) }}>
+                            {(calendarType === "hijri" ? hijriMonths : gregorianMonths).map((m, index) => (
+                                <option key={index} value={index + 1}>{m}</option>
+                            ))}
+                        </Select>
+                    </FormControl>
+                )}
 
                 <Button marginX={2} mt={4} onClick={fetchPrayerTimes}>
                     Berechnen
