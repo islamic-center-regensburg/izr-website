@@ -10,6 +10,7 @@ function NavBar() {
       {isDesktop && <DNavBar />}
       {isTablet && <TNavBar />}
       {isMobile && <MNavBar />}
+
     </>
   );
 }

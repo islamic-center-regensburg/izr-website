@@ -20,6 +20,7 @@ import IZRApp from "./components/IZRApp";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import PrayerTimesTable from "./components/PrayerTimesTable";
+import Hero from "./components/Hero";
 
 
 const theme = extendTheme({
@@ -51,6 +52,7 @@ function App() {
             element={
               <VStack gap={0} width={"100vw"} fontSize={fontSize}>
                 <NavBar />
+                <Hero></Hero>
                 <Section margin={false} bg="white">
                   <DStatement />
                 </Section>

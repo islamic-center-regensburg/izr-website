@@ -17,7 +17,7 @@ function DNavBar() {
     }
   }, []);
 
-  const handleScrollToSection = (sectionId : string) => {
+  const handleScrollToSection = (sectionId: string) => {
     if (window.location.pathname !== "/") {
       // If not on the home page, navigate to the home page first
       navigate("/");
