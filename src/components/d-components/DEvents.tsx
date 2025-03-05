@@ -1,4 +1,4 @@
-import { Heading, VStack, Text, Image } from "@chakra-ui/react";
+import { Heading, VStack, Text, Image, Button, Stack, Link } from "@chakra-ui/react";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import Skeleton from "../Skeleton";
 import useResponsiveBreakpoints from "../../hooks/useResponsiveBreakpoints";
@@ -14,9 +14,16 @@ function DEvents() {
       <Heading width={"100%"}>Veranstaltungen</Heading>
       {events?.map((event) => (
         <VStack marginBottom={events?.length > 1 ? "55px" : ""}>
-          <Heading width={"100%"} fontSize={"3xl"}>
-            {event.title}
-          </Heading>
+          <Stack flexDir={isMobile ? "column" : "row"} justifyContent={"left"} width={"100%"}>
+            <Heading width={"100%"} fontSize={"3xl"}>
+              {event.title}
+            </Heading>
+            {event.more_info && <Link href={event.more_info} isExternal>
+              <Button width={"100%"}>
+                Mehr Informationen / Link Zum Anmedlden
+              </Button>
+            </Link>}
+          </Stack>
           <Image
             borderRadius={"10px"}
             shadow={"0px 0px 10px 4px lightgrey"}

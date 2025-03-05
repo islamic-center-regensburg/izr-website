@@ -5,13 +5,21 @@ import axios from "axios";
 interface Event {
   title: string;
   title_ar: string;
+  title_en: string;
   flyer: string;
   flyer_ar: string;
+  flyer_en: string;
   flyerTV: string;
+  flyerTV_ar: string;
+  flyerTV_en: string;
   subtitle: string | null;
   subtitle_ar: string | null;
+  subtitle_en: string | null;
+  subtitle_den: string | null;
   description: string;
   description_ar: string;
+  description_de: string;
+  more_info: string;
 }
 
 // Define the main response structure, which includes an array of events

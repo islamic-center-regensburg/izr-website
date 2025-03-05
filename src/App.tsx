@@ -52,7 +52,9 @@ function App() {
             element={
               <VStack gap={0} width={"100vw"} fontSize={fontSize}>
                 <NavBar />
-                <Hero></Hero>
+                <Section margin={false} bg="white">
+                  <Hero></Hero>
+                </Section>
                 <Section margin={false} bg="white">
                   <DStatement />
                 </Section>
