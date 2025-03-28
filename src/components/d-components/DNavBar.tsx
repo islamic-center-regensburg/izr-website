@@ -68,7 +68,7 @@ function DNavBar() {
           borderRadius={"10px"}
           onClick={() => handleScrollToSection("#events")}
         >
-          Veranstaltungen
+          Informationen
         </Text>
         <Text
           cursor={"pointer"}

@@ -11,7 +11,7 @@ function DEvents() {
   if (loading) return <Skeleton />;
   return (
     <VStack id="events">
-      <Heading width={"100%"}>Veranstaltungen</Heading>
+      <Heading width={"100%"}>Informationen</Heading>
       {events?.map((event) => (
         <VStack marginBottom={events?.length > 1 ? "55px" : ""}>
           <Stack flexDir={isMobile ? "column" : "row"} justifyContent={"left"} width={"100%"}>

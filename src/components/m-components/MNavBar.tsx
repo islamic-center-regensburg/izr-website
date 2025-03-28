@@ -33,7 +33,7 @@ function MNavBar() {
             borderRadius={"10px"}
             onClick={() => (window.location.hash = "#events")}
           >
-            Veranstaltungen
+            Informationen
           </Text>
           <Text
             cursor={"pointer"}

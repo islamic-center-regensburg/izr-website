@@ -63,7 +63,9 @@ const PrayerTimesTable: React.FC = () => {
     ];
 
     const hijriMonths = [
-        "Muharram", "Safar", "Rabi' al-awwal", "Rabi' al-thani", "Jumada al-awwal", "Jumada al-thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhul-Qa'dah", "Dhul-Hijjah"
+        "Muharram", "Safar", "Rabi al-awwal", "Rabi al-thani",
+        "Jumada al-awwal", "Jumada al-thani", "Rajab", "Shaban",
+        "Ramadan", "Shawwal", "Dhul-Qadah", "Dhul-Hijjah"
     ];
 
 
@@ -73,7 +75,7 @@ const PrayerTimesTable: React.FC = () => {
         try {
             const formData = {
                 hijri: calendarType !== "gregorian",
-                value: periodType === "anual" ? year : month,
+                value: periodType === "annual" ? year : month,
                 period: periodType
             }
             const response = await axios.post<PrayerTimesData>("https://izr-cloud.online/prayer-times", formData);
