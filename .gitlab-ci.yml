@@ -5,6 +5,7 @@ deploy_izr_website:
   stage: deploy
   variables:
     TARGET: website
+    BRANCH: main
   trigger:
     include: 
       - project: izr-production/izr-server
