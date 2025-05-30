@@ -1,7 +1,12 @@
-import { Heading, VStack, Text, Image, Button, Stack, Link } from "@chakra-ui/react";
+import { Heading, VStack, Text, Image, Button, Stack, Link, Box, Card, CardBody, CardHeader, IconButton } from "@chakra-ui/react";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import Skeleton from "../Skeleton";
 import useResponsiveBreakpoints from "../../hooks/useResponsiveBreakpoints";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 function DEvents() {
   const { events, error, loading } = useFetchEvents();
@@ -9,29 +14,108 @@ function DEvents() {
 
   if (error) return <Text>Server Error</Text>;
   if (loading) return <Skeleton />;
+
   return (
-    <VStack id="events">
-      <Heading width={"100%"}>Informationen</Heading>
-      {events?.map((event) => (
-        <VStack marginBottom={events?.length > 1 ? "55px" : ""}>
-          <Stack flexDir={isMobile ? "column" : "row"} justifyContent={"left"} width={"100%"}>
-            <Heading width={"100%"} fontSize={"3xl"}>
-              {event.title}
-            </Heading>
-            {event.more_info && <Link href={event.more_info} isExternal>
-              <Button width={"100%"}>
-                Mehr Informationen / Link Zum Anmedlden
-              </Button>
-            </Link>}
-          </Stack>
-          <Image
-            borderRadius={"10px"}
-            shadow={"0px 0px 10px 4px lightgrey"}
-            marginTop={"20px"}
-            src={isMobile ? event.flyer : event.flyerTV}
-          />
-          {/* <Text width={"100%"}>{formatText(event.description)}</Text> */}
-        </VStack>
+    <VStack id="events" spacing={8} width="100%">
+      <Heading width="100%" textAlign="left">Informationen</Heading>
+      {events?.map((event, index) => (
+        <Card key={index} width="100%" shadow="lg" borderRadius="xl" p={4}>
+          <CardHeader>
+            <Heading size="lg">{event.title}</Heading>
+          </CardHeader>
+          <CardBody>
+            <Stack
+              direction={isMobile ? "column" : "row"}
+              spacing={6}
+              align="start"
+            >
+              {/* Left side: Description */}
+              <Box width={isMobile ? "100%" : "60%"} flex="1">
+                <Text>{event.description}</Text>
+                {event.more_info && (
+                  <Link href={event.more_info} isExternal>
+                    <Button mt={4} colorScheme="blue" width="fit-content">
+                      Mehr Informationen / Link Zum Anmelden
+                    </Button>
+                  </Link>
+                )}
+              </Box>
+
+              {/* Right side: Flyer slider with shadows */}
+              <Box w={isMobile ? "100%" : "40%"} flex="1" position="relative">
+                <Swiper
+                  spaceBetween={10}
+                  slidesPerView={1}
+                  loop={true}
+                  modules={[Navigation]}
+                  navigation={{
+                    prevEl: `.swiper-button-prev-${index}`,
+                    nextEl: `.swiper-button-next-${index}`,
+                  }}
+                >
+                  <SwiperSlide>
+                    <Image
+                      src={event.flyer}
+                      borderRadius="md"
+                      boxShadow="0 4px 12px rgba(0, 0, 0, 0.3)"
+                      alt="Flyer"
+                      objectFit="cover"
+                      width="100%"
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <Image
+                      src={event.flyer_en}
+                      borderRadius="md"
+                      boxShadow="0 4px 12px rgba(0, 0, 0, 0.3)"
+                      alt="Flyer Englisch"
+                      objectFit="cover"
+                      width="100%"
+                    />
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <Image
+                      src={event.flyer_ar}
+                      borderRadius="md"
+                      boxShadow="0 4px 12px rgba(0, 0, 0, 0.3)"
+                      alt="Flyer Arabisch"
+                      objectFit="cover"
+                      width="100%"
+                    />
+                  </SwiperSlide>
+                </Swiper>
+
+                {/* Custom arrow buttons */}
+                <IconButton
+                  icon={<FaArrowLeft />}
+                  aria-label="Previous"
+                  className={`swiper-button-prev-${index}`}
+                  position="absolute"
+                  top="50%"
+                  left="-30px"
+                  transform="translateY(-50%)"
+                  zIndex="10"
+                  colorScheme="blue"
+                  borderRadius="full"
+                  size="sm"
+                />
+                <IconButton
+                  icon={<FaArrowRight />}
+                  aria-label="Next"
+                  className={`swiper-button-next-${index}`}
+                  position="absolute"
+                  top="50%"
+                  right="-30px"
+                  transform="translateY(-50%)"
+                  zIndex="10"
+                  colorScheme="blue"
+                  borderRadius="full"
+                  size="sm"
+                />
+              </Box>
+            </Stack>
+          </CardBody>
+        </Card>
       ))}
     </VStack>
   );
