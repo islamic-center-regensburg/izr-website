@@ -15,6 +15,11 @@ import '@fontsource/tajawal/400.css'; // Regular weight
 import '@fontsource/tajawal/500.css'; // Medium weight
 import '@fontsource/tajawal/700.css'; // Bold weight
 
+import "@fontsource/fira-sans"; // Defaults to weight 400
+import "@fontsource/fira-sans/400.css"; // Specify weight
+import "@fontsource/fira-sans/700.css"; // Specify weight
+import "@fontsource/fira-sans/400-italic.css"; // Specify weight and style
+
 import { extendTheme } from "@chakra-ui/react";
 import IZRApp from "./components/IZRApp";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -25,8 +30,8 @@ import Hero from "./components/Hero";
 
 const theme = extendTheme({
   fonts: {
-    heading: `'Tajawal', sans-serif`, // Use Tajawal for headings
-    body: `'Tajawal', sans-serif`,   // Use Tajawal for body text
+    heading: `'Fira Sans', sans-serif`, // Use Tajawal for headings
+    body: `'Fira Sans', sans-serif`,   // Use Tajawal for body text
   },
 });
 
