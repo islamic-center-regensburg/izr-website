@@ -11,12 +11,7 @@ function TVisitUs() {
 
   if (loading) return <Skeleton />;
   return (
-    <VStack
-      backgroundColor={colors.primary}
-      color={"white"}
-      padding={"20px"}
-      borderRadius={"10px"}
-    >
+    <VStack color={"white"} padding={"20px"} borderRadius={"10px"}>
       <VStack>
         <Heading width={"100%"} fontSize={"3xl"} fontWeight={"semibold"}>
           Besuchen Sie uns
@@ -53,14 +48,8 @@ function TVisitUs() {
             Buslinien : 10 30
           </Text>
           <Text width={"100%"}>Haltstelle : Zuckerfabrikstraße</Text>
-          <Image src={logo} height={"150px"} width={"150px"}></Image>
         </VStack>
-        <Image
-          src={location}
-          width={"392px"}
-          height={"100%"}
-          borderRadius={"10px"}
-        ></Image>
+        <Image src={logo} height={"150px"} width={"150px"}></Image>
       </HStack>
     </VStack>
   );

@@ -1,4 +1,4 @@
-import { ChakraProvider, VStack } from "@chakra-ui/react";
+import { Box, ChakraProvider, VStack } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import DStatement from "./components/d-components/DStatement";
 import Section from "./components/Section";
@@ -11,9 +11,9 @@ import DKontakt from "./components/d-components/DKontakt";
 import DBlog from "./components/d-components/DBlog";
 import DSpenden from "./components/d-components/DSpenden";
 import DFooter from "./components/d-components/DFooter";
-import '@fontsource/tajawal/400.css'; // Regular weight
-import '@fontsource/tajawal/500.css'; // Medium weight
-import '@fontsource/tajawal/700.css'; // Bold weight
+import "@fontsource/tajawal/400.css"; // Regular weight
+import "@fontsource/tajawal/500.css"; // Medium weight
+import "@fontsource/tajawal/700.css"; // Bold weight
 
 import "@fontsource/fira-sans"; // Defaults to weight 400
 import "@fontsource/fira-sans/400.css"; // Specify weight
@@ -26,12 +26,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import PrayerTimesTable from "./components/PrayerTimesTable";
 import Hero from "./components/Hero";
-
+import { colors } from "./theme";
 
 const theme = extendTheme({
   fonts: {
     heading: `'Fira Sans', sans-serif`, // Use Tajawal for headings
-    body: `'Fira Sans', sans-serif`,   // Use Tajawal for body text
+    body: `'Fira Sans', sans-serif`, // Use Tajawal for body text
   },
 });
 
@@ -63,13 +63,21 @@ function App() {
                 <Section margin={false} bg="white">
                   <DStatement />
                 </Section>
-                <Section bg="white">
-                  <VisitUs />
-                </Section>
+                {/* <Box display={"flex"} justifyContent={"center"} backgroundColor={colors.primary} width={'100%'}> */}
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  bgGradient={colors.gradient}
+                  width={"100%"}
+                >
+                  <Section bg="transparent">
+                    <VisitUs />
+                  </Section>
+                </Box>
                 <Section bg="white">
                   <DPrayerTimes />
                 </Section>
-                <Section bg="white">
+                <Section bg="transparent">
                   <PrayerTimesTable />
                 </Section>
                 <Section bg="white">
@@ -81,16 +89,35 @@ function App() {
                 <Section bg="white">
                   <DBlog />
                 </Section>
-                <Section bg="white">
-                  <DSpenden />
-                </Section>
+                <Box
+                  display={"flex"}
+                  justifyContent={"center"}
+                  bgGradient={[
+                    "linear(to-tr, teal.300, yellow.400)",
+                    // "linear(to-t, blue.200, teal.500)",
+                    // "linear(to-b, orange.100, green.500)",
+                  ]}
+                  width={"100%"}
+                >
+                  <Section bg="transparent">
+                    <DSpenden />
+                  </Section>
+                </Box>
                 <Section bg="white">
                   <DKontakt />
                 </Section>
               </VStack>
             }
           />
-          <Route path="/privacy-policy" element={<VStack gap={0} width={"100vw"} fontSize={fontSize}> <NavBar /> <PrivacyPolicy /></VStack>} />
+          <Route
+            path="/privacy-policy"
+            element={
+              <VStack gap={0} width={"100vw"} fontSize={fontSize}>
+                {" "}
+                <NavBar /> <PrivacyPolicy />
+              </VStack>
+            }
+          />
         </Routes>
         <DFooter />
       </Router>

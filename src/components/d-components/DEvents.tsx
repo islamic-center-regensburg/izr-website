@@ -1,11 +1,24 @@
-import { Heading, VStack, Text, Image, Button, Stack, Link, Box, Card, CardBody, CardHeader, IconButton } from "@chakra-ui/react";
+import {
+  Heading,
+  VStack,
+  Text,
+  Image,
+  Button,
+  Stack,
+  Link,
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  IconButton,
+} from "@chakra-ui/react";
 import useFetchEvents from "../../hooks/useFetchEvents";
 import Skeleton from "../Skeleton";
 import useResponsiveBreakpoints from "../../hooks/useResponsiveBreakpoints";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 function DEvents() {
@@ -17,7 +30,9 @@ function DEvents() {
 
   return (
     <VStack id="events" spacing={8} width="100%">
-      <Heading width="100%" textAlign="left">Informationen</Heading>
+      <Heading width="100%" textAlign="left">
+        Informationen
+      </Heading>
       {events?.map((event, index) => (
         <Card key={index} width="100%" shadow="lg" borderRadius="xl" p={4}>
           <CardHeader>
@@ -25,12 +40,13 @@ function DEvents() {
           </CardHeader>
           <CardBody>
             <Stack
-              direction={isMobile ? "column" : "row"}
+              display={"flex"}
+              alignItems={"center"}
+              direction={"column"}
               spacing={6}
-              align="start"
             >
               {/* Left side: Description */}
-              <Box width={isMobile ? "100%" : "60%"} flex="1">
+              <Box width={"100%"} flex="1">
                 <Text>{event.description}</Text>
                 {event.more_info && (
                   <Link href={event.more_info} isExternal>
@@ -42,7 +58,7 @@ function DEvents() {
               </Box>
 
               {/* Right side: Flyer slider with shadows */}
-              <Box w={isMobile ? "100%" : "40%"} flex="1" position="relative">
+              <Box w={isMobile ? "100%" : "50%"} flex="1" position="relative">
                 <Swiper
                   spaceBetween={10}
                   slidesPerView={1}

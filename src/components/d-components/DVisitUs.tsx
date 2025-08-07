@@ -1,6 +1,5 @@
 import { HStack, VStack, Image, Heading, Text } from "@chakra-ui/react";
 import location from "../../assets/izr.png";
-import { colors } from "../../theme";
 import logo from "../../assets/IZRLOGOROUND.png";
 import useFetchStatments from "../../hooks/useFetchStatments";
 import Skeleton from "../Skeleton";
@@ -12,7 +11,6 @@ function DVisitUs() {
   if (loading) return <Skeleton />;
   return (
     <HStack
-      backgroundColor={colors.primary}
       color={"white"}
       padding={"20px"}
       borderRadius={"10px"}

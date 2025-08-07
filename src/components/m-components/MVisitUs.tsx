@@ -1,6 +1,4 @@
 import { HStack, VStack, Image, Heading, Text } from "@chakra-ui/react";
-import location from "../../assets/izr.png";
-import { colors } from "../../theme";
 import logo from "../../assets/IZRLOGOROUND.png";
 import Skeleton from "../Skeleton";
 import useFetchStatments from "../../hooks/useFetchStatments";
@@ -11,12 +9,7 @@ function MVisitUs() {
 
   if (loading) return <Skeleton />;
   return (
-    <VStack
-      backgroundColor={colors.primary}
-      color={"white"}
-      padding={"20px"}
-      borderRadius={"10px"}
-    >
+    <VStack color={"white"} padding={"20px"} borderRadius={"10px"}>
       <VStack>
         <Heading width={"100%"} fontSize={"3xl"} fontWeight={"semibold"}>
           Besuchen Sie uns
@@ -53,12 +46,6 @@ function MVisitUs() {
           </VStack>
           <Image src={logo} height={"120px"} width={"120px"}></Image>
         </HStack>
-        <Image
-          src={location}
-          width={"100%"}
-          height={"100%px"}
-          borderRadius={"10px"}
-        ></Image>
       </VStack>
     </VStack>
   );
