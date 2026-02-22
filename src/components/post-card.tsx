@@ -1,17 +1,10 @@
 import { Link } from "@tanstack/react-router";
+import Markdown from "react-markdown";
 
 interface PostCardProps {
 	id: string;
 	title: string;
 	description: string;
-}
-
-function truncateText(text: string, maxLength: number) {
-	if (text.length <= maxLength) {
-		return text;
-	}
-
-	return `${text.slice(0, maxLength).trim()}...`;
 }
 
 function PostCard({ id, title, description }: PostCardProps) {
@@ -22,9 +15,30 @@ function PostCard({ id, title, description }: PostCardProps) {
 			className="block rounded-2xl border border-border/50 bg-background/40 p-5 shadow-xs transition-colors hover:bg-accent/30"
 		>
 			<h3 className="text-lg font-semibold tracking-tight">{title}</h3>
-			<p className="mt-3 text-sm text-muted-foreground">
-				{truncateText(description, 140)}
-			</p>
+			<div className="mt-3 overflow-hidden text-sm text-muted-foreground [display:-webkit-box] [line-clamp:4] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">
+				<Markdown
+					components={{
+						p: ({ children }) => <span>{children} </span>,
+						ul: ({ children }) => <span>{children}</span>,
+						ol: ({ children }) => <span>{children}</span>,
+						li: ({ children }) => <span>• {children} </span>,
+						strong: ({ children }) => (
+							<strong className="font-semibold text-foreground">
+								{children}
+							</strong>
+						),
+						em: ({ children }) => <em className="italic">{children}</em>,
+						code: ({ children }) => (
+							<code className="rounded bg-accent/50 px-1 py-0.5 text-xs text-foreground">
+								{children}
+							</code>
+						),
+						br: () => <br />,
+					}}
+				>
+					{description}
+				</Markdown>
+			</div>
 		</Link>
 	);
 }

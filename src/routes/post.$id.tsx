@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import Markdown from "react-markdown";
 import {
 	getPostByIdQueryOptions,
 	getPostMediaQueryOptions,
@@ -86,9 +87,53 @@ function RouteComponent() {
 			<h1 className="text-3xl font-bold tracking-tight">
 				{translation?.title || t("posts.untitled")}
 			</h1>
-			<p className="mt-4 whitespace-pre-wrap text-base leading-relaxed text-muted-foreground">
-				{translation?.description || t("posts.no_description")}
-			</p>
+			<div className="mt-4 text-base leading-relaxed text-muted-foreground">
+				<Markdown
+					components={{
+						h1: ({ children }) => (
+							<h2 className="mb-3 mt-5 text-2xl font-semibold text-foreground first:mt-0">
+								{children}
+							</h2>
+						),
+						h2: ({ children }) => (
+							<h3 className="mb-2 mt-4 text-xl font-semibold text-foreground">
+								{children}
+							</h3>
+						),
+						p: ({ children }) => <p className="mb-3 last:mb-0">{children}</p>,
+						ul: ({ children }) => (
+							<ul className="mb-3 list-disc space-y-1 pl-6">{children}</ul>
+						),
+						ol: ({ children }) => (
+							<ol className="mb-3 list-decimal space-y-1 pl-6">{children}</ol>
+						),
+						li: ({ children }) => <li>{children}</li>,
+						strong: ({ children }) => (
+							<strong className="font-semibold text-foreground">
+								{children}
+							</strong>
+						),
+						em: ({ children }) => <em className="italic">{children}</em>,
+						code: ({ children }) => (
+							<code className="rounded bg-accent/50 px-1 py-0.5 text-sm text-foreground">
+								{children}
+							</code>
+						),
+						a: ({ href, children }) => (
+							<a
+								href={href}
+								target="_blank"
+								rel="noreferrer"
+								className="text-primary underline underline-offset-4"
+							>
+								{children}
+							</a>
+						),
+					}}
+				>
+					{translation?.description || t("posts.no_description")}
+				</Markdown>
+			</div>
 
 			<div className="mt-6">
 				<h2 className="text-lg font-semibold">
