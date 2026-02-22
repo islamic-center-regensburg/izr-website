@@ -80,7 +80,7 @@ function PrayerTimesSection() {
 	const prayerTimesQuery = useQuery(
 		getPrayerTimesForMosqueQueryOptions({
 			mosque_id: mosque?.id ?? "",
-			query: { year, month, day },
+			query: { year, month, day, source: "stored" },
 		}),
 	);
 
