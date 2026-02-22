@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import DocumentLanguageSync from "@/components/document-language-sync";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/NavBar";
 import { Toaster } from "@/components/ui/sonner";
 import "@/i18n";
 import Bg from "@/components/bg";

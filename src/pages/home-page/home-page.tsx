@@ -1,4 +1,4 @@
-import Hero from "@/components/hero";
+import Hero from "@/components/Hero";
 import PostsSection from "@/components/posts-section";
 import PrayerTimesSection from "@/components/prayer-times-section";
 
