@@ -28,7 +28,7 @@ function RouteComponent() {
 	];
 
 	return (
-		<section className="mx-auto mt-8 rounded-3xl border border-border/40 bg-transparent backdrop-blur-xs sm:p-8">
+		<section className="mx-auto p-4 mt-8 rounded-3xl border border-border/40 bg-transparent backdrop-blur-xs sm:p-8">
 			<div className="mx-auto space-y-6">
 				<h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
 					{t("about.title")}
