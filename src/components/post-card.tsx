@@ -14,8 +14,10 @@ function PostCard({ id, title, description }: PostCardProps) {
 			params={{ id }}
 			className="block rounded-2xl border border-border/50 bg-background/40 p-5 shadow-xs transition-colors hover:bg-accent/30"
 		>
-			<h3 className="text-lg font-semibold tracking-tight">{title}</h3>
-			<div className="markdown-content mt-3 overflow-hidden text-sm text-muted-foreground [display:-webkit-box] [line-clamp:4] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">
+			<h3 className="title-content text-lg font-semibold tracking-tight">
+				{title}
+			</h3>
+			<div className="markdown-content mt-3 overflow-hidden text-sm text-muted-foreground [display:-webkit-box] [line-clamp:4] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
 				<Markdown
 					components={{
 						p: ({ children }) => <span>{children} </span>,

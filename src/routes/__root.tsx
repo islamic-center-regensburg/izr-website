@@ -11,6 +11,7 @@ import Navbar from "@/components/NavBar";
 import { Toaster } from "@/components/ui/sonner";
 import "@/i18n";
 import Bg from "@/components/bg";
+import Footer from "@/components/Footer";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import TanStackQueryProvider from "../integrations/tanstack-query/root-provider";
 import appCss from "../styles.css?url";
@@ -57,6 +58,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 						<main className="container m-auto overflow-visible pt-20">
 							{children}
 						</main>
+						<footer>
+							<Footer />
+						</footer>
 					</Bg>
 
 					<Toaster />

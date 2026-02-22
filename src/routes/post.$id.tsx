@@ -84,7 +84,7 @@ function RouteComponent() {
 
 	return (
 		<article className="rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-xs sm:p-8">
-			<h1 className="text-3xl font-bold tracking-tight">
+			<h1 className="title-content text-3xl font-bold tracking-tight">
 				{translation?.title || t("posts.untitled")}
 			</h1>
 			<div className="markdown-content mt-4 text-base leading-relaxed text-muted-foreground">
@@ -102,10 +102,10 @@ function RouteComponent() {
 						),
 						p: ({ children }) => <p className="mb-3 last:mb-0">{children}</p>,
 						ul: ({ children }) => (
-							<ul className="mb-3 list-disc space-y-1 pl-6">{children}</ul>
+							<ul className="mb-3 list-disc space-y-1 ps-6">{children}</ul>
 						),
 						ol: ({ children }) => (
-							<ol className="mb-3 list-decimal space-y-1 pl-6">{children}</ol>
+							<ol className="mb-3 list-decimal space-y-1 ps-6">{children}</ol>
 						),
 						li: ({ children }) => <li>{children}</li>,
 						strong: ({ children }) => (

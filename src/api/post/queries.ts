@@ -22,7 +22,7 @@ export const getAllPostsQueryOptions = ({
 	query,
 }: GetAllPostsQueryOptionsInterface) => {
 	return {
-		queryKey: POST_QUERY_KEYS.all(mosque_id, query ? { query } : undefined),
+		queryKey: POST_QUERY_KEYS.all(mosque_id, query),
 		queryFn: async (): Promise<PaginatedResponsePostOut> => {
 			try {
 				const response = await getAllPosts({
@@ -54,7 +54,7 @@ export const getPostByIdQueryOptions = ({
 	query,
 }: GetPostByIdQueryOptionsInterface) => {
 	return {
-		queryKey: POST_QUERY_KEYS.byId(post_id, query ? { query } : undefined),
+		queryKey: POST_QUERY_KEYS.byId(post_id, query),
 		queryFn: async (): Promise<PostOut> => {
 			try {
 				const response = await getPost({

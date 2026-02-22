@@ -16,18 +16,20 @@ function Navbar() {
 		<header className="sticky top-4 z-50 px-4">
 			<div className="container relative mx-auto">
 				<nav className="h-20 flex items-center justify-between gap-4 rounded-full border border-border/30 bg-background/60 px-4 py-2 shadow-xs backdrop-blur-sm md:px-10">
-					<div className="flex items-center gap-3">
-						<img
-							className="h-16 w-16 rounded-full md:h-20 md:w-20"
-							src="/IZR_LOGO_ROUND_WHITE_BG.png"
-							alt="Islamic Center Regensburg logo"
-						/>
-						<div className="flex flex-col leading-tight">
-							<span className="text-sm font-semibold md:text-base">
-								{t("nav.title")}
-							</span>
+					<Link to="/">
+						<div className="flex items-center gap-3">
+							<img
+								className="h-16 w-16 rounded-full md:h-20 md:w-20"
+								src="/IZR_LOGO_ROUND_WHITE_BG.png"
+								alt="Islamic Center Regensburg logo"
+							/>
+							<div className="flex flex-col leading-tight">
+								<span className="text-sm font-semibold md:text-base">
+									{t("nav.title")}
+								</span>
+							</div>
 						</div>
-					</div>
+					</Link>
 					<div className="hidden items-center gap-1 md:flex">
 						{navLinks.map((item) => (
 							<Link
