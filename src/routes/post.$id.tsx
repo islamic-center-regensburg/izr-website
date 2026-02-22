@@ -87,7 +87,7 @@ function RouteComponent() {
 			<h1 className="text-3xl font-bold tracking-tight">
 				{translation?.title || t("posts.untitled")}
 			</h1>
-			<div className="mt-4 text-base leading-relaxed text-muted-foreground">
+			<div className="markdown-content mt-4 text-base leading-relaxed text-muted-foreground">
 				<Markdown
 					components={{
 						h1: ({ children }) => (
@@ -115,7 +115,7 @@ function RouteComponent() {
 						),
 						em: ({ children }) => <em className="italic">{children}</em>,
 						code: ({ children }) => (
-							<code className="rounded bg-accent/50 px-1 py-0.5 text-sm text-foreground">
+							<code className="time-ltr rounded bg-accent/50 px-1 py-0.5 text-sm text-foreground">
 								{children}
 							</code>
 						),
@@ -124,7 +124,7 @@ function RouteComponent() {
 								href={href}
 								target="_blank"
 								rel="noreferrer"
-								className="text-primary underline underline-offset-4"
+								className="time-ltr text-primary underline underline-offset-4"
 							>
 								{children}
 							</a>

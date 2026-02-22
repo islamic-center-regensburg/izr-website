@@ -32,6 +32,20 @@ code {
   font-variant-numeric: tabular-nums;
 }
 
+.markdown-content {
+  font-variant-numeric: tabular-nums;
+}
+
+html:lang(ar) .markdown-content {
+  font-family: 'Bricolage', 'Naveid', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+html:lang(ar) .markdown-content ol li::marker {
+  font-family: 'Bricolage', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
 @keyframes heartbeat {
   0%,
   28%,
