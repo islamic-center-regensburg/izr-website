@@ -1,0 +1,134 @@
+import { useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import {
+	getPostByIdQueryOptions,
+	getPostMediaQueryOptions,
+} from "@/api/post/queries";
+
+export const Route = createFileRoute("/post/$id")({
+	component: RouteComponent,
+});
+
+function RouteComponent() {
+	const { id } = Route.useParams();
+	const { t, i18n } = useTranslation();
+
+	const postQuery = useQuery(
+		getPostByIdQueryOptions({
+			post_id: id,
+			query: {
+				language: i18n.language as "de" | "en" | "ar",
+			},
+		}),
+	);
+
+	const selectedTranslation =
+		postQuery.data?.translations.find(
+			(item) => item.language === i18n.language,
+		) ?? postQuery.data?.translations[0];
+
+	const mediaQuery = useQuery(
+		getPostMediaQueryOptions({
+			mosque_id: postQuery.data?.mosque_id ?? "",
+			dir: selectedTranslation?.media ?? "",
+		}),
+	);
+
+	if (postQuery.isLoading) {
+		return (
+			<section className="rounded-3xl border border-border/40 bg-card/70 p-6">
+				<p className="text-sm text-muted-foreground">{t("posts.loading")}</p>
+			</section>
+		);
+	}
+
+	if (postQuery.error || !postQuery.data) {
+		return (
+			<section className="rounded-3xl border border-border/40 bg-card/70 p-6">
+				<p className="text-sm text-destructive">{t("posts.error")}</p>
+			</section>
+		);
+	}
+
+	const translation = selectedTranslation;
+
+	const imageSources = Array.from(
+		new Set(
+			(mediaQuery.data ?? [])
+				.filter((item) => {
+					const objectPath = item.object.toLowerCase();
+					return (
+						objectPath.endsWith(".png") ||
+						objectPath.endsWith(".jpg") ||
+						objectPath.endsWith(".jpeg") ||
+						objectPath.endsWith(".webp")
+					);
+				})
+				.map((item) => item.url.replace("minio", "localhost")),
+		),
+	);
+
+	const attachmentFiles = Array.from(
+		new Map(
+			(mediaQuery.data ?? []).map((item) => [
+				item.object,
+				{
+					name: item.object.split("/").pop() ?? item.object,
+					url: item.url.replace("minio", "localhost"),
+				},
+			]),
+		).values(),
+	);
+
+	return (
+		<article className="rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-xs sm:p-8">
+			<h1 className="text-3xl font-bold tracking-tight">
+				{translation?.title || t("posts.untitled")}
+			</h1>
+			<p className="mt-4 whitespace-pre-wrap text-base leading-relaxed text-muted-foreground">
+				{translation?.description || t("posts.no_description")}
+			</p>
+
+			<div className="mt-6">
+				<h2 className="text-lg font-semibold">
+					{t("posts.attachments_title")}
+				</h2>
+				{attachmentFiles.length === 0 ? (
+					<p className="mt-2 text-sm text-muted-foreground">
+						{t("posts.attachments_empty")}
+					</p>
+				) : (
+					<ul className="mt-3 space-y-2">
+						{attachmentFiles.map((file) => (
+							<li key={file.url}>
+								<a
+									href={file.url}
+									download={file.name}
+									target="_blank"
+									rel="noreferrer"
+									className="text-sm text-primary underline underline-offset-4"
+								>
+									{file.name}
+								</a>
+							</li>
+						))}
+					</ul>
+				)}
+			</div>
+
+			{imageSources.length > 0 && (
+				<div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+					{imageSources.map((source) => (
+						<img
+							key={source}
+							src={source}
+							alt={translation?.title || t("posts.untitled")}
+							className="h-auto w-full rounded-2xl border border-border/40 object-cover"
+						/>
+					))}
+				</div>
+			)}
+		</article>
+	);
+}
