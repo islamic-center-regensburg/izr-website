@@ -165,7 +165,7 @@ function PrayerTimesSection() {
 
 	return (
 		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6  backdrop-blur-xs sm:p-8">
-			<div className="mb-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+			<div className="mb-5 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
 				<div>
 					<h2 className="text-2xl font-semibold tracking-tight">
 						{t("prayer_times.title")}
@@ -174,7 +174,7 @@ function PrayerTimesSection() {
 						{t("prayer_times.subtitle")}
 					</p>
 				</div>
-				<div className="ml-auto mt-4 inline-block w-fit rounded-xl border border-border/50 bg-background/40 px-4 py-3 backdrop-blur-md">
+				<div className="mt-2 inline-block w-fit self-start rounded-xl border border-border/50 bg-background/40 px-4 py-3 backdrop-blur-md sm:ml-auto sm:mt-0">
 					<div className="flex items-center justify-between gap-3 border-b border-border/40 py-2">
 						<p className="text-xs text-muted-foreground">
 							{t("prayer_times.dates.gregorian")}

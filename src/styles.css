@@ -32,6 +32,28 @@ code {
   font-variant-numeric: tabular-nums;
 }
 
+@keyframes heartbeat {
+  0%,
+  28%,
+  60%,
+  100% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(1.12);
+  }
+
+  42% {
+    transform: scale(1.08);
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
