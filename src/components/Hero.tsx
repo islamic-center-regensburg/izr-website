@@ -7,6 +7,13 @@ function Hero() {
 	return (
 		<section className="">
 			<div className="relative mx-auto max-w-3xl text-center">
+				<div>
+					<img
+						src="/ramadan.png"
+						alt="Ramadan Moon"
+						className="absolute top-1/2 left-1/2 w-3/4 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-20"
+					/>
+				</div>
 				<p className="mb-4 inline-flex rounded-full border border-border/60 bg-background/70 px-4 py-1 text-sm text-muted-foreground">
 					{t("hero.badge")}
 				</p>
