@@ -6,7 +6,7 @@
 
 body {
   @apply m-0;
-  font-family: 'Bricolage', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+  font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -14,7 +14,7 @@ body {
 }
 
 html:lang(ar) body {
-  font-family: 'Naveid', 'Bricolage', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Kufi', 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -27,7 +27,7 @@ code {
   direction: ltr;
   unicode-bidi: plaintext;
   text-align: left;
-  font-family: 'Bricolage', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+  font-family: 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-variant-numeric: tabular-nums;
 }
@@ -54,14 +54,14 @@ code {
 }
 
 html:lang(ar) .title-content {
-  font-family: 'Bricolage', 'Naveid', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Kufi', 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 html:lang(ar) .markdown-content {
   direction: rtl;
   text-align: start;
-  font-family: 'Bricolage', 'Naveid', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Kufi', 'Fira Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -217,25 +217,47 @@ html:lang(ar) .markdown-content ol li::marker {
   }
 }
 
-
 @font-face {
-  font-family: 'Bricolage';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf') format('truetype-variations');
-}
-@font-face {
-  font-family: 'Naveid';
-  font-style: normal;
-  font-weight: bold;
-  font-display: swap;
-  src: url('../fonts/Naveid_Arabic/naveid-arabic-demo.extra-bold.otf') format('opentype');
-}
-@font-face {
-  font-family: 'Naveid';
+  font-family: 'Kufi';
   font-style: normal;
   font-weight: normal;
   font-display: swap;
-  src: url('../fonts/Naveid_Arabic/naveid-arabic-demo.regular.otf') format('opentype');
+  src: url('../fonts/Kufi/NotoKufiArabic-Regular.ttf') format('opentype');
+}
+@font-face {
+  font-family: 'Kufi Bold';
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: url('../fonts/Kufi/NotoKufiArabic-Bold.ttf') format('opentype');
+}
+@font-face {
+  font-family: 'Kufi Black';
+  font-style: normal;
+  font-weight: black;
+  font-display: swap;
+  src: url('../fonts/Kufi/NotoKufiArabic-Black.ttf') format('opentype');
+}
+
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url('../fonts/FiraSans/FiraSans-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans Bold';
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: url('../fonts/FiraSans/FiraSans-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Fira Sans Black';
+  font-style: normal;
+  font-weight: black;
+  font-display: swap;
+  src: url('../fonts/FiraSans/FiraSans-Black.ttf') format('truetype');
 }

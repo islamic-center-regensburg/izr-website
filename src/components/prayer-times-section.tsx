@@ -89,9 +89,12 @@ function PrayerTimesSection() {
 	const prayerTimes = prayerTimesQuery.data?.[0];
 	const gregorianDate = prayerTimes?.gregorian_date ?? emptyValue;
 	const hijriDate = prayerTimes?.hijri_date ?? emptyValue;
-	const iqamaByPrayer = new Map(
-		(iqamaQuery.data ?? []).map((item) => [item.prayer_name, item]),
-	);
+	// Map prayer names to arrays of iqama times to support multiple iqamas per prayer
+	const iqamaByPrayer = new Map<PrayerKey, typeof iqamaQuery.data>();
+	(iqamaQuery.data ?? []).forEach((item) => {
+		const existing = iqamaByPrayer.get(item.prayer_name as PrayerKey) ?? [];
+		iqamaByPrayer.set(item.prayer_name as PrayerKey, [...existing, item]);
+	});
 
 	const getPrayerTime = (prayerKey: PrayerKey) => {
 		if (!prayerTimes) {
@@ -116,33 +119,35 @@ function PrayerTimesSection() {
 		}
 	};
 
-	const getIqamaTime = (prayerKey: PrayerKey) => {
-		const iqama = iqamaByPrayer.get(prayerKey);
-		if (!iqama) {
-			return emptyValue;
+	const getIqamaTimes = (prayerKey: PrayerKey) => {
+		const iqamas = iqamaByPrayer.get(prayerKey);
+		if (!iqamas || iqamas.length === 0) {
+			return [];
 		}
 
-		if (iqama.fixed_time) {
-			return formatTime(iqama.fixed_time);
-		}
-
-		if (iqama.offset_minutes !== null && iqama.offset_minutes !== undefined) {
-			const basePrayerTime = getPrayerTime(prayerKey);
-			if (basePrayerTime !== emptyValue) {
-				const calculated = addMinutesToTime(
-					basePrayerTime,
-					iqama.offset_minutes,
-				);
-				if (calculated) {
-					return calculated;
-				}
+		return iqamas.map((iqama) => {
+			if (iqama.fixed_time) {
+				return formatTime(iqama.fixed_time);
 			}
 
-			const sign = iqama.offset_minutes >= 0 ? "+" : "";
-			return `${sign}${Math.abs(iqama.offset_minutes)} min`;
-		}
+			if (iqama.offset_minutes !== null && iqama.offset_minutes !== undefined) {
+				const basePrayerTime = getPrayerTime(prayerKey);
+				if (basePrayerTime !== emptyValue) {
+					const calculated = addMinutesToTime(
+						basePrayerTime,
+						iqama.offset_minutes,
+					);
+					if (calculated) {
+						return calculated;
+					}
+				}
 
-		return emptyValue;
+				const sign = iqama.offset_minutes >= 0 ? "+" : "";
+				return `${sign}${Math.abs(iqama.offset_minutes)} min`;
+			}
+
+			return emptyValue;
+		});
 	};
 
 	if (isMosqueLoading || prayerTimesQuery.isLoading || iqamaQuery.isLoading) {
@@ -161,6 +166,23 @@ function PrayerTimesSection() {
 				<p className="text-sm text-destructive">{t("prayer_times.error")}</p>
 			</section>
 		);
+	}
+
+	if (!prayerTimes) {
+		return null;
+	}
+
+	// Check if there are any actual prayer times
+	const hasPrayerTimes = [
+		prayerTimes.fajr,
+		prayerTimes.dhuhr,
+		prayerTimes.asr,
+		prayerTimes.maghrib,
+		prayerTimes.isha,
+	].some((time) => time);
+
+	if (!hasPrayerTimes) {
+		return null;
 	}
 
 	return (
@@ -204,22 +226,65 @@ function PrayerTimesSection() {
 							{t(`prayer_times.names.${prayerKey}`)}
 						</p>
 						<div className="mt-4 space-y-2">
-							<div className="flex items-center justify-between gap-3">
-								<span className="text-sm text-muted-foreground">
-									{t("prayer_times.columns.prayer_time")}
-								</span>
-								<span className="time-ltr text-sm font-medium">
-									{toBidiSafeText(getPrayerTime(prayerKey))}
-								</span>
-							</div>
-							<div className="flex items-center justify-between gap-3">
-								<span className="text-sm text-muted-foreground">
-									{t("prayer_times.columns.iqama_time")}
-								</span>
-								<span className="time-ltr text-sm font-medium">
-									{toBidiSafeText(getIqamaTime(prayerKey))}
-								</span>
-							</div>
+							{getPrayerTime(prayerKey) !== emptyValue && (
+								<div className="flex items-center justify-between gap-3">
+									<span className="text-sm text-muted-foreground">
+										{t("prayer_times.columns.prayer_time")}
+									</span>
+									<span className="time-ltr text-sm font-medium">
+										{toBidiSafeText(getPrayerTime(prayerKey))}
+									</span>
+								</div>
+							)}
+							{(() => {
+								const iqamaTimes = getIqamaTimes(prayerKey);
+								if (iqamaTimes.length === 0) {
+									return (
+										<div className="flex items-center justify-between gap-3">
+											<span className="text-sm text-muted-foreground">
+												{t("prayer_times.columns.iqama_time")}
+											</span>
+											<span className="time-ltr text-sm font-medium">
+												{toBidiSafeText(emptyValue)}
+											</span>
+										</div>
+									);
+								}
+
+								if (iqamaTimes.length === 1) {
+									return (
+										<div className="flex items-center justify-between gap-3">
+											<span className="text-sm text-muted-foreground">
+												{t("prayer_times.columns.iqama_time")}
+											</span>
+											<span className="time-ltr text-sm font-medium">
+												{toBidiSafeText(iqamaTimes[0])}
+											</span>
+										</div>
+									);
+								}
+
+								// Multiple iqama times
+								return (
+									<div className="space-y-1">
+										<span className="text-sm text-muted-foreground">
+											{t("prayer_times.columns.iqama_time")}
+										</span>
+										<div className="space-y-1">
+											{iqamaTimes.map((time) => (
+												<div
+													key={time}
+													className="flex items-center justify-end gap-2"
+												>
+													<span className="time-ltr text-sm font-medium">
+														{toBidiSafeText(time)}
+													</span>
+												</div>
+											))}
+										</div>
+									</div>
+								);
+							})()}
 						</div>
 					</div>
 				))}

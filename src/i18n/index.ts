@@ -32,7 +32,7 @@ const resources = {
 				},
 				columns: {
 					prayer: "Gebet",
-					prayer_time: "Gebetszeit",
+					prayer_time: "Adhan",
 					iqama_time: "Iqama",
 				},
 				names: {
@@ -118,7 +118,7 @@ const resources = {
 				},
 				columns: {
 					prayer: "Prayer",
-					prayer_time: "Prayer Time",
+					prayer_time: "Adhan",
 					iqama_time: "Iqama",
 				},
 				names: {
@@ -202,7 +202,7 @@ const resources = {
 				},
 				columns: {
 					prayer: "الصلاة",
-					prayer_time: "وقت الصلاة",
+					prayer_time: "الأذان",
 					iqama_time: "الإقامة",
 				},
 				names: {
