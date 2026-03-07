@@ -5,24 +5,13 @@ export type ClientOptions = {
 };
 
 /**
- * AllowedMediaType
+ * Body_upload_post_media
  */
-export type AllowedMediaType = 'image/jpeg' | 'image/png' | 'image/webp' | 'video/mp4';
-
-/**
- * Body_create_translation_for_post
- */
-export type BodyCreateTranslationForPost = {
-    /**
-     * Description
-     *
-     * Description of the post translation
-     */
-    description?: string | null;
+export type BodyUploadPostMedia = {
     /**
      * Media
      */
-    media?: Array<Blob | File> | null;
+    media: Array<Blob | File>;
 };
 
 /**
@@ -44,11 +33,6 @@ export type CalculationMethod = 0 | 1 | 2 | 3 | 4 | 5 | 7 | 8 | 9 | 10 | 11 | 12
  * CalendarMethod
  */
 export type CalendarMethod = 'HJCoSA' | 'UAQ' | 'DIYANET' | 'MATHEMATICAL';
-
-/**
- * DirectoryEnum
- */
-export type DirectoryEnum = 'prayer_times_objects' | 'backups_objects' | 'media_objects';
 
 /**
  * FileTypeEnum
@@ -81,14 +65,10 @@ export type LatitudeAdjustmentMethod = 1 | 2 | 3;
 export type MediaOut = {
     /**
      * Object
-     *
-     * The filename or object key of the media file
      */
     object: string;
     /**
      * Url
-     *
-     * Presigned URL to access the media file
      */
     url: string;
 };
@@ -343,7 +323,7 @@ export type PostOut = {
     /**
      * Translations
      */
-    translations: Array<PostTranslationRead>;
+    translations: Array<PostTranslationOut>;
 };
 
 /**
@@ -374,9 +354,13 @@ export type PostRead = {
 };
 
 /**
- * PostTranslationRead
+ * PostTranslationOut
  */
-export type PostTranslationRead = {
+export type PostTranslationOut = {
+    /**
+     * Id
+     */
+    id?: string;
     /**
      * Title
      *
@@ -396,7 +380,34 @@ export type PostTranslationRead = {
     /**
      * Media
      *
-     * Object key that points to S3 Object Directory
+     * Media Urls with Object keys
+     */
+    media?: Array<MediaOut> | null;
+};
+
+/**
+ * PostTranslationRead
+ */
+export type PostTranslationRead = {
+    /**
+     * Id
+     */
+    id?: string;
+    /**
+     * Title
+     */
+    title?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    language?: SupportedLanguages;
+    /**
+     * Post Id
+     */
+    post_id?: string;
+    /**
+     * Media
      */
     media?: string | null;
 };
@@ -1287,7 +1298,12 @@ export type UpdatePrayerConfigResponse = UpdatePrayerConfigResponses[keyof Updat
 export type GetCalculationMethodsData = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * Lang
+         */
+        lang: 'en' | 'ar' | 'de';
+    };
     url: '/prayer_configs/calculation_methods';
 };
 
@@ -1784,136 +1800,6 @@ export type GetPrayerIqamasForMosqueResponses = {
 
 export type GetPrayerIqamasForMosqueResponse = GetPrayerIqamasForMosqueResponses[keyof GetPrayerIqamasForMosqueResponses];
 
-export type DeleteMediaData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * Mosque Id
-         */
-        mosque_id: string;
-        /**
-         * Dir
-         */
-        dir: string;
-        media_category: DirectoryEnum;
-    };
-    url: '/media';
-};
-
-export type DeleteMediaErrors = {
-    /**
-     * Bad Request
-     */
-    400: HttpError;
-    /**
-     * Unauthorized
-     */
-    401: HttpError;
-    /**
-     * Forbidden
-     */
-    403: HttpError;
-    /**
-     * Not found
-     */
-    404: HttpError;
-    /**
-     * Conflict
-     */
-    409: HttpError;
-    /**
-     * Unprocessable Entity
-     */
-    422: HttpError;
-    /**
-     * Internal Server Error
-     */
-    500: HttpError;
-};
-
-export type DeleteMediaError = DeleteMediaErrors[keyof DeleteMediaErrors];
-
-export type DeleteMediaResponses = {
-    /**
-     * Response Delete Media
-     *
-     * Successful Response
-     */
-    200: string;
-};
-
-export type DeleteMediaResponse = DeleteMediaResponses[keyof DeleteMediaResponses];
-
-export type GetMediaData = {
-    body?: never;
-    path?: never;
-    query: {
-        /**
-         * Mosque Id
-         */
-        mosque_id: string;
-        /**
-         * Dir
-         */
-        dir: string;
-        media_category: DirectoryEnum;
-        /**
-         * Content Type
-         */
-        content_type?: AllowedMediaType | null;
-        /**
-         * Download Link
-         */
-        download_link?: boolean;
-    };
-    url: '/media';
-};
-
-export type GetMediaErrors = {
-    /**
-     * Bad Request
-     */
-    400: HttpError;
-    /**
-     * Unauthorized
-     */
-    401: HttpError;
-    /**
-     * Forbidden
-     */
-    403: HttpError;
-    /**
-     * Not found
-     */
-    404: HttpError;
-    /**
-     * Conflict
-     */
-    409: HttpError;
-    /**
-     * Unprocessable Entity
-     */
-    422: HttpError;
-    /**
-     * Internal Server Error
-     */
-    500: HttpError;
-};
-
-export type GetMediaError = GetMediaErrors[keyof GetMediaErrors];
-
-export type GetMediaResponses = {
-    /**
-     * Response Get Media
-     *
-     * Successful Response
-     */
-    200: Array<MediaOut>;
-};
-
-export type GetMediaResponse = GetMediaResponses[keyof GetMediaResponses];
-
 export type GetAllPostsData = {
     body?: never;
     path: {
@@ -1988,6 +1874,62 @@ export type GetAllPostsResponses = {
 };
 
 export type GetAllPostsResponse = GetAllPostsResponses[keyof GetAllPostsResponses];
+
+export type DeletePostData = {
+    body?: never;
+    path: {
+        /**
+         * Post Id
+         */
+        post_id: string;
+    };
+    query?: never;
+    url: '/posts/{post_id}';
+};
+
+export type DeletePostErrors = {
+    /**
+     * Bad Request
+     */
+    400: HttpError;
+    /**
+     * Unauthorized
+     */
+    401: HttpError;
+    /**
+     * Forbidden
+     */
+    403: HttpError;
+    /**
+     * Not found
+     */
+    404: HttpError;
+    /**
+     * Conflict
+     */
+    409: HttpError;
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpError;
+    /**
+     * Internal Server Error
+     */
+    500: HttpError;
+};
+
+export type DeletePostError = DeletePostErrors[keyof DeletePostErrors];
+
+export type DeletePostResponses = {
+    /**
+     * Response Delete Post
+     *
+     * Successful Response
+     */
+    200: boolean;
+};
+
+export type DeletePostResponse = DeletePostResponses[keyof DeletePostResponses];
 
 export type GetPostData = {
     body?: never;
@@ -2116,7 +2058,12 @@ export type CreatePostResponses = {
 export type CreatePostResponse = CreatePostResponses[keyof CreatePostResponses];
 
 export type CreateTranslationForPostData = {
-    body?: BodyCreateTranslationForPost;
+    /**
+     * Description
+     *
+     * Description of the post translation
+     */
+    body?: string | null;
     path: {
         /**
          * Post Id
@@ -2124,10 +2071,6 @@ export type CreateTranslationForPostData = {
         post_id: string;
     };
     query: {
-        /**
-         * Mosque Id
-         */
-        mosque_id: string;
         /**
          * Title
          */
@@ -2178,3 +2121,247 @@ export type CreateTranslationForPostResponses = {
 };
 
 export type CreateTranslationForPostResponse = CreateTranslationForPostResponses[keyof CreateTranslationForPostResponses];
+
+export type DeleteTranslationForPostData = {
+    body?: never;
+    path: {
+        /**
+         * Post Id
+         */
+        post_id: string;
+        /**
+         * Translation Id
+         */
+        translation_id: string;
+    };
+    query?: never;
+    url: '/posts/{post_id}/translations/{translation_id}';
+};
+
+export type DeleteTranslationForPostErrors = {
+    /**
+     * Bad Request
+     */
+    400: HttpError;
+    /**
+     * Unauthorized
+     */
+    401: HttpError;
+    /**
+     * Forbidden
+     */
+    403: HttpError;
+    /**
+     * Not found
+     */
+    404: HttpError;
+    /**
+     * Conflict
+     */
+    409: HttpError;
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpError;
+    /**
+     * Internal Server Error
+     */
+    500: HttpError;
+};
+
+export type DeleteTranslationForPostError = DeleteTranslationForPostErrors[keyof DeleteTranslationForPostErrors];
+
+export type DeleteTranslationForPostResponses = {
+    /**
+     * Response Delete Translation For Post
+     *
+     * Successful Response
+     */
+    200: boolean;
+};
+
+export type DeleteTranslationForPostResponse = DeleteTranslationForPostResponses[keyof DeleteTranslationForPostResponses];
+
+export type UpdateTranslationForPostData = {
+    /**
+     * Description
+     *
+     * Description of the post translation
+     */
+    body?: string | null;
+    path: {
+        /**
+         * Post Id
+         */
+        post_id: string;
+        /**
+         * Translation Id
+         */
+        translation_id: string;
+    };
+    query: {
+        /**
+         * Title
+         */
+        title?: string | null;
+        language: SupportedLanguages;
+    };
+    url: '/posts/{post_id}/translations/{translation_id}';
+};
+
+export type UpdateTranslationForPostErrors = {
+    /**
+     * Bad Request
+     */
+    400: HttpError;
+    /**
+     * Unauthorized
+     */
+    401: HttpError;
+    /**
+     * Forbidden
+     */
+    403: HttpError;
+    /**
+     * Not found
+     */
+    404: HttpError;
+    /**
+     * Conflict
+     */
+    409: HttpError;
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpError;
+    /**
+     * Internal Server Error
+     */
+    500: HttpError;
+};
+
+export type UpdateTranslationForPostError = UpdateTranslationForPostErrors[keyof UpdateTranslationForPostErrors];
+
+export type UpdateTranslationForPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: PostTranslationRead;
+};
+
+export type UpdateTranslationForPostResponse = UpdateTranslationForPostResponses[keyof UpdateTranslationForPostResponses];
+
+export type DeletePostMediaData = {
+    body?: never;
+    path: {
+        /**
+         * Translation Id
+         */
+        translation_id: string;
+    };
+    query?: {
+        /**
+         * File Path
+         *
+         * Optional file path to delete from translation media directory
+         */
+        file_path?: string | null;
+    };
+    url: '/posts/media/{translation_id}';
+};
+
+export type DeletePostMediaErrors = {
+    /**
+     * Bad Request
+     */
+    400: HttpError;
+    /**
+     * Unauthorized
+     */
+    401: HttpError;
+    /**
+     * Forbidden
+     */
+    403: HttpError;
+    /**
+     * Not found
+     */
+    404: HttpError;
+    /**
+     * Conflict
+     */
+    409: HttpError;
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpError;
+    /**
+     * Internal Server Error
+     */
+    500: HttpError;
+};
+
+export type DeletePostMediaError = DeletePostMediaErrors[keyof DeletePostMediaErrors];
+
+export type DeletePostMediaResponses = {
+    /**
+     * Successful Response
+     */
+    200: PostTranslationRead;
+};
+
+export type DeletePostMediaResponse = DeletePostMediaResponses[keyof DeletePostMediaResponses];
+
+export type UploadPostMediaData = {
+    body: BodyUploadPostMedia;
+    path: {
+        /**
+         * Translation Id
+         */
+        translation_id: string;
+    };
+    query?: never;
+    url: '/posts/media/{translation_id}';
+};
+
+export type UploadPostMediaErrors = {
+    /**
+     * Bad Request
+     */
+    400: HttpError;
+    /**
+     * Unauthorized
+     */
+    401: HttpError;
+    /**
+     * Forbidden
+     */
+    403: HttpError;
+    /**
+     * Not found
+     */
+    404: HttpError;
+    /**
+     * Conflict
+     */
+    409: HttpError;
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpError;
+    /**
+     * Internal Server Error
+     */
+    500: HttpError;
+};
+
+export type UploadPostMediaError = UploadPostMediaErrors[keyof UploadPostMediaErrors];
+
+export type UploadPostMediaResponses = {
+    /**
+     * Successful Response
+     */
+    200: PostTranslationRead;
+};
+
+export type UploadPostMediaResponse = UploadPostMediaResponses[keyof UploadPostMediaResponses];

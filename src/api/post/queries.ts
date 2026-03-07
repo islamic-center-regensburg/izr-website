@@ -1,12 +1,9 @@
 import { toast } from "sonner";
 import {
 	type GetAllPostsData,
-	type GetMediaData,
 	type GetPostData,
 	getAllPosts,
-	getMedia,
 	getPost,
-	type MediaOut,
 	type PaginatedResponsePostOut,
 	type PostOut,
 } from "../gen";
@@ -73,49 +70,5 @@ export const getPostByIdQueryOptions = ({
 			}
 		},
 		enabled: Boolean(post_id),
-	};
-};
-
-interface GetPostMediaQueryOptionsInterface {
-	mosque_id: string;
-	dir: string;
-	content_type?: GetMediaData["query"]["content_type"];
-}
-
-export const getPostMediaQueryOptions = ({
-	mosque_id,
-	dir,
-	content_type,
-}: GetPostMediaQueryOptionsInterface) => {
-	return {
-		queryKey: POST_QUERY_KEYS.media(mosque_id, {
-			dir,
-			media_category: "media_objects",
-			content_type,
-		}),
-		queryFn: async (): Promise<MediaOut[]> => {
-			try {
-				const response = await getMedia({
-					query: {
-						mosque_id,
-						dir,
-						media_category: "media_objects",
-						content_type,
-					},
-				});
-
-				if (!response.data) {
-					toast.error("No media data returned. Please try again later.");
-					throw new Error("No media data returned");
-				}
-
-				return response.data;
-			} catch (error) {
-				console.error("Error fetching post media:", error);
-				toast.error("Failed to fetch post media. Please try again later.");
-				throw error;
-			}
-		},
-		enabled: Boolean(mosque_id) && Boolean(dir),
 	};
 };

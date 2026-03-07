@@ -1,11 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Markdown from "react-markdown";
+import { getPostByIdQueryOptions } from "@/api/post/queries";
+import { Button } from "@/components/ui/button";
 import {
-	getPostByIdQueryOptions,
-	getPostMediaQueryOptions,
-} from "@/api/post/queries";
+	Carousel,
+	CarouselContent,
+	CarouselItem,
+	CarouselNext,
+	CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/post/$id")({
 	component: RouteComponent,
@@ -14,6 +20,10 @@ export const Route = createFileRoute("/post/$id")({
 function RouteComponent() {
 	const { id } = Route.useParams();
 	const { t, i18n } = useTranslation();
+	const [selectedImage, setSelectedImage] = useState<{
+		src: string;
+		name: string;
+	} | null>(null);
 
 	const postQuery = useQuery(
 		getPostByIdQueryOptions({
@@ -28,13 +38,6 @@ function RouteComponent() {
 		postQuery.data?.translations.find(
 			(item) => item.language === i18n.language,
 		) ?? postQuery.data?.translations[0];
-
-	const mediaQuery = useQuery(
-		getPostMediaQueryOptions({
-			mosque_id: postQuery.data?.mosque_id ?? "",
-			dir: selectedTranslation?.media ?? "",
-		}),
-	);
 
 	if (postQuery.isLoading) {
 		return (
@@ -53,10 +56,11 @@ function RouteComponent() {
 	}
 
 	const translation = selectedTranslation;
+	const mediaItems = translation?.media ?? [];
 
 	const imageSources = Array.from(
 		new Set(
-			(mediaQuery.data ?? [])
+			mediaItems
 				.filter((item) => {
 					const objectPath = item.object.toLowerCase();
 					return (
@@ -72,7 +76,7 @@ function RouteComponent() {
 
 	const attachmentFiles = Array.from(
 		new Map(
-			(mediaQuery.data ?? []).map((item) => [
+			mediaItems.map((item) => [
 				item.object,
 				{
 					name: item.object.split("/").pop() ?? item.object,
@@ -81,6 +85,16 @@ function RouteComponent() {
 			]),
 		).values(),
 	);
+
+	const imageFiles = attachmentFiles.filter((file) => {
+		const lowerName = file.name.toLowerCase();
+		return (
+			lowerName.endsWith(".png") ||
+			lowerName.endsWith(".jpg") ||
+			lowerName.endsWith(".jpeg") ||
+			lowerName.endsWith(".webp")
+		);
+	});
 
 	return (
 		<article className="rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-xs sm:p-8">
@@ -163,15 +177,74 @@ function RouteComponent() {
 			</div>
 
 			{imageSources.length > 0 && (
-				<div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-					{imageSources.map((source) => (
+				<div className="mt-8">
+					<Carousel
+						opts={{ align: "start", loop: imageSources.length > 1 }}
+						className="w-full"
+					>
+						<CarouselContent>
+							{imageSources.map((source, index) => (
+								<CarouselItem
+									key={source}
+									className="sm:basis-1/2 lg:basis-1/3"
+								>
+									<button
+										type="button"
+										onClick={() =>
+											setSelectedImage({
+												src: source,
+												name:
+													imageFiles[index]?.name ??
+													source.split("/").pop() ??
+													"image",
+											})
+										}
+										className="block w-full"
+									>
+										<img
+											src={source}
+											alt={translation?.title || t("posts.untitled")}
+											className=" h-auto w-full md:h-96 md:w-auto cursor-pointer rounded-2xl border border-border/40 object-cover"
+										/>
+									</button>
+								</CarouselItem>
+							))}
+						</CarouselContent>
+						{imageSources.length > 1 && (
+							<>
+								<CarouselPrevious />
+								<CarouselNext />
+							</>
+						)}
+					</Carousel>
+				</div>
+			)}
+
+			{selectedImage && (
+				<div
+					className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4"
+					onMouseDown={() => setSelectedImage(null)}
+				>
+					<div
+						className="relative max-h-[95vh] w-full max-w-5xl"
+						onMouseDown={(event) => event.stopPropagation()}
+					>
+						<div className="mb-3 flex items-center justify-end gap-2">
+							<Button asChild>
+								<a href={selectedImage.src} download={selectedImage.name}>
+									{t("common.download")}
+								</a>
+							</Button>
+							<Button type="button" onClick={() => setSelectedImage(null)}>
+								{t("common.close")}
+							</Button>
+						</div>
 						<img
-							key={source}
-							src={source}
+							src={selectedImage.src}
 							alt={translation?.title || t("posts.untitled")}
-							className="h-auto w-full rounded-2xl border border-border/40 object-cover"
+							className="max-h-[86vh] w-full rounded-xl object-contain"
 						/>
-					))}
+					</div>
 				</div>
 			)}
 		</article>

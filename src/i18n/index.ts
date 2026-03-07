@@ -90,6 +90,10 @@ const resources = {
 				},
 				website_text: "Weitere Informationen finden Sie auf unserer Website:",
 			},
+			common: {
+				close: "Schließen",
+				download: "Herunterladen",
+			},
 		},
 	},
 	en: {
@@ -174,6 +178,10 @@ const resources = {
 					},
 				},
 				website_text: "More information is available on our website:",
+			},
+			common: {
+				close: "Close",
+				download: "Download",
 			},
 		},
 	},
@@ -260,6 +268,10 @@ const resources = {
 					},
 				},
 				website_text: "لمزيد من المعلومات، تفضلوا بزيارة موقعنا:",
+			},
+			common: {
+				close: "إغلاق",
+				download: "تحميل",
 			},
 		},
 	},
