@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/select";
 import { type AppLocale, appLocales, STORAGE_KEY } from "@/i18n";
 
-function LanguageSwitcher() {
+function LanguageSwitcher({ onSwitch }: { onSwitch?: () => void }) {
 	const { i18n, t } = useTranslation();
 	const selectedLanguage = (i18n.resolvedLanguage ?? "en") as AppLocale;
 
@@ -17,6 +17,9 @@ function LanguageSwitcher() {
 		await i18n.changeLanguage(locale);
 		if (typeof window !== "undefined") {
 			window.localStorage.setItem(STORAGE_KEY, locale);
+		}
+		if (onSwitch) {
+			onSwitch();
 		}
 	};
 

@@ -70,5 +70,6 @@ export const getPostByIdQueryOptions = ({
 			}
 		},
 		enabled: Boolean(post_id),
+		staleTime: 3600,
 	};
 };

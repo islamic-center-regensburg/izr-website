@@ -93,7 +93,7 @@ function Navbar() {
 								</Link>
 							))}
 							<div className="px-1 py-2">
-								<LanguageSwitcher />
+								<LanguageSwitcher onSwitch={() => setIsMobileMenuOpen(false)} />
 							</div>
 						</div>
 					</div>
