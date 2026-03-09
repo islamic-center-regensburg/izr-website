@@ -11,7 +11,7 @@ import Navbar from "@/components/NavBar";
 import { Toaster } from "@/components/ui/sonner";
 import "@/i18n";
 import Bg from "@/components/bg";
-import Footer from "@/components/Footer";
+import Footer from "@/pages/home-page/footer";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import TanStackQueryProvider from "../integrations/tanstack-query/root-provider";
 import appCss from "../styles.css?url";

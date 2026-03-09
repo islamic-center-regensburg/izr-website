@@ -1,13 +1,29 @@
-import Hero from "@/components/Hero";
-import PostsSection from "@/components/posts-section";
-import PrayerTimesSection from "@/components/prayer-times-section";
+import { lazy, Suspense } from "react";
+
+const Hero = lazy(() => import("@/pages/home-page/hero"));
+const PrayerTimesSection = lazy(
+	() => import("@/components/prayer-times-section"),
+);
+const PostsSection = lazy(() => import("@/components/posts-section"));
+
+function SectionFallback({ heightClass }: { heightClass: string }) {
+	return (
+		<div className="container mx-auto px-4">
+			<div
+				className={`w-full animate-pulse rounded-2xl bg-primary/10 ${heightClass}`}
+			/>
+		</div>
+	);
+}
 
 function HomePage() {
 	return (
 		<div className="py-10">
-			<Hero />
-			<PrayerTimesSection />
-			<PostsSection />
+			<Suspense fallback={<SectionFallback heightClass="h-screen" />}>
+				<Hero />
+				<PrayerTimesSection />
+				<PostsSection />
+			</Suspense>
 		</div>
 	);
 }
