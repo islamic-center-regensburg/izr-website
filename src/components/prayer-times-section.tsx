@@ -16,39 +16,22 @@ const prayerOrder: PrayerKey[] = [
 ];
 
 const emptyValue = "—";
-const lri = "\u2066";
-const pdi = "\u2069";
-
-function normalizeDigits(input: string) {
-	return input
-		.replace(/[٠-٩]/g, (digit) => String(digit.charCodeAt(0) - 1632))
-		.replace(/[۰-۹]/g, (digit) => String(digit.charCodeAt(0) - 1776));
-}
 
 function formatTime(timeValue: string | null | undefined) {
 	if (!timeValue) {
 		return emptyValue;
 	}
 
-	const normalizedTime = normalizeDigits(timeValue.trim());
-	const [hoursRaw, minutesRaw] = normalizedTime.split(":");
+	const trimmedTime = timeValue.trim();
+	const [hoursRaw, minutesRaw] = trimmedTime.split(":");
 	const hours = Number.parseInt(hoursRaw ?? "", 10);
 	const minutes = Number.parseInt(minutesRaw ?? "", 10);
 
 	if (Number.isNaN(hours) || Number.isNaN(minutes)) {
-		return normalizedTime;
+		return trimmedTime;
 	}
 
 	return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-}
-
-function toBidiSafeText(value: string | null | undefined) {
-	if (!value || value === emptyValue) {
-		return emptyValue;
-	}
-
-	const normalizedValue = normalizeDigits(value.trim());
-	return `${lri}${normalizedValue}${pdi}`;
 }
 
 function addMinutesToTime(baseTime: string, offsetMinutes: number) {
@@ -96,28 +79,17 @@ function PrayerTimesSection() {
 		iqamaByPrayer.set(item.prayer_name as PrayerKey, [...existing, item]);
 	});
 
-	const getPrayerTime = (prayerKey: PrayerKey) => {
-		if (!prayerTimes) {
-			return emptyValue;
-		}
-
-		switch (prayerKey) {
-			case "fajr":
-				return formatTime(prayerTimes.fajr);
-			case "dhuhr":
-				return formatTime(prayerTimes.dhuhr);
-			case "asr":
-				return formatTime(prayerTimes.asr);
-			case "maghrib":
-				return formatTime(prayerTimes.maghrib);
-			case "isha":
-				return formatTime(prayerTimes.isha);
-			case "jumah":
-				return emptyValue;
-			default:
-				return emptyValue;
-		}
+	const prayerTimeGetters: Record<PrayerKey, () => string> = {
+		fajr: () => formatTime(prayerTimes?.fajr),
+		dhuhr: () => formatTime(prayerTimes?.dhuhr),
+		asr: () => formatTime(prayerTimes?.asr),
+		maghrib: () => formatTime(prayerTimes?.maghrib),
+		isha: () => formatTime(prayerTimes?.isha),
+		jumah: () => emptyValue,
 	};
+
+	const getPrayerTime = (prayerKey: PrayerKey) =>
+		prayerTimeGetters[prayerKey]?.() ?? emptyValue;
 
 	const getIqamaTimes = (prayerKey: PrayerKey) => {
 		const iqamas = iqamaByPrayer.get(prayerKey);
@@ -126,24 +98,24 @@ function PrayerTimesSection() {
 		}
 
 		return iqamas.map((iqama) => {
-			if (iqama.fixed_time) {
+			if (iqama.mode === "fixed") {
 				return formatTime(iqama.fixed_time);
-			}
-
-			if (iqama.offset_minutes !== null && iqama.offset_minutes !== undefined) {
-				const basePrayerTime = getPrayerTime(prayerKey);
-				if (basePrayerTime !== emptyValue) {
-					const calculated = addMinutesToTime(
-						basePrayerTime,
-						iqama.offset_minutes,
-					);
-					if (calculated) {
-						return calculated;
+			} else {
+				if (iqama.offset_minutes) {
+					const basePrayerTime = getPrayerTime(prayerKey);
+					if (basePrayerTime !== emptyValue) {
+						const calculated = addMinutesToTime(
+							basePrayerTime,
+							iqama.offset_minutes,
+						);
+						if (calculated) {
+							return calculated;
+						}
 					}
-				}
 
-				const sign = iqama.offset_minutes >= 0 ? "+" : "";
-				return `${sign}${Math.abs(iqama.offset_minutes)} min`;
+					const sign = iqama.offset_minutes >= 0 ? "+" : "";
+					return `${sign}${Math.abs(iqama.offset_minutes)} min`;
+				}
 			}
 
 			return emptyValue;
@@ -201,17 +173,13 @@ function PrayerTimesSection() {
 						<p className="text-xs text-muted-foreground">
 							{t("prayer_times.dates.gregorian")}
 						</p>
-						<p className="time-ltr text-sm font-medium">
-							{toBidiSafeText(gregorianDate)}
-						</p>
+						<p className="time-ltr text-sm font-medium">{gregorianDate}</p>
 					</div>
 					<div className="flex items-center justify-between gap-3 py-2">
 						<p className="text-xs text-muted-foreground">
 							{t("prayer_times.dates.hijri")}
 						</p>
-						<p className="time-ltr text-sm font-medium">
-							{toBidiSafeText(hijriDate)}
-						</p>
+						<p className="time-ltr text-sm font-medium">{hijriDate}</p>
 					</div>
 				</div>
 			</div>
@@ -232,7 +200,7 @@ function PrayerTimesSection() {
 										{t("prayer_times.columns.prayer_time")}
 									</span>
 									<span className="time-ltr text-sm font-medium">
-										{toBidiSafeText(getPrayerTime(prayerKey))}
+										{getPrayerTime(prayerKey)}
 									</span>
 								</div>
 							)}
@@ -245,7 +213,7 @@ function PrayerTimesSection() {
 												{t("prayer_times.columns.iqama_time")}
 											</span>
 											<span className="time-ltr text-sm font-medium">
-												{toBidiSafeText(emptyValue)}
+												{emptyValue}
 											</span>
 										</div>
 									);
@@ -258,7 +226,7 @@ function PrayerTimesSection() {
 												{t("prayer_times.columns.iqama_time")}
 											</span>
 											<span className="time-ltr text-sm font-medium">
-												{toBidiSafeText(iqamaTimes[0])}
+												{iqamaTimes[0]}
 											</span>
 										</div>
 									);
@@ -277,7 +245,7 @@ function PrayerTimesSection() {
 													className="flex items-center justify-end gap-2"
 												>
 													<span className="time-ltr text-sm font-medium">
-														{toBidiSafeText(time)}
+														{time}
 													</span>
 												</div>
 											))}

@@ -1,3 +1,5 @@
+import islamic_bg from "/islamic-bg.svg";
+
 function Bg({ children }: { children: React.ReactNode }) {
 	return (
 		<div className="relative min-h-screen w-full bg-[#f0fdfa]">
@@ -17,21 +19,16 @@ function Bg({ children }: { children: React.ReactNode }) {
 					backgroundRepeat: "no-repeat",
 				}}
 			/>
-			<div
-				className="pointer-events-none absolute inset-0"
-				style={{
-					backgroundImage: `
-        linear-gradient(45deg, transparent 49%, #e5e7eb 49%, #e5e7eb 51%, transparent 51%),
-        linear-gradient(-45deg, transparent 49%, #e5e7eb 49%, #e5e7eb 51%, transparent 51%)
-      `,
-					backgroundSize: "40px 40px",
-					WebkitMaskImage:
-						"radial-gradient(ellipse 80% 80% at 100% 100%, #000 50%, transparent 90%)",
-					maskImage:
-						"radial-gradient(ellipse 80% 80% at 100% 100%, #000 50%, transparent 90%)",
-				}}
+			<img
+				src={islamic_bg}
+				alt="Islamic Background"
+				className="pointer-events-none absolute right-0 bottom-0 z-0 h-auto w-full md:w-1/2 object-contain"
 			/>
-			{/* Your Content/Components */}
+			<img
+				src={islamic_bg}
+				alt="Islamic Background"
+				className="pointer-events-none absolute left-0 top-0 rotate-180 z-0 h-auto w-1/2 md:w-1/3 object-contain"
+			/>
 			<div className="relative z-10">{children}</div>
 		</div>
 	);
