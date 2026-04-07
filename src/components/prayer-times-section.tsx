@@ -161,7 +161,7 @@ function PrayerTimesSection() {
 		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6  backdrop-blur-xs sm:p-8">
 			<div className="mb-5 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
 				<div>
-					<h2 className="text-2xl font-semibold tracking-tight">
+					<h2 className="text-4xl font-semibold tracking-tight">
 						{t("prayer_times.title")}
 					</h2>
 					<p className="text-sm text-muted-foreground">

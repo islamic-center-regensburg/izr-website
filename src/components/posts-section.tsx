@@ -38,7 +38,7 @@ function PostsSection() {
 	return (
 		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-xs sm:p-8">
 			<div className="mb-5">
-				<h2 className="text-2xl font-semibold tracking-tight">
+				<h2 className="text-4xl font-semibold tracking-tight">
 					{t("posts.title")}
 				</h2>
 			</div>

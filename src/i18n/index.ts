@@ -15,7 +15,7 @@ const resources = {
 				title: "Islamisches Zentrum Regensburg",
 			},
 			hero: {
-				badge: "Willkommen",
+				badge: "as-salamu alaykum",
 				title: "Islamisches Zentrum Regensburg",
 				subtitle:
 					"Ein Ort für Gemeinschaft, Lernen und spirituelles Wachstum im Herzen von Regensburg.",
@@ -62,6 +62,19 @@ const resources = {
 				attachments_title: "Anhänge",
 				attachments_empty: "Keine Anhänge verfügbar.",
 			},
+			donation: {
+				title: "Spenden",
+				subtitle: "Unterstützen Sie unsere Moschee per Banküberweisung",
+				description:
+					"Mit Ihrer Spende helfen Sie uns, den Moscheebetrieb, Bildungsangebote und soziale Projekte aufrechtzuerhalten. Jeder Beitrag zählt.",
+				fields: {
+					iban: "IBAN",
+					bic: "BIC",
+					holder: "Kontoinhaber",
+				},
+				transfer_note:
+					'Bitte geben Sie bei der Überweisung nach Möglichkeit den Verwendungszweck "Spende" an.',
+			},
 			home: {
 				welcome: "Willkommen im Islamischen Zentrum Regensburg",
 			},
@@ -101,6 +114,7 @@ const resources = {
 			common: {
 				close: "Schließen",
 				download: "Herunterladen",
+				copy_success: "In die Zwischenablage kopiert",
 			},
 		},
 	},
@@ -113,7 +127,7 @@ const resources = {
 				title: "Islamic Center of Regensburg",
 			},
 			hero: {
-				badge: "Welcome",
+				badge: "as-salamu alaykum",
 				title: "Islamic Center Regensburg",
 				subtitle:
 					"A place for community, learning, and spiritual growth in the heart of Regensburg.",
@@ -160,6 +174,19 @@ const resources = {
 				attachments_title: "Attachments",
 				attachments_empty: "No attachments available.",
 			},
+			donation: {
+				title: "Donations",
+				subtitle: "Support our mosque by bank transfer",
+				description:
+					"Your donation helps us maintain the mosque, provide educational activities, and support community initiatives. Every contribution matters.",
+				fields: {
+					iban: "IBAN",
+					bic: "BIC",
+					holder: "Account Holder",
+				},
+				transfer_note:
+					'When possible, please use "Donation" as the transfer reference.',
+			},
 			home: {
 				welcome: "Welcome to the Islamic Center Regensburg",
 			},
@@ -198,6 +225,7 @@ const resources = {
 			common: {
 				close: "Close",
 				download: "Download",
+				copy_success: "Copied to clipboard",
 			},
 		},
 	},
@@ -210,7 +238,7 @@ const resources = {
 				title: "المركز الإسلامي في ريغنسبورغ",
 			},
 			hero: {
-				badge: "مرحبًا بكم",
+				badge: "السلام عليكم",
 				title: "المركز الإسلامي في ريغنسبورغ",
 				subtitle: "مكان للمجتمع والتعلم والنمو الروحي في قلب ريغنسبورغ.",
 				cta: "اعرف المزيد",
@@ -256,6 +284,18 @@ const resources = {
 				attachments_title: "المرفقات",
 				attachments_empty: "لا توجد مرفقات متاحة.",
 			},
+			donation: {
+				title: "التبرعات",
+				subtitle: "ادعموا مسجدنا عبر التحويل البنكي",
+				description:
+					"يساعدنا تبرعكم في الحفاظ على المسجد، وتقديم الأنشطة التعليمية، ودعم المبادرات المجتمعية. كل مساهمة لها أثر.",
+				fields: {
+					iban: "رقم IBAN",
+					bic: "رمز BIC",
+					holder: "اسم صاحب الحساب",
+				},
+				transfer_note: 'يرجى كتابة "تبرع" كمرجع للتحويل قدر الإمكان.',
+			},
 			home: {
 				welcome: "مرحبًا بكم في المركز الإسلامي في ريغنسبورغ",
 			},
@@ -296,6 +336,7 @@ const resources = {
 			common: {
 				close: "إغلاق",
 				download: "تحميل",
+				copy_success: "تم النسخ إلى الحافظة",
 			},
 		},
 	},
