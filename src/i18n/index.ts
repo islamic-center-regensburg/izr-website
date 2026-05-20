@@ -46,6 +46,7 @@ const resources = {
 				names: {
 					fajr: "Fajr",
 					dhuhr: "Dhuhr",
+					schuruq: "Schuruq",
 					asr: "Asr",
 					maghrib: "Maghrib",
 					isha: "Isha",
@@ -104,8 +105,8 @@ const resources = {
 						label: "App / Website / IT",
 						email: "mohamed.bellil@iz-regensburg.de",
 					},
-					rental: {
-						label: "Raumvermietung",
+					reservation: {
+						label: "Raumreservierung",
 						email: "n.bouzgarrou@iz-regensburg.de",
 					},
 				},
@@ -157,6 +158,7 @@ const resources = {
 				},
 				names: {
 					fajr: "Fajr",
+					shuruq: "Shuruq",
 					dhuhr: "Dhuhr",
 					asr: "Asr",
 					maghrib: "Maghrib",
@@ -215,8 +217,8 @@ const resources = {
 						label: "App / Website / IT",
 						email: "mohamed.bellil@iz-regensburg.de",
 					},
-					rental: {
-						label: "Room Rental",
+					reservation: {
+						label: "Room Reservation",
 						email: "n.bouzgarrou@iz-regensburg.de",
 					},
 				},
@@ -267,6 +269,7 @@ const resources = {
 				},
 				names: {
 					fajr: "الفجر",
+					shuruq: "الشروق",
 					dhuhr: "الظهر",
 					asr: "العصر",
 					maghrib: "المغرب",
@@ -326,8 +329,8 @@ const resources = {
 						label: "التطبيق / الموقع / تقنية المعلومات",
 						email: "mohamed.bellil@iz-regensburg.de",
 					},
-					rental: {
-						label: "تأجير القاعة",
+					reservation: {
+						label: "حجز الغرف",
 						email: "n.bouzgarrou@iz-regensburg.de",
 					},
 				},
