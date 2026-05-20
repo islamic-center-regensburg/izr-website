@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 
 const Hero = lazy(() => import("@/pages/home-page/hero"));
 const PrayerTimesSection = lazy(
-	() => import("@/components/prayer-times-section"),
+	() => import("@/pages/home-page/prayer-times-section/prayer-times-section"),
 );
 const DonationSection = lazy(() => import("@/components/donation-section"));
 const PostsSection = lazy(() => import("@/components/posts-section"));

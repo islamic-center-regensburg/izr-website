@@ -22,8 +22,8 @@ function RouteComponent() {
 			email: t("about.contacts.it.email"),
 		},
 		{
-			label: t("about.contacts.rental.label"),
-			email: t("about.contacts.rental.email"),
+			label: t("about.contacts.reservation.label"),
+			email: t("about.contacts.reservation.email"),
 		},
 	];
 
