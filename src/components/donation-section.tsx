@@ -13,14 +13,12 @@ function DonationSection() {
 	const { t } = useTranslation();
 
 	return (
-		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-xs sm:p-8">
+		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8">
 			<div className="mb-5">
 				<h2 className="text-4xl font-semibold tracking-tight">
 					{t("donation.title")}
 				</h2>
-				<p className="mt-2 text-sm text-muted-foreground">
-					{t("donation.subtitle")}
-				</p>
+				<p className="mt-2 text-sm text-foreground">{t("donation.subtitle")}</p>
 			</div>
 
 			<p className="text-sm leading-7 text-foreground/90">
@@ -30,7 +28,7 @@ function DonationSection() {
 			<div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
 				<div className="rounded-2xl border border-border/50 bg-background/40 p-4 shadow-xs backdrop-blur-md flex justify-between">
 					<div>
-						<p className="text-xs text-muted-foreground">
+						<p className="text-xs text-foreground">
 							{t("donation.fields.iban")}
 						</p>
 						<p className="mt-2 break-all font-mono text-sm font-medium time-ltr">
@@ -50,7 +48,7 @@ function DonationSection() {
 				</div>
 				<div className="rounded-2xl border border-border/50 bg-background/40 p-4 shadow-xs backdrop-blur-md flex justify-between">
 					<div>
-						<p className="text-xs text-muted-foreground">
+						<p className="text-xs text-foreground">
 							{t("donation.fields.bic")}
 						</p>
 						<p className="mt-2 break-all font-mono text-sm font-medium time-ltr">
@@ -70,7 +68,7 @@ function DonationSection() {
 				</div>
 				<div className="rounded-2xl border border-border/50 bg-background/40 p-4 shadow-xs backdrop-blur-md flex justify-between">
 					<div>
-						<p className="text-xs text-muted-foreground">
+						<p className="text-xs text-foreground">
 							{t("donation.fields.holder")}
 						</p>
 						<p className="mt-2 text-sm font-medium">{transferDetails.holder}</p>
@@ -88,7 +86,7 @@ function DonationSection() {
 				</div>
 			</div>
 
-			<p className="mt-4 text-xs text-muted-foreground">
+			<p className="mt-4 text-xs text-foreground">
 				{t("donation.transfer_note")}
 			</p>
 		</section>

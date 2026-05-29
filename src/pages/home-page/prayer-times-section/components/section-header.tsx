@@ -26,9 +26,7 @@ export function SectionHeader({
 				<h2 className="text-4xl font-semibold tracking-tight">
 					{t("prayer_times.title")}
 				</h2>
-				<p className="text-sm text-muted-foreground">
-					{t("prayer_times.subtitle")}
-				</p>
+				<p className="text-sm text-foreground">{t("prayer_times.subtitle")}</p>
 			</div>
 			<DateInfo
 				gregorianDate={gregorianDate}

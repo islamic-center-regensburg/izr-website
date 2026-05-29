@@ -83,11 +83,11 @@ const resources = {
 				title:
 					"Willkommen im Islamischen Zentrum Regensburg (IZR) – Ar-Rahman-Moschee",
 				paragraphs: {
-					p1: "Seit vielen Jahren ist das Islamische Zentrum Regensburg (IZR) ein wichtiger Treffpunkt und ein Herzstück der muslimischen Gemeinde in Regensburg. Unsere Moschee befindet sich in der <address>Alten Straubinger Straße 33, 93055 Regensburg</address>.",
-					p2: "Unser Zentrum setzt sich aktiv für die Förderung der islamischen Religion, Kultur und Traditionen ein. Neben den täglichen Gebeten – darunter Fajr, Dhuhr, Asr, Maghrib und Isha – bieten wir zahlreiche religiöse, kulturelle und gemeinschaftliche Aktivitäten an. Die aktuellen Gebetszeiten sowie Neuigkeiten und wichtige Erinnerungen können Sie bequem über unsere App abrufen.",
-					p3: "Ein besonderes Anliegen ist uns der offene Dialog und das gegenseitige Kennenlernen. Beim „Tag der offenen Moschee“ heißen wir alle Interessierten herzlich willkommen, unseren Glaubensalltag kennenzulernen, Fragen zu stellen und mit uns ins Gespräch zu kommen. Unsere Imame und Verantwortlichen stehen Ihnen dabei jederzeit gerne zur Verfügung.",
-					p4: "Bleiben Sie informiert und folgen Sie uns auf Instagram unter",
-					p5: "Gemeinsam beten, lernen und feiern wir in einer offenen und respektvollen Gemeinschaft – jeder ist bei uns jederzeit herzlich willkommen.",
+					p1: "Das Islamische Zentrum Regensburg (IZR) – die Ar-Rahman-Moschee – ist seit vielen Jahren ein lebendiger Treffpunkt für Muslime und alle, die uns kennenlernen möchten. Mitten in Regensburg, in der <address>Alten Straubinger Straße 33, 93055 Regensburg</address>, haben wir ein Zuhause für Gebet, Begegnung und Gemeinschaft geschaffen.",
+					p2: "Bei uns wird jeden Tag gemeinsam gebetet – Fajr, Dhuhr, Asr, Maghrib und Isha – und das Freitagsgebet bringt unsere Gemeinschaft regelmäßig zusammen. Neben den Gebeten organisieren wir Veranstaltungen, Bildungsangebote und Aktivitäten für Jung und Alt. Aktuelle Gebetszeiten, Neuigkeiten und Erinnerungen findest du jederzeit bequem in unserer App.",
+					p3: "Uns ist Offenheit wichtig – nicht nur als Wort, sondern gelebt. Beim 'Tag der offenen Moschee' heißen wir alle Neugierigen herzlich willkommen: Schau rein, stell Fragen, komm ins Gespräch. Unsere Imame und das Team sind immer für dich da.",
+					p4: "Einblicke in unser Leben und unsere Community gibt es auch auf Instagram:",
+					p5: "Wir freuen uns auf dich – wann immer du kommst.",
 				},
 				instagram_text:
 					"Bleiben Sie informiert und folgen Sie uns auf Instagram unter",
@@ -196,11 +196,11 @@ const resources = {
 				title:
 					"Welcome to the Islamic Center Regensburg (IZR) – Ar-Rahman Mosque",
 				paragraphs: {
-					p1: "For many years, the Islamic Center Regensburg (IZR) has been an important meeting point and a central part of the Muslim community in Regensburg. Our mosque is located at <address>Alte Straubinger Straße 33, 93055 Regensburg</address>.",
-					p2: "Our center is actively committed to promoting Islamic religion, culture, and traditions. In addition to the daily prayers — including Fajr, Dhuhr, Asr, Maghrib, and Isha — we offer many religious, cultural, and community activities. Current prayer times, news, and important reminders are available conveniently through our app.",
-					p3: "Open dialogue and mutual understanding are especially important to us. During the “Open Mosque Day,” we warmly welcome everyone interested in learning about our daily religious life, asking questions, and having conversations with us. Our imams and responsible team members are always happy to assist you.",
-					p4: "Stay informed and follow us on Instagram at",
-					p5: "Together we pray, learn, and celebrate in an open and respectful community — everyone is always warmly welcome.",
+					p1: "The Islamic Center Regensburg (IZR) – the Ar-Rahman Mosque – has long been a living, breathing home for Muslims and anyone curious to connect. Right in the heart of Regensburg, at <address>Alte Straubinger Straße 33, 93055 Regensburg</address>, we've built a place of prayer, warmth, and genuine community.",
+					p2: "Every day we pray together — Fajr, Dhuhr, Asr, Maghrib, and Isha — and Jumu'ah brings our community together every Friday. Beyond prayers, we organize events, learning circles, and activities for all ages. Prayer times, news, and reminders are always just a tap away in our app.",
+					p3: "Openness isn't just a value for us — it's something we live. On Open Mosque Day and beyond, we welcome everyone who's curious: come in, ask questions, have a conversation. Our imams and team are always happy to meet you where you are.",
+					p4: "For a real glimpse into our community life, follow us on Instagram:",
+					p5: "However and whenever you come — you're welcome here.",
 				},
 				instagram_text: "Stay informed and follow us on Instagram at",
 				contact_title: "Contact",
@@ -237,16 +237,17 @@ const resources = {
 				home: "الرئيسية",
 				about: "حول",
 				language: "اللغة",
-				title: "المركز الإسلامي في ريغنسبورغ",
+				title: "المركز الإسلامي بريغنسبورغ",
 			},
 			hero: {
 				badge: "السلام عليكم",
-				title: "المركز الإسلامي في ريغنسبورغ",
-				subtitle: "مكان للمجتمع والتعلم والنمو الروحي في قلب ريغنسبورغ.",
+				title: "المركـــــز الإسلامي بريغنسبورغ",
+				subtitle:
+					"بيتٌ يجمع المسلمين في ريغنسبورغ، مكانٌ للعبادة، والعلم، والتآخي، وتنمية الإيمان، وتعزيز روح المجتمع في قلب المدينة",
 				cta: "اعرف المزيد",
 			},
 			footer: {
-				copyright: "المركز الإسلامي في ريغنسبورغ. جميع الحقوق محفوظة",
+				copyright: "المركز الإسلامي بريغنسبورغ. جميع الحقوق محفوظة",
 				instagram: "إنستغرام",
 				tiktok: "تيك توك",
 				facebook: "فيسبوك",
@@ -300,19 +301,16 @@ const resources = {
 				transfer_note: 'يرجى كتابة "تبرع" كمرجع للتحويل قدر الإمكان.',
 			},
 			home: {
-				welcome: "مرحبًا بكم في المركز الإسلامي في ريغنسبورغ",
+				welcome: "مرحبًا بكم في المركز الإسلامي بريغنسبورغ",
 			},
 			about: {
-				title: "مرحبًا بكم في المركز الإسلامي في ريغنسبورغ (IZR) – مسجد الرحمن",
+				title: "مرحبًا بكم في المركز الإسلامي بريغنسبورغ (IZR) – مسجد الرحمن",
 				paragraphs: {
-					p1: "منذ سنوات عديدة، يُعد المركز الإسلامي في ريغنسبورغ (IZR) نقطة لقاء مهمة وقلبًا نابضًا للجالية المسلمة في ريغنسبورغ. يقع مسجدنا في <address>Alte Straubinger Straße 33, 93055 Regensburg</address>.",
-					p2: "يلتزم مركزنا بشكل فعّال بدعم الدين الإسلامي والثقافة والتقاليد الإسلامية. وإلى جانب الصلوات اليومية — الفجر والظهر والعصر والمغرب والعشاء — نقدم العديد من الأنشطة الدينية والثقافية والمجتمعية. كما يمكنكم الاطلاع بسهولة على مواقيت الصلاة الحالية والأخبار والتذكيرات المهمة عبر تطبيقنا.",
-					p3:
-						"يهمّنا بشكل خاص الحوار المفتوح والتعارف المتبادل. وفي " +
-						"يوم المسجد المفتوح" +
-						" نرحب بجميع المهتمين للتعرف على حياتنا الإيمانية اليومية، وطرح الأسئلة، والتحاور معنا. أئمتنا والمسؤولون لدينا على استعداد دائم لخدمتكم بكل سرور.",
-					p4: "ابقوا على اطلاع وتابعونا على إنستغرام عبر",
-					p5: "نصلي ونتعلم ونحتفل معًا في مجتمع منفتح ومحترم — الجميع مرحب بهم لدينا في كل وقت.",
+					p1: "المركز الإسلامي بريغنسبورغ (IZR) – مسجد الرحمن – منذ سنوات طويلة وهو بيتٌ دافئ يجمع المسلمين وكل من يرغب في التعرف علينا. في قلب ريغنسبورغ، في <address>Alte Straubinger Straße 33, 93055 Regensburg</address>، بنينا مكانًا للصلاة، واللقاء، والأخوّة الحقيقية.",
+					p2: "نُقيم الصلوات الخمس يوميًا – الفجر والظهر والعصر والمغرب والعشاء – وتجمعنا صلاة الجمعة كل أسبوع في أجواء إيمانية مميزة. وإلى جانب الصلاة، ننظّم فعاليات ودروسًا وأنشطة للصغار والكبار على حدٍّ سواء. مواقيت الصلاة والأخبار والتذكيرات دائمًا في متناول يدك عبر تطبيقنا.",
+					p3: "الانفتاح ليس شعارًا عندنا، بل أسلوب حياة. في يوم المسجد المفتوح وفي كل يوم، نرحب بكل من يريد أن يعرف، يسأل، ويتحاور. أئمتنا وفريقنا دائمًا هنا من أجلك.",
+					p4: "لتعيش لحظات من حياتنا ومجتمعنا، تابعونا على إنستغرام:",
+					p5: "مهما كان وقت زيارتك – أهلًا وسهلًا بك دائمًا.",
 				},
 				instagram_text: "ابقوا على اطلاع وتابعونا على إنستغرام عبر",
 				contact_title: "التواصل",
