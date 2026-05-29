@@ -24,7 +24,7 @@ function Navbar() {
 								alt="Islamic Center Regensburg logo"
 							/>
 							<div className="flex flex-col leading-tight">
-								<span className="text-sm font-semibold md:text-base">
+								<span className="text-sm tatweel font-semibold md:text-base">
 									{t("nav.title")}
 								</span>
 							</div>

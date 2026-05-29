@@ -51,7 +51,7 @@ function PrayerTimesSection() {
 	const shuruq = prayerTimes.shuruq ?? EMPTY_VALUE;
 
 	return (
-		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-xs sm:p-8">
+		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8">
 			<SectionHeader
 				gregorianDate={gregorianDate}
 				hijriDate={hijriDate}

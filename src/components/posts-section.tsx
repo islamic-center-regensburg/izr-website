@@ -20,7 +20,7 @@ function PostsSection() {
 	if (isMosqueLoading || postsQuery.isLoading) {
 		return (
 			<section className="mt-8 rounded-3xl border border-border/40 bg-card/70 p-6">
-				<p className="text-sm text-muted-foreground">{t("posts.loading")}</p>
+				<p className="text-sm text-foreground">{t("posts.loading")}</p>
 			</section>
 		);
 	}
@@ -36,7 +36,7 @@ function PostsSection() {
 	const posts = postsQuery.data?.data ?? [];
 
 	return (
-		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-xs sm:p-8">
+		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8">
 			<div className="mb-5">
 				<h2 className="text-4xl font-semibold tracking-tight">
 					{t("posts.title")}
@@ -44,7 +44,7 @@ function PostsSection() {
 			</div>
 
 			{posts.length === 0 ? (
-				<p className="text-sm text-muted-foreground">{t("posts.empty")}</p>
+				<p className="text-sm text-foreground">{t("posts.empty")}</p>
 			) : (
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{posts.map((post) => {

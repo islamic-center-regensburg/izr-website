@@ -28,13 +28,13 @@ function RouteComponent() {
 	];
 
 	return (
-		<section className="mx-auto p-4 mt-8 rounded-3xl border border-border/40 bg-transparent backdrop-blur-xs sm:p-8">
+		<section className="mx-auto p-4 mt-8 rounded-3xl border border-border/40 bg-transparent backdrop-blur-md sm:p-8">
 			<div className="mx-auto space-y-6">
 				<h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
 					{t("about.title")}
 				</h1>
 
-				<p className="text-base leading-relaxed text-muted-foreground">
+				<p className="text-base leading-relaxed text-foreground">
 					<Trans
 						i18nKey="about.paragraphs.p1"
 						components={{
@@ -44,18 +44,18 @@ function RouteComponent() {
 						}}
 					/>
 				</p>
-				<p className="text-base leading-relaxed text-muted-foreground">
+				<p className="text-base leading-relaxed text-foreground">
 					{t("about.paragraphs.p2")}
 				</p>
-				<p className="text-base leading-relaxed text-muted-foreground">
+				<p className="text-base leading-relaxed text-foreground">
 					{t("about.paragraphs.p3")}
 				</p>
-				<p className="text-base leading-relaxed text-muted-foreground">
+				<p className="text-base leading-relaxed text-foreground">
 					{t("about.paragraphs.p4")}
 				</p>
 
 				<div className="rounded-2xl border border-border/50 bg-background/40 p-5 backdrop-blur-sm">
-					<p className="text-base leading-relaxed text-muted-foreground">
+					<p className="text-base leading-relaxed text-foreground">
 						{t("about.instagram_text")}{" "}
 						<a
 							href="https://instagram.com/islamischeszentrumregensburg_"
@@ -88,7 +88,7 @@ function RouteComponent() {
 					</div>
 				</div>
 
-				<p className="text-base leading-relaxed text-muted-foreground">
+				<p className="text-base leading-relaxed text-foreground">
 					{t("about.paragraphs.p5")}
 				</p>
 			</div>

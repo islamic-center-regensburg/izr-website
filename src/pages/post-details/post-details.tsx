@@ -31,7 +31,7 @@ function PostDetails() {
 	if (postQuery.isLoading) {
 		return (
 			<section className="rounded-3xl border border-border/40 bg-card/70 p-6">
-				<p className="text-sm text-muted-foreground">{t("posts.loading")}</p>
+				<p className="text-sm text-foreground">{t("posts.loading")}</p>
 			</section>
 		);
 	}
@@ -64,11 +64,11 @@ function PostDetails() {
 	);
 
 	return (
-		<article className="rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-xs sm:p-8">
+		<article className="rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8">
 			<h1 className="title-content text-3xl font-bold tracking-tight">
 				{translation?.title || t("posts.untitled")}
 			</h1>
-			<div className="markdown-content mt-4 text-base leading-relaxed text-muted-foreground">
+			<div className="markdown-content mt-4 text-base leading-relaxed text-foreground">
 				<MarkdonwRenderer
 					content={translation?.description || t("posts.no_description")}
 				/>

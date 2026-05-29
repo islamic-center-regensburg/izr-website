@@ -5,13 +5,14 @@ import SocialLinks from "./social-links";
 const Footer = () => {
 	const { t } = useTranslation();
 	return (
-		<div className="w-full mt-20 min-h-40 bg-linear-to-br from-transparent to-primary px-4 py-8 bg-transparent p-6  backdrop-blur-xs">
+		<div className="w-full mt-20 min-h-40 bg-linear-to-br from-transparent to-primary px-4 py-8 bg-transparent p-6  backdrop-blur-md">
 			<div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6">
 				<SocialLinks />
-				<p className="text-center text-xs text-white">
-					&copy; <span className="time-ltr ">{new Date().getFullYear()}</span>{" "}
+				<h6 className="text-center text-xs text-white">
+					&copy;{" "}
+					<span className="time-ltr tatweel">{new Date().getFullYear()}</span>{" "}
 					{t("footer.copyright")}
-				</p>
+				</h6>
 			</div>
 		</div>
 	);

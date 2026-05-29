@@ -24,7 +24,7 @@ export function PrayerCard({
 			<div className="mt-4 space-y-2">
 				{prayerTime !== EMPTY_VALUE && (
 					<div className="flex items-center justify-between gap-3">
-						<span className="text-sm text-muted-foreground">
+						<span className="text-sm text-foreground">
 							{t("prayer_times.columns.prayer_time")}
 						</span>
 						<span className="time-ltr text-sm font-medium">{prayerTime}</span>

@@ -11,7 +11,7 @@ export function IqamaTimesDisplay({ iqamaTimes }: IqamaTimesDisplayProps) {
 	if (iqamaTimes.length === 0) {
 		return (
 			<div className="flex items-center justify-between gap-3">
-				<span className="text-sm text-muted-foreground">
+				<span className="text-sm text-foreground">
 					{t("prayer_times.columns.iqama_time")}
 				</span>
 				<span className="time-ltr text-sm font-medium">{EMPTY_VALUE}</span>
@@ -22,7 +22,7 @@ export function IqamaTimesDisplay({ iqamaTimes }: IqamaTimesDisplayProps) {
 	if (iqamaTimes.length === 1) {
 		return (
 			<div className="flex items-center justify-between gap-3">
-				<span className="text-sm text-muted-foreground">
+				<span className="text-sm text-foreground">
 					{t("prayer_times.columns.iqama_time")}
 				</span>
 				<span className="time-ltr text-sm font-medium">{iqamaTimes[0]}</span>
@@ -31,7 +31,7 @@ export function IqamaTimesDisplay({ iqamaTimes }: IqamaTimesDisplayProps) {
 	}
 	return (
 		<div className="flex items-center justify-between gap-3">
-			<span className="text-sm text-muted-foreground">
+			<span className="text-sm text-foreground">
 				{t("prayer_times.columns.iqama_time")}
 			</span>
 			<span className="time-ltr text-sm font-medium">
