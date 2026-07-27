@@ -36,7 +36,7 @@ function PostsSection() {
 	const posts = postsQuery.data?.data ?? [];
 
 	return (
-		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8">
+		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8 shadow-md">
 			<div className="mb-5">
 				<h2 className="text-4xl font-semibold tracking-tight">
 					{t("posts.title")}
