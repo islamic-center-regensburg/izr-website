@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import Statement from "./statement";
 
 const Hero = lazy(() => import("@/pages/home-page/hero"));
 const PrayerTimesSection = lazy(
@@ -22,7 +21,6 @@ function HomePage() {
 	return (
 		<div className="py-10">
 			<Suspense fallback={<SectionFallback heightClass="h-screen" />}>
-				<Statement />
 				<Hero />
 				<PrayerTimesSection />
 				<DonationSection />
