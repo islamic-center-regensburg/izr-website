@@ -4,7 +4,7 @@ const Hero = lazy(() => import("@/pages/home-page/hero"));
 const PrayerTimesSection = lazy(
 	() => import("@/pages/home-page/prayer-times-section/prayer-times-section"),
 );
-const DonationSection = lazy(() => import("@/components/donation-section"));
+const DonationDashboard = lazy(() => import("@/components/donation-dashboard"));
 const PostsSection = lazy(() => import("@/components/posts-section"));
 
 function SectionFallback({ heightClass }: { heightClass: string }) {
@@ -22,8 +22,8 @@ function HomePage() {
 		<div className="py-10">
 			<Suspense fallback={<SectionFallback heightClass="h-screen" />}>
 				<Hero />
+				<DonationDashboard />
 				<PrayerTimesSection />
-				<DonationSection />
 				<PostsSection />
 			</Suspense>
 		</div>
