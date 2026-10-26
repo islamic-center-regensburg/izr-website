@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import Markdown from "react-markdown";
+import DOMPurify from "dompurify";
+import { useMemo } from "react";
 
 interface PostCardProps {
 	id: string;
@@ -7,7 +8,26 @@ interface PostCardProps {
 	description: string;
 }
 
+function stripHtml(html: string): string {
+	if (typeof window === "undefined") {
+		// SSR fallback: regex strip
+		return html
+			.replace(/<[^>]*>/g, " ")
+			.replace(/\s+/g, " ")
+			.trim();
+	}
+	const tmp = document.createElement("div");
+	tmp.innerHTML = html;
+	return tmp.textContent || tmp.innerText || "";
+}
+
 function PostCard({ id, title, description }: PostCardProps) {
+	const sanitizedHtml = useMemo(
+		() => DOMPurify.sanitize(description),
+		[description],
+	);
+	const plainText = useMemo(() => stripHtml(sanitizedHtml), [sanitizedHtml]);
+
 	return (
 		<Link
 			to="/post/$id"
@@ -17,30 +37,7 @@ function PostCard({ id, title, description }: PostCardProps) {
 			<h3 className="title-content text-lg font-semibold tracking-tight">
 				{title}
 			</h3>
-			<div className="markdown-content mt-3 overflow-hidden text-sm text-foreground [display:-webkit-box] [line-clamp:4] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
-				<Markdown
-					components={{
-						p: ({ children }) => <span>{children} </span>,
-						ul: ({ children }) => <span>{children}</span>,
-						ol: ({ children }) => <span>{children}</span>,
-						li: ({ children }) => <span>• {children} </span>,
-						strong: ({ children }) => (
-							<strong className="font-semibold text-foreground">
-								{children}
-							</strong>
-						),
-						em: ({ children }) => <em className="italic">{children}</em>,
-						code: ({ children }) => (
-							<code className="time-ltr rounded bg-accent/50 px-1 py-0.5 text-xs text-foreground">
-								{children}
-							</code>
-						),
-						br: () => <br />,
-					}}
-				>
-					{description}
-				</Markdown>
-			</div>
+			<p className="mt-3 line-clamp-3 text-sm text-foreground">{plainText}</p>
 		</Link>
 	);
 }

@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-export type AppLocale = "de" | "en" | "ar";
+export type AppLocale = "de-DE" | "en-US" | "ar-SA";
 
 const STORAGE_KEY = "izr_locale";
 
@@ -62,6 +62,11 @@ const resources = {
 				no_description: "Dieses Beitrag ist nicht verfügbar auf Deutsch.",
 				attachments_title: "Anhänge",
 				attachments_empty: "Keine Anhänge verfügbar.",
+				navigation: {
+					aria_label: "Beitragsnavigation",
+					previous: "Vorheriger Beitrag",
+					next: "Nächster Beitrag",
+				},
 			},
 			donation: {
 				title: "Spenden",
@@ -177,6 +182,11 @@ const resources = {
 				no_description: "This post is not available in English.",
 				attachments_title: "Attachments",
 				attachments_empty: "No attachments available.",
+				navigation: {
+					aria_label: "Post navigation",
+					previous: "Previous post",
+					next: "Next post",
+				},
 			},
 			donation: {
 				title: "Donations",
@@ -291,6 +301,11 @@ const resources = {
 				no_description: "هذا المنشور غير متاح باللغة العربية.",
 				attachments_title: "المرفقات",
 				attachments_empty: "لا توجد مرفقات متاحة.",
+				navigation: {
+					aria_label: "تصفح المنشورات",
+					previous: "المنشور السابق",
+					next: "المنشور التالي",
+				},
 			},
 			donation: {
 				title: "التبرعات",
@@ -351,34 +366,34 @@ const resources = {
 
 function detectInitialLanguage(): AppLocale {
 	if (typeof window === "undefined") {
-		return "de";
+		return "de-DE";
 	}
 
 	const stored = window.localStorage.getItem(STORAGE_KEY);
-	if (stored === "de" || stored === "en" || stored === "ar") {
+	if (stored === "de-DE" || stored === "en-US" || stored === "ar-SA") {
 		return stored;
 	}
 
 	const browserLanguage = window.navigator.language.toLowerCase();
-	if (browserLanguage.startsWith("de")) {
-		return "de";
+	if (browserLanguage.startsWith("de-DE")) {
+		return "de-DE";
 	}
-	if (browserLanguage.startsWith("ar")) {
-		return "ar";
+	if (browserLanguage.startsWith("ar-SA")) {
+		return "ar-SA";
 	}
 
-	return "en";
+	return "en-US";
 }
 
 void i18n.use(initReactI18next).init({
 	resources,
 	lng: detectInitialLanguage(),
-	fallbackLng: "en",
+	fallbackLng: "en-US",
 	interpolation: {
 		escapeValue: false,
 	},
 });
 
-export const appLocales: AppLocale[] = ["de", "en", "ar"];
+export const appLocales: AppLocale[] = ["de-DE", "en-US", "ar-SA"];
 export { STORAGE_KEY };
 export default i18n;

@@ -5,7 +5,7 @@ function DocumentLanguageSync() {
 	const { i18n } = useTranslation();
 
 	useEffect(() => {
-		const lang = i18n.resolvedLanguage ?? "en";
+		const lang = i18n.resolvedLanguage ?? "en-US";
 		document.documentElement.lang = lang;
 		document.documentElement.dir = i18n.dir(lang);
 	}, [i18n, i18n.resolvedLanguage]);

@@ -16,6 +16,7 @@
     "openapi-ts": "openapi-ts -i http://localhost:8000/openapi.json -o src/api/gen"
   },
   "dependencies": {
+    "@directus/sdk": "^27.0.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "^0.7.0",
     "@tanstack/react-query": "^5.66.5",
@@ -27,6 +28,8 @@
     "@tanstack/router-plugin": "^1.132.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cn": "^0.5.0",
+    "dompurify": "^3.4.17",
     "echarts": "^6.1.0",
     "embla-carousel-react": "^8.6.0",
     "i18next": "^25.8.11",

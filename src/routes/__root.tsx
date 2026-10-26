@@ -46,16 +46,16 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="de">
+		<html lang="de-DE">
 			<head>
 				<HeadContent />
 			</head>
-			<body>
+			<body className="flex min-h-screen flex-col">
 				<TanStackQueryProvider>
 					<DocumentLanguageSync />
-					<Bg>
+					<Bg className="flex flex-1 flex-col">
 						<Navbar />
-						<main className="container m-auto overflow-visible pt-20">
+						<main className="container m-auto flex-1 overflow-visible pt-20 w-full">
 							{children}
 						</main>
 						<footer>
@@ -65,9 +65,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
 					<Toaster />
 					<TanStackDevtools
-						config={{
-							position: "bottom-right",
-						}}
+						config={{ position: "bottom-right" }}
 						plugins={[
 							{
 								name: "Tanstack Router",

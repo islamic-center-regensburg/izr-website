@@ -1,34 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { getPostByIdQueryOptions } from "@/api/post/queries";
 import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "@/components/ui/carousel";
-import MarkdonwRenderer from "./markdonw-renderer";
-import ZoomableImage from "./zoomable-image";
+	getActualByIdQueryOptions,
+	getAdjacentActualsQueryOptions,
+} from "@/api/cms/actuals/queries";
 
 function PostDetails() {
 	const { id } = useParams({ from: "/post/$id" });
 	const { t, i18n } = useTranslation();
-	const postQuery = useQuery(
-		getPostByIdQueryOptions({
-			post_id: id,
-			query: {
-				language: i18n.language as "de" | "en" | "ar",
-			},
-		}),
+
+	const actualQuery = useQuery(getActualByIdQueryOptions(id, i18n.language));
+
+	const adjacentQuery = useQuery(
+		getAdjacentActualsQueryOptions(
+			actualQuery.data?.date_updated ?? "",
+			i18n.language,
+		),
 	);
 
-	if (postQuery.data?.translations.length === 0) {
-	}
-	const selectedTranslation = postQuery.data?.translations[0];
-
-	if (postQuery.isLoading) {
+	if (actualQuery.isLoading) {
 		return (
 			<section className="rounded-3xl border border-border/40 bg-card/70 p-6">
 				<p className="text-sm text-foreground">{t("posts.loading")}</p>
@@ -36,7 +28,7 @@ function PostDetails() {
 		);
 	}
 
-	if (postQuery.error || !postQuery.data) {
+	if (actualQuery.error || !actualQuery.data) {
 		return (
 			<section className="rounded-3xl border border-border/40 bg-card/70 p-6">
 				<p className="text-sm text-destructive">{t("posts.error")}</p>
@@ -44,64 +36,75 @@ function PostDetails() {
 		);
 	}
 
-	const translation = selectedTranslation;
-	const mediaItems = translation?.media ?? [];
-
-	const imageSources = Array.from(
-		new Set(
-			mediaItems
-				.filter((item) => {
-					const objectPath = item.object.toLowerCase();
-					return (
-						objectPath.endsWith(".png") ||
-						objectPath.endsWith(".jpg") ||
-						objectPath.endsWith(".jpeg") ||
-						objectPath.endsWith(".webp")
-					);
-				})
-				.map((item) => item.url),
-		),
-	);
+	const translation = actualQuery.data.translations?.[0];
+	const previous = adjacentQuery.data?.previous;
+	const next = adjacentQuery.data?.next;
+	const isRtl = i18n.dir() === "rtl";
 
 	return (
 		<article className="rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8">
-			<h1 className="title-content text-3xl font-bold tracking-tight">
+			<h1 className="title-content text-3xl font-bold tracking-tight font-serif!">
 				{translation?.title || t("posts.untitled")}
 			</h1>
-			<div className="markdown-content mt-4 text-base leading-relaxed text-foreground">
-				<MarkdonwRenderer
-					content={translation?.description || t("posts.no_description")}
-				/>
-			</div>
 
-			{imageSources.length > 0 && (
-				<div className="mt-8">
-					<Carousel
-						opts={{ align: "start", loop: imageSources.length > 1 }}
-						className="w-full"
-					>
-						<CarouselContent>
-							{imageSources.map((source) => (
-								<CarouselItem
-									key={source}
-									className="sm:basis-1/2 lg:basis-1/3"
-								>
-									<ZoomableImage
-										src={source}
-										alt={translation?.title || t("posts.untitled")}
-										className=" h-full w-auto md:h-96 md:w-auto cursor-pointer rounded-2xl border border-border/40 object-cover"
-									/>
-								</CarouselItem>
-							))}
-						</CarouselContent>
-						{imageSources.length > 1 && (
-							<>
-								<CarouselPrevious />
-								<CarouselNext />
-							</>
-						)}
-					</Carousel>
-				</div>
+			<div
+				className="post-content prose prose-sm dark:prose-invert mt-4 max-w-none text-base leading-relaxed text-foreground [&_li]:ms-10"
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: content comes from trusted CMS
+				dangerouslySetInnerHTML={{
+					__html: translation?.content || t("posts.no_description"),
+				}}
+			/>
+
+			{/* Prev/Next Navigation */}
+			{(previous || next) && (
+				<nav
+					className="mt-10 grid grid-cols-1 gap-4 border-t border-border/40 pt-6 sm:grid-cols-2"
+					aria-label={t("posts.navigation.aria_label")}
+				>
+					{previous ? (
+						<Link
+							to="/post/$id"
+							params={{ id: previous.id }}
+							className="group flex flex-col gap-1 rounded-2xl border border-border/40 bg-background/40 p-4 transition-colors hover:bg-accent/30 sm:col-start-1"
+						>
+							<span className="flex items-center gap-1 text-xs text-foreground/60">
+								{isRtl ? (
+									<ChevronRight className="h-3 w-3" />
+								) : (
+									<ChevronLeft className="h-3 w-3" />
+								)}
+								{t("posts.navigation.previous")}
+							</span>
+							<span className="line-clamp-1 text-sm font-semibold tracking-tight group-hover:text-primary">
+								{previous.translations?.[0]?.title ?? t("posts.untitled")}
+							</span>
+						</Link>
+					) : (
+						<div className="hidden sm:block" />
+					)}
+
+					{next ? (
+						<Link
+							to="/post/$id"
+							params={{ id: next.id }}
+							className="group flex flex-col gap-1 rounded-2xl border border-border/40 bg-background/40 p-4 transition-colors hover:bg-accent/30 sm:col-start-2 sm:text-end"
+						>
+							<span className="flex items-center gap-1 text-xs text-foreground/60 sm:justify-end">
+								{t("posts.navigation.next")}
+								{isRtl ? (
+									<ChevronLeft className="h-3 w-3" />
+								) : (
+									<ChevronRight className="h-3 w-3" />
+								)}
+							</span>
+							<span className="line-clamp-1 text-sm font-semibold tracking-tight group-hover:text-primary">
+								{next.translations?.[0]?.title ?? t("posts.untitled")}
+							</span>
+						</Link>
+					) : (
+						<div className="hidden sm:block" />
+					)}
+				</nav>
 			)}
 		</article>
 	);
