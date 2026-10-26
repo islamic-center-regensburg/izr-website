@@ -20,7 +20,7 @@ export function SectionHeader({
 			<div
 				className={cx(
 					"flex flex-col h-full self-start",
-					i18n.language === "ar" ? "ml-auto" : "mr-auto",
+					i18n.language === "ar-SA" ? "ml-auto" : "mr-auto",
 				)}
 			>
 				<h2 className="text-4xl font-semibold tracking-tight">
