@@ -1,0 +1,15 @@
+{
+	"title": "Latest Posts",
+	"loading": "Loading posts...",
+	"error": "Failed to load posts.",
+	"empty": "No posts available yet.",
+	"untitled": "Untitled",
+	"no_description": "This post is not available in English.",
+	"attachments_title": "Attachments",
+	"attachments_empty": "No attachments available.",
+	"navigation": {
+		"aria_label": "Post navigation",
+		"previous": "Previous post",
+		"next": "Next post"
+	}
+}

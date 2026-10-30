@@ -192,6 +192,9 @@ html:lang(ar) .markdown-content {
   body {
     @apply bg-background text-foreground;
   }
+  .section {
+    @apply mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8 shadow-md
+  }
 }
 
 /* Thmanyah Sans Font Faces */

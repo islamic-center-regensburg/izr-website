@@ -1,0 +1,24 @@
+{
+	"title": "Assalamu Alaikum 👋",
+	"subtitle": "Unterstütze uns oder nimm Kontakt auf — alle Links an einem Ort.",
+	"donation": "Jetzt spenden",
+	"donation_desc": "Unterstütze unsere Mission",
+	"social": "Folge uns",
+	"footer_text": "Alle Rechte vorbehalten.",
+	"bank": {
+		"bank_transfer": "Banküberweisung",
+		"bank_transfer_desc": "Direkte Überweisung senden",
+		"recipient": "Empfänger",
+		"iban": "IBAN",
+		"bic": "BIC / SWIFT",
+		"bank_name": "Bank",
+		"reference": "Verwendungszweck",
+		"copy": "{{field}} kopieren",
+		"copy_all": "Alles kopieren",
+		"copied": "Kopiert!",
+		"show_qr": "QR-Code anzeigen",
+		"hide_qr": "QR-Code ausblenden",
+		"download_qr": "QR herunterladen",
+		"qr_hint": "Mit deiner Banking-App scannen, um die Überweisung automatisch auszufüllen"
+	}
+}

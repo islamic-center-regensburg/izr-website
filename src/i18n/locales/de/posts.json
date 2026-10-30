@@ -1,0 +1,15 @@
+{
+	"title": "Aktuelle Beiträge",
+	"loading": "Beiträge werden geladen...",
+	"error": "Beiträge konnten nicht geladen werden.",
+	"empty": "Noch keine Beiträge verfügbar.",
+	"untitled": "Ohne Titel",
+	"no_description": "Dieses Beitrag ist nicht verfügbar auf Deutsch.",
+	"attachments_title": "Anhänge",
+	"attachments_empty": "Keine Anhänge verfügbar.",
+	"navigation": {
+		"aria_label": "Beitragsnavigation",
+		"previous": "Vorheriger Beitrag",
+		"next": "Nächster Beitrag"
+	}
+}

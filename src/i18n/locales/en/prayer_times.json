@@ -1,0 +1,24 @@
+{
+	"title": "Prayer Times",
+	"subtitle": "Daily prayer and iqama schedule",
+	"loading": "Loading prayer times...",
+	"error": "Failed to load prayer times.",
+	"dates": {
+		"gregorian": "Gregorian Date",
+		"hijri": "Hijri Date"
+	},
+	"columns": {
+		"prayer": "Prayer",
+		"prayer_time": "Adhan",
+		"iqama_time": "Iqama"
+	},
+	"names": {
+		"fajr": "Fajr",
+		"shuruq": "Shuruq",
+		"dhuhr": "Dhuhr",
+		"asr": "Asr",
+		"maghrib": "Maghrib",
+		"isha": "Isha",
+		"jumah": "Jumu'ah"
+	}
+}
