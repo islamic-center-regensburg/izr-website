@@ -25,6 +25,15 @@ This project uses [Vitest](https://vitest.dev/) for testing. You can run the tes
 npm run test
 ```
 
+## Translations
+
+Translations live in `src/i18n/locales/{de,en,ar}/`, with a JSON file for
+each content section (for example, `nav.json`, `about.json`, and `linktree.json`).
+`src/i18n/index.ts` combines these files into the existing translation keys,
+so components continue to use calls such as `t("linktree.title")`.
+When adding a section, create its JSON file in all three language folders and
+register the imports in `src/i18n/index.ts`.
+
 ## Styling
 
 This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.

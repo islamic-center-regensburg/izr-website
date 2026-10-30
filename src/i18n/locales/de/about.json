@@ -1,0 +1,31 @@
+{
+	"title": "Willkommen im Islamischen Zentrum Regensburg (IZR) – Ar-Rahman-Moschee",
+	"paragraphs": {
+		"p1": "Das Islamische Zentrum Regensburg (IZR) – die Ar-Rahman-Moschee – ist seit vielen Jahren ein lebendiger Treffpunkt für Muslime und alle, die uns kennenlernen möchten. Mitten in Regensburg, in der <address>Alten Straubinger Straße 33, 93055 Regensburg</address>, haben wir ein Zuhause für Gebet, Begegnung und Gemeinschaft geschaffen.",
+		"p2": "Bei uns wird jeden Tag gemeinsam gebetet – Fajr, Dhuhr, Asr, Maghrib und Isha – und das Freitagsgebet bringt unsere Gemeinschaft regelmäßig zusammen. Neben den Gebeten organisieren wir Veranstaltungen, Bildungsangebote und Aktivitäten für Jung und Alt. Aktuelle Gebetszeiten, Neuigkeiten und Erinnerungen findest du jederzeit bequem in unserer App.",
+		"p3": "Uns ist Offenheit wichtig – nicht nur als Wort, sondern gelebt. Beim 'Tag der offenen Moschee' heißen wir alle Neugierigen herzlich willkommen: Schau rein, stell Fragen, komm ins Gespräch. Unsere Imame und das Team sind immer für dich da.",
+		"p4": "Einblicke in unser Leben und unsere Community gibt es auch auf Instagram:",
+		"p5": "Wir freuen uns auf dich – wann immer du kommst."
+	},
+	"instagram_text": "Bleiben Sie informiert und folgen Sie uns auf Instagram unter",
+	"contact_title": "Kontakt",
+	"contacts": {
+		"first_chairman": {
+			"label": "Erster Vorstand",
+			"email": "h.elouadhane@iz-regensburg.de"
+		},
+		"board": {
+			"label": "Vorstand",
+			"email": "vorstand@iz-regensburg.de"
+		},
+		"it": {
+			"label": "App / Website / IT",
+			"email": "mohamed.bellil@iz-regensburg.de"
+		},
+		"reservation": {
+			"label": "Raumreservierung",
+			"email": "n.bouzgarrou@iz-regensburg.de"
+		}
+	},
+	"website_text": "Weitere Informationen finden Sie auf unserer Website:"
+}

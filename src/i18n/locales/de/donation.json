@@ -1,0 +1,11 @@
+{
+	"title": "Spenden",
+	"subtitle": "Unterstützen Sie unsere Moschee per Banküberweisung",
+	"description": "Mit Ihrer Spende helfen Sie uns, den Moscheebetrieb, Bildungsangebote und soziale Projekte aufrechtzuerhalten. Jeder Beitrag zählt.",
+	"fields": {
+		"iban": "IBAN",
+		"bic": "BIC",
+		"holder": "Kontoinhaber"
+	},
+	"transfer_note": "Bitte geben Sie bei der Überweisung nach Möglichkeit den Verwendungszweck \"Spende\" an."
+}

@@ -1,0 +1,11 @@
+{
+	"title": "Donations",
+	"subtitle": "Support our mosque by bank transfer",
+	"description": "Your donation helps us maintain the mosque, provide educational activities, and support community initiatives. Every contribution matters.",
+	"fields": {
+		"iban": "IBAN",
+		"bic": "BIC",
+		"holder": "Account Holder"
+	},
+	"transfer_note": "When possible, please use \"Donation\" as the transfer reference."
+}

@@ -1,0 +1,31 @@
+{
+	"title": "Welcome to the Islamic Center Regensburg (IZR) – Ar-Rahman Mosque",
+	"paragraphs": {
+		"p1": "The Islamic Center Regensburg (IZR) – the Ar-Rahman Mosque – has long been a living, breathing home for Muslims and anyone curious to connect. Right in the heart of Regensburg, at <address>Alte Straubinger Straße 33, 93055 Regensburg</address>, we've built a place of prayer, warmth, and genuine community.",
+		"p2": "Every day we pray together — Fajr, Dhuhr, Asr, Maghrib, and Isha — and Jumu'ah brings our community together every Friday. Beyond prayers, we organize events, learning circles, and activities for all ages. Prayer times, news, and reminders are always just a tap away in our app.",
+		"p3": "Openness isn't just a value for us — it's something we live. On Open Mosque Day and beyond, we welcome everyone who's curious: come in, ask questions, have a conversation. Our imams and team are always happy to meet you where you are.",
+		"p4": "For a real glimpse into our community life, follow us on Instagram:",
+		"p5": "However and whenever you come — you're welcome here."
+	},
+	"instagram_text": "Stay informed and follow us on Instagram at",
+	"contact_title": "Contact",
+	"contacts": {
+		"first_chairman": {
+			"label": "First Chairman",
+			"email": "h.elouadhane@iz-regensburg.de"
+		},
+		"board": {
+			"label": "Board",
+			"email": "vorstand@iz-regensburg.de"
+		},
+		"it": {
+			"label": "App / Website / IT",
+			"email": "mohamed.bellil@iz-regensburg.de"
+		},
+		"reservation": {
+			"label": "Room Reservation",
+			"email": "n.bouzgarrou@iz-regensburg.de"
+		}
+	},
+	"website_text": "More information is available on our website:"
+}

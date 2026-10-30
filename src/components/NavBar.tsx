@@ -10,6 +10,7 @@ function Navbar() {
 	const navLinks = [
 		{ to: "/", label: t("nav.home") },
 		{ to: "/about", label: t("nav.about") },
+		{ to: "/linktree", label: t("nav.linktree") },
 	];
 
 	return (

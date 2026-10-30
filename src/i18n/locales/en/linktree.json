@@ -1,0 +1,24 @@
+{
+	"title": "Assalamu Alaikum 👋",
+	"subtitle": "Support us or get in touch — all our links in one place.",
+	"donation": "Donate Now",
+	"donation_desc": "Support our mission",
+	"social": "Follow Us",
+	"footer_text": "All rights reserved.",
+	"bank": {
+		"bank_transfer": "Bank Transfer",
+		"bank_transfer_desc": "Send a direct bank transfer",
+		"recipient": "Recipient",
+		"iban": "IBAN",
+		"bic": "BIC / SWIFT",
+		"bank_name": "Bank",
+		"reference": "Reference",
+		"copy": "Copy {{field}}",
+		"copy_all": "Copy All",
+		"copied": "Copied!",
+		"show_qr": "Show QR Code",
+		"hide_qr": "Hide QR Code",
+		"download_qr": "Download QR",
+		"qr_hint": "Scan with your banking app to auto-fill the transfer"
+	}
+}
