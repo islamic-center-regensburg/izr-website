@@ -1,56 +1,65 @@
-name: Build and Push Docker Image
+name: Build, Push and Deploy
 
 on:
   push:
     branches:
-      - main # trigger only on main branch merges
+      - "**"
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.vars.outputs.version }}
 
     steps:
-      # Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Log in to Docker Hub
       - name: Log in to Docker Hub
+        if: github.ref == 'refs/heads/main'
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Define version (using run number + short commit sha)
       - name: Set image version
         id: vars
         run: |
           VERSION="${GITHUB_RUN_NUMBER}-${GITHUB_SHA::7}"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      # Build Docker image
-      - name: Build Docker image
-        env:
-          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
-          VITE_MOSQUE_NAME: ${{ vars.VITE_MOSQUE_NAME }}
-        run: |
-          docker build \
-            --build-arg VITE_API_BASE_URL="${VITE_API_BASE_URL}" \
-            --build-arg VITE_MOSQUE_NAME="${VITE_MOSQUE_NAME}" \
-            --build-arg VITE_INSTAGRAM_LINK="${VITE_INSTAGRAM_LINK}" \
-            --build-arg VITE_FACEBOOK_LINK="${VITE_FACEBOOK_LINK}" \
-            --build-arg VITE_EMAIL_ADDRESS="${VITE_EMAIL_ADDRESS}" \
-            --build-arg VITE_TIKTOK_LINK="${VITE_TIKTOK_LINK}" \
-            -t ${{ secrets.DOCKER_USERNAME }}/izr-website:${{ steps.vars.outputs.version }} \
-            .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/izr-website:${{ steps.vars.outputs.version }} ${{ secrets.DOCKER_USERNAME }}/izr-website:latest
+      - name: Build and (optionally) push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/izr-website:${{ steps.vars.outputs.version }}
+            ${{ secrets.DOCKER_USERNAME }}/izr-website:latest
+          build-args: |
+            VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }}
+            VITE_MOSQUE_NAME=${{ vars.VITE_MOSQUE_NAME }}
+            VITE_INSTAGRAM_LINK=${{ vars.VITE_INSTAGRAM_LINK }}
+            VITE_FACEBOOK_LINK=${{ vars.VITE_FACEBOOK_LINK }}
+            VITE_EMAIL_ADDRESS=${{ vars.VITE_EMAIL_ADDRESS }}
+            VITE_TIKTOK_LINK=${{ vars.VITE_TIKTOK_LINK }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      # Push Docker image
-      - name: Push Docker image
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, vps, docker]
+    steps:
+      - name: Pull latest image and redeploy
+        working-directory: /root/izr-server
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/izr-website:${{ steps.vars.outputs.version }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/izr-website:latest
+          docker compose -p izr-server -f docker-compose.yml --env-file .env pull website
+          docker compose -p izr-server -f docker-compose.yml --env-file .env up -d website
+          docker image prune -f
