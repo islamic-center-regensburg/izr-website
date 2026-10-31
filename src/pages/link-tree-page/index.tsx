@@ -27,10 +27,6 @@ function LinkTreePage() {
 
 	return (
 		<section className="section relative overflow-hidden">
-			{/* Decorative blurred blobs (contained within section) */}
-			<div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-pink-500/20 blur-3xl" />
-			<div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl" />
-
 			<div className="relative mx-auto flex max-w-2xl flex-col items-center">
 				{/* Avatar / Logo */}
 				<div className="relative">
