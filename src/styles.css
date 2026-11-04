@@ -198,7 +198,7 @@ html:lang(ar) .markdown-content {
     @apply bg-background text-foreground;
   }
   .section {
-    @apply mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8 shadow-md
+    @apply mt-8 rounded-3xl bg-transparent p-6 backdrop-blur-3xl sm:p-8;
   }
 }
 
