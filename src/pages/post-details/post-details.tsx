@@ -7,6 +7,8 @@ import {
 	getAdjacentActualsQueryOptions,
 } from "@/api/cms/actuals/queries";
 
+import PendingScreen from "@/components/pending-screen";
+
 function PostDetails() {
 	const { id } = useParams({ from: "/post/$id" });
 	const { t, i18n } = useTranslation();
@@ -21,11 +23,7 @@ function PostDetails() {
 	);
 
 	if (actualQuery.isLoading) {
-		return (
-			<section className="rounded-3xl border border-border/40 bg-card/70 p-6">
-				<p className="text-sm text-foreground">{t("posts.loading")}</p>
-			</section>
-		);
+		return <PendingScreen message={t("posts.loading")} />;
 	}
 
 	if (actualQuery.error || !actualQuery.data) {

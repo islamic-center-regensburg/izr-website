@@ -1,4 +1,6 @@
 {
+	"loading": "Ein Moment für Sie",
+	"loading_description": "Wir bereiten die Inhalte für Sie vor.",
 	"close": "Schließen",
 	"download": "Herunterladen",
 	"copy_success": "In die Zwischenablage kopiert",
