@@ -1,4 +1,6 @@
 {
+	"loading": "لحظة من فضلك",
+	"loading_description": "نجهز المحتوى لكم.",
 	"close": "إغلاق",
 	"download": "تحميل",
 	"copy_success": "تم النسخ إلى الحافظة",

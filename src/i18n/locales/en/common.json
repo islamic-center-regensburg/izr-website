@@ -1,4 +1,6 @@
 {
+	"loading": "Just a moment",
+	"loading_description": "We are getting everything ready for you.",
 	"close": "Close",
 	"download": "Download",
 	"copy_success": "Copied to clipboard",

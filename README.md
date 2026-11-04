@@ -25,6 +25,14 @@ This project uses [Vitest](https://vitest.dev/) for testing. You can run the tes
 npm run test
 ```
 
+## Pending screens
+
+`src/components/pending-screen.tsx` provides a shared animated loading screen
+with localized text, a compact section variant, and reduced-motion support.
+It is the router's default pending component (200ms delay, 400ms minimum
+display) and the fallback for lazy homepage/dashboard content and initial data
+loads. Background query refreshes keep existing content visible.
+
 ## Translations
 
 Translations live in `src/i18n/locales/{de,en,ar}/`, with a JSON file for

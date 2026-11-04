@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { getAllActualsQueryOptions } from "@/api/cms/actuals/queries";
+import PendingScreen from "./pending-screen";
 import PostCard from "./post-card";
 
 function PostsSection() {
@@ -16,9 +17,7 @@ function PostsSection() {
 
 	if (actualsQuery.isLoading) {
 		return (
-			<section className="mt-8 rounded-3xl border border-border/40 bg-card/70 p-6">
-				<p className="text-sm text-foreground">{t("posts.loading")}</p>
-			</section>
+			<PendingScreen compact className="mt-8" message={t("posts.loading")} />
 		);
 	}
 
