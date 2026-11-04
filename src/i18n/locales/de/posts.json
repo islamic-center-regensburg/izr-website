@@ -8,6 +8,16 @@
 	"no_description": "Dieses Beitrag ist nicht verfügbar auf Deutsch.",
 	"attachments_title": "Anhänge",
 	"attachments_empty": "Keine Anhänge verfügbar.",
+	"detail": {
+		"breadcrumb": "Brotkrumennavigation",
+		"home": "Startseite",
+		"eyebrow": "Neues aus der Gemeinde",
+		"publisher": "Islamisches Zentrum Regensburg",
+		"contents": "Auf dieser Seite",
+		"together": "Gemeinsam für unsere Zukunft",
+		"closingTitle": "Gemeinsam bewahren wir, was Generationen aufgebaut haben.",
+		"back": "Zurück zu allen Beiträgen"
+	},
 	"navigation": {
 		"aria_label": "Beitragsnavigation",
 		"previous": "Vorheriger Beitrag",

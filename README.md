@@ -25,14 +25,6 @@ This project uses [Vitest](https://vitest.dev/) for testing. You can run the tes
 npm run test
 ```
 
-## Pending screens
-
-`src/components/pending-screen.tsx` provides a shared animated loading screen
-with localized text, a compact section variant, and reduced-motion support.
-It is the router's default pending component (200ms delay, 400ms minimum
-display) and the fallback for lazy homepage/dashboard content and initial data
-loads. Background query refreshes keep existing content visible.
-
 ## Donation dashboard
 
 `/dashboard` implements the goal-progress dashboard with a EUR 1,200,000 target.
@@ -65,6 +57,18 @@ Animation and locale formatting live in `src/pages/dashboard/hooks/`.
 Only the goal card rerenders on each
 animation frame; the donation table and action card do not.
 
+## Post details
+
+Post pages use an editorial reading column with a responsive campaign sidebar.
+The body remains a single CMS rich-text HTML field; no CMS schema changes are
+needed. HTML is sanitized with DOMPurify and inline presentation styles are
+removed so headings, lists, quotes, images, and tables use the site's typography.
+A leading blockquote becomes the introduction, while the remaining content keeps
+its order. The contents menu is generated from nonempty H2 headings and omitted
+when none exist. The campaign panel reuses the existing donation dialog and goal;
+it does not infer campaign data from article text. German, English, and Arabic
+labels are supported. The design ornament is stored locally.
+
 ## Donor CSV scripts
 
 `data/create-donors.mjs` creates the donor schema matching the receipt-based CSV.
@@ -83,8 +87,15 @@ methods to cash. English values are `paid`/`outstanding`, `cash`/`bank`,
 UUIDs, audit fields, and the campaign relationship are retained alongside the
 eight CSV fields; old name/pledge/source fields are removed in the replacement.
 
-## Translations
+## Pending screens
 
+`src/components/pending-screen.tsx` provides a shared animated loading screen
+with localized text, a compact section variant, and reduced-motion support.
+It is the router's default pending component (200ms delay, 400ms minimum
+display) and the fallback for lazy homepage/dashboard content and initial data
+loads. Background query refreshes keep existing content visible.
+
+## Translations
 Translations live in `src/i18n/locales/{de,en,ar}/`, with a JSON file for
 each content section (for example, `nav.json`, `about.json`, and `linktree.json`).
 `src/i18n/index.ts` combines these files into the existing translation keys,
@@ -94,6 +105,19 @@ register the imports in `src/i18n/index.ts`.
 
 ## Styling
 
+`CardSurface` in `src/components/card-surface.tsx` provides shared Motion hover
+feedback for cards and card-like sections. Surfaces are borderless and shadowless
+at rest; hover adds a spring lift, subtle scale, outline, and shadow. Large
+sections use gentler scaling. Keyboard focus inside a surface reveals its outline
+and shadow, and reduced-motion preferences disable the lift and scale.
+The shadcn Card uses this surface automatically; semantic sections and links
+reuse it with `asChild` without adding wrapper elements.
+
+`src/components/call-to-action-card.tsx` exports the shared patterned green
+`CallToActionCard` and gold `CallToActionButton`, built on the shadcn primitives.
+The donation CTA and news previews reuse these components; news cards remain
+single clickable links with localized read-more labels.
+
 The shared shadcn Button uses Motion (`motion/react`) for spring hover-lift and
 press feedback, including `asChild` links. Disabled buttons and reduced-motion
 preferences disable these gesture animations. CSS transitions exclude transforms
@@ -102,11 +126,6 @@ The navigation header expands over the page without changing its reserved height
 on hover or keyboard focus, revealing a tagline and desktop link descriptions.
 Links have individual hover/press feedback. Reduced-motion preferences make
 expansion immediate and disable link gesture animations.
-
-`src/components/call-to-action-card.tsx` exports the shared patterned green
-`CallToActionCard` and gold `CallToActionButton`, built on the shadcn primitives.
-The donation CTA and news previews reuse these components; news cards remain
-single clickable links with localized read-more labels.
 
 This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
 
