@@ -36,6 +36,11 @@ register the imports in `src/i18n/index.ts`.
 
 ## Styling
 
+The shared shadcn Button uses Motion (`motion/react`) for spring hover-lift and
+press feedback, including `asChild` links. Disabled buttons and reduced-motion
+preferences disable these gesture animations. CSS transitions exclude transforms
+so they do not compete with Motion.
+
 This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
 
 ### Removing Tailwind CSS

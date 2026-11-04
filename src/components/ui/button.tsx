@@ -1,11 +1,11 @@
 import { cva, type VariantProps } from "class-variance-authority";
+import { type HTMLMotionProps, motion, useReducedMotion } from "motion/react";
 import { Slot } from "radix-ui";
-import type * as React from "react";
 
 import { cn } from "src/lib/utils";
 
 const buttonVariants = cva(
-	"cursor-pointer inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+	"cursor-pointer inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-[color,background-color,border-color,box-shadow,opacity] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 	{
 		variants: {
 			variant: {
@@ -38,17 +38,30 @@ const buttonVariants = cva(
 	},
 );
 
+const MotionSlot = motion.create(Slot.Root);
+
 function Button({
 	className,
 	variant = "default",
 	size = "default",
 	asChild = false,
+	disabled,
+	"aria-disabled": ariaDisabled,
+	whileHover,
+	whileTap,
+	transition,
 	...props
-}: React.ComponentProps<"button"> &
+}: HTMLMotionProps<"button"> &
 	VariantProps<typeof buttonVariants> & {
 		asChild?: boolean;
 	}) {
-	const Comp = asChild ? Slot.Root : "button";
+	const reducedMotion = useReducedMotion();
+	const animate =
+		!reducedMotion &&
+		!disabled &&
+		ariaDisabled !== true &&
+		ariaDisabled !== "true";
+	const Comp = asChild ? MotionSlot : motion.button;
 
 	return (
 		<Comp
@@ -57,6 +70,11 @@ function Button({
 			data-size={size}
 			className={cn(buttonVariants({ variant, size, className }))}
 			{...props}
+			disabled={disabled}
+			aria-disabled={ariaDisabled}
+			whileHover={animate ? (whileHover ?? { y: -2, scale: 1.025 }) : undefined}
+			whileTap={animate ? (whileTap ?? { y: 0, scale: 0.96 }) : undefined}
+			transition={transition ?? { type: "spring", stiffness: 400, damping: 24 }}
 		/>
 	);
 }
