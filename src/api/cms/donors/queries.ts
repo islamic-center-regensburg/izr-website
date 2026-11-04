@@ -6,10 +6,11 @@ import type { Schema } from "../schema";
 export const DONATION_GOAL = 1_200_000;
 const totalsOptions = {
 	aggregate: { sum: ["amount"] as "amount"[], count: "*" as const },
+	groupBy: ["status"] as "status"[],
 	query: {
 		filter: {
 			amount: { _nnull: true as const, _gt: 0 },
-			status: { _eq: "paid" as const },
+			status: { _in: ["paid", "outstanding"] as ("paid" | "outstanding")[] },
 		},
 	},
 };
@@ -59,7 +60,7 @@ function parseDonation(value: unknown): Donation {
 
 export const donationDashboardQueryOptions = () =>
 	queryOptions({
-		queryKey: ["donors", "dashboard", "paid"],
+		queryKey: ["donors", "dashboard", "paid", "outstanding"],
 		queryFn: async () => {
 			const [totals, recent] = await Promise.all([
 				directus.request(
@@ -80,23 +81,38 @@ export const donationDashboardQueryOptions = () =>
 					}),
 				),
 			]);
-			const rawCount = totals[0]?.count;
-			const count = Number(rawCount);
-			if (
-				(typeof rawCount !== "string" && typeof rawCount !== "number") ||
-				rawCount === "" ||
-				!Number.isSafeInteger(count) ||
-				count < 0 ||
-				!Array.isArray(recent)
-			) {
+			if (!Array.isArray(totals) || !Array.isArray(recent)) {
 				throw new Error("Invalid donation summary returned by CMS");
 			}
+			const amounts = { paid: 0, outstanding: 0 };
+			const seen = new Set<string>();
+			for (const row of totals as unknown as {
+				status?: unknown;
+				count?: unknown;
+				sum?: { amount?: unknown };
+			}[]) {
+				const status = row.status;
+				const rawCount = row.count;
+				const count = Number(rawCount);
+				if (
+					(status !== "paid" && status !== "outstanding") ||
+					seen.has(status) ||
+					(typeof rawCount !== "string" && typeof rawCount !== "number") ||
+					String(rawCount).trim() === "" ||
+					!Number.isSafeInteger(count) ||
+					count < 0
+				) {
+					throw new Error("Invalid donation summary returned by CMS");
+				}
+				seen.add(status);
+				amounts[status] = parseAmount(
+					count === 0 && row.sum?.amount === null ? 0 : row.sum?.amount,
+				);
+			}
 			return {
-				totalAmount: parseAmount(
-					count === 0 && totals[0]?.sum?.amount === null
-						? 0
-						: totals[0]?.sum?.amount,
-				),
+				totalAmount: parseAmount(amounts.paid + amounts.outstanding),
+				paidAmount: amounts.paid,
+				outstandingAmount: amounts.outstanding,
 				recentDonations: recent.map(parseDonation),
 			};
 		},
