@@ -1,6 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import DOMPurify from "dompurify";
+import { ArrowRight } from "lucide-react";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { CallToActionButton, CallToActionCard } from "./call-to-action-card";
 
 interface PostCardProps {
 	id: string;
@@ -22,6 +25,7 @@ function stripHtml(html: string): string {
 }
 
 function PostCard({ id, title, description }: PostCardProps) {
+	const { t } = useTranslation();
 	const sanitizedHtml = useMemo(
 		() => DOMPurify.sanitize(description),
 		[description],
@@ -32,12 +36,22 @@ function PostCard({ id, title, description }: PostCardProps) {
 		<Link
 			to="/post/$id"
 			params={{ id }}
-			className="block rounded-2xl border border-border/50 bg-background/40 p-5 shadow-xs transition-colors hover:bg-accent/30"
+			className="group block h-full min-w-0 rounded-2xl outline-none focus-visible:ring-3 focus-visible:ring-donation-gold"
 		>
-			<h3 className="title-content text-lg font-semibold tracking-tight">
-				{title}
-			</h3>
-			<p className="mt-3 line-clamp-3 text-sm text-foreground">{plainText}</p>
+			<CallToActionCard className="min-h-72">
+				<h3 className="title-content text-2xl leading-snug font-semibold wrap-anywhere">
+					{title}
+				</h3>
+				<p className="line-clamp-3 text-sm leading-relaxed text-white/85">
+					{plainText}
+				</p>
+				<CallToActionButton asChild className="group-hover:bg-[#d9b752]">
+					<span>
+						{t("posts.read_more")}
+						<ArrowRight aria-hidden="true" className="rtl:rotate-180" />
+					</span>
+				</CallToActionButton>
+			</CallToActionCard>
 		</Link>
 	);
 }

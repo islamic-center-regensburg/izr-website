@@ -41,6 +41,11 @@ press feedback, including `asChild` links. Disabled buttons and reduced-motion
 preferences disable these gesture animations. CSS transitions exclude transforms
 so they do not compete with Motion.
 
+`src/components/call-to-action-card.tsx` exports the shared patterned green
+`CallToActionCard` and gold `CallToActionButton`, built on the shadcn primitives.
+The donation CTA and news previews reuse these components; news cards remain
+single clickable links with localized read-more labels.
+
 This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
 
 ### Removing Tailwind CSS
