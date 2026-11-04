@@ -8,6 +8,16 @@
 	"no_description": "This post is not available in English.",
 	"attachments_title": "Attachments",
 	"attachments_empty": "No attachments available.",
+	"detail": {
+		"breadcrumb": "Breadcrumb",
+		"home": "Home",
+		"eyebrow": "News & community",
+		"publisher": "Islamic Center of Regensburg",
+		"contents": "On this page",
+		"together": "Together for our future",
+		"closingTitle": "Together we preserve what generations have built.",
+		"back": "Back to all news"
+	},
 	"navigation": {
 		"aria_label": "Post navigation",
 		"previous": "Previous post",
