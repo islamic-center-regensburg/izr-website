@@ -1,7 +1,15 @@
 {
+	"tagline": "Ein Ort für Glauben, Gemeinschaft und Begegnung.",
+	"descriptions": {
+		"home": "Neues aus der Gemeinde",
+		"about": "Unser Zentrum kennenlernen",
+		"linktree": "Alle wichtigen Links",
+		"dashboard": "Gemeinsam unser Ziel erreichen"
+	},
 	"home": "Startseite",
 	"about": "Über uns",
 	"language": "Sprache",
 	"title": "Islamisches Zentrum Regensburg",
-	"linktree": "Linktree"
+	"linktree": "Linktree",
+	"dashboard": "SOM Übersicht"
 }
