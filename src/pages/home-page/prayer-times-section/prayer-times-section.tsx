@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { CardSurface } from "@/components/card-surface";
 import { PrayerCard } from "./components/prayer-card";
 import { SectionHeader } from "./components/section-header";
 import { ErrorState, LoadingState } from "./components/states";
@@ -51,24 +52,26 @@ function PrayerTimesSection() {
 	const shuruq = prayerTimes.shuruq ?? EMPTY_VALUE;
 
 	return (
-		<section className="mt-8 rounded-3xl border border-border/40 bg-transparent p-6 backdrop-blur-md sm:p-8 shadow-md">
-			<SectionHeader
-				gregorianDate={gregorianDate}
-				hijriDate={hijriDate}
-				shuruq={shuruq}
-			/>
+		<CardSurface asChild section>
+			<section className="mt-8 rounded-3xl bg-transparent p-6 backdrop-blur-md sm:p-8">
+				<SectionHeader
+					gregorianDate={gregorianDate}
+					hijriDate={hijriDate}
+					shuruq={shuruq}
+				/>
 
-			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				{PRAYER_ORDER.map((prayerKey) => (
-					<PrayerCard
-						key={prayerKey}
-						prayerKey={prayerKey}
-						prayerTime={getPrayerTime(prayerKey)}
-						iqamaTimes={getIqamaTimes(prayerKey)}
-					/>
-				))}
-			</div>
-		</section>
+				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					{PRAYER_ORDER.map((prayerKey) => (
+						<PrayerCard
+							key={prayerKey}
+							prayerKey={prayerKey}
+							prayerTime={getPrayerTime(prayerKey)}
+							iqamaTimes={getIqamaTimes(prayerKey)}
+						/>
+					))}
+				</div>
+			</section>
+		</CardSurface>
 	);
 }
 

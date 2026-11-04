@@ -1,7 +1,15 @@
 {
+	"tagline": "A place for faith, community and connection.",
+	"descriptions": {
+		"home": "Community news",
+		"about": "Discover our center",
+		"linktree": "All useful links",
+		"dashboard": "Reaching our goal together"
+	},
 	"home": "Home",
 	"about": "About",
 	"language": "Language",
 	"title": "Islamic Center of Regensburg",
-	"linktree": "Meine Links"
+	"linktree": "Meine Links",
+	"dashboard": "SOM Overview"
 }

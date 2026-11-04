@@ -1,6 +1,7 @@
 import { Facebook, Instagram, Mail, Music2 } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { useTranslation } from "react-i18next";
+import { CardSurface } from "@/components/card-surface";
 import { cn } from "@/lib/utils"; // adjust if your path differs
 
 type SocialLink = {
@@ -100,20 +101,22 @@ function SocialMedia({
 				)}
 			>
 				{translatedLinks.map(({ label, href, Icon, isExternal }) => (
-					<a
-						key={label}
-						href={href}
-						target={isExternal ? "_blank" : undefined}
-						rel={isExternal ? "noreferrer" : undefined}
-						aria-label={label}
-						className={cn(
-							"inline-flex items-center justify-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium transition-colors",
-							styles.link,
-						)}
-					>
-						<Icon className="size-4" strokeWidth={1.5} aria-hidden="true" />
-						<span>{label}</span>
-					</a>
+					<CardSurface asChild key={label}>
+						<a
+							key={label}
+							href={href}
+							target={isExternal ? "_blank" : undefined}
+							rel={isExternal ? "noreferrer" : undefined}
+							aria-label={label}
+							className={cn(
+								"inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
+								styles.link,
+							)}
+						>
+							<Icon className="size-4" strokeWidth={1.5} aria-hidden="true" />
+							<span>{label}</span>
+						</a>
+					</CardSurface>
 				))}
 			</div>
 		</div>

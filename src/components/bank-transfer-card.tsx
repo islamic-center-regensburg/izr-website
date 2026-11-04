@@ -10,6 +10,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { CardSurface } from "./card-surface";
 
 type BankTransferCardProps = {
 	iban?: string;
@@ -123,7 +124,7 @@ function BankTransferCard(props: BankTransferCardProps) {
 	};
 
 	return (
-		<div className="group relative overflow-hidden rounded-2xl border border-border/40 bg-background/40 backdrop-blur-md transition-all hover:border-border/80">
+		<CardSurface className="group relative overflow-hidden rounded-2xl bg-background/40 backdrop-blur-md">
 			{/* Trigger */}
 			{!isOpen && (
 				<div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-foreground/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
@@ -195,7 +196,7 @@ function BankTransferCard(props: BankTransferCardProps) {
 									<button
 										type="button"
 										onClick={() => handleCopy(field.key, field.value)}
-										aria-label={t("bank.copy", { field: field.label })}
+										aria-label={t("linktree.bank.copy", { field: field.label })}
 										className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border/40 bg-background/40 text-muted-foreground transition-all hover:bg-background/80 hover:text-foreground active:scale-95"
 									>
 										{copiedKey === field.key ? (
@@ -300,7 +301,7 @@ function BankTransferCard(props: BankTransferCardProps) {
 					</div>
 				</div>
 			</div>
-		</div>
+		</CardSurface>
 	);
 }
 

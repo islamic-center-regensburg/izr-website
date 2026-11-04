@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { CardSurface } from "@/components/card-surface";
 import { EMPTY_VALUE } from "../hooks/user-prayer-times-data";
 import type { PrayerKey } from "../types";
 import { IqamaTimesDisplay } from "./iqama-times-display";
@@ -17,7 +18,7 @@ export function PrayerCard({
 	const { t } = useTranslation();
 
 	return (
-		<div className="rounded-2xl border border-border/50 bg-background/40 p-4 shadow-xs backdrop-blur-md">
+		<CardSurface className="rounded-2xl bg-background/40 p-4 backdrop-blur-md">
 			<p className="text-base font-semibold">
 				{t(`prayer_times.names.${prayerKey}`)}
 			</p>
@@ -32,6 +33,6 @@ export function PrayerCard({
 				)}
 				<IqamaTimesDisplay iqamaTimes={iqamaTimes} />
 			</div>
-		</div>
+		</CardSurface>
 	);
 }

@@ -98,6 +98,10 @@ The shared shadcn Button uses Motion (`motion/react`) for spring hover-lift and
 press feedback, including `asChild` links. Disabled buttons and reduced-motion
 preferences disable these gesture animations. CSS transitions exclude transforms
 so they do not compete with Motion.
+The navigation header expands over the page without changing its reserved height
+on hover or keyboard focus, revealing a tagline and desktop link descriptions.
+Links have individual hover/press feedback. Reduced-motion preferences make
+expansion immediate and disable link gesture animations.
 
 `src/components/call-to-action-card.tsx` exports the shared patterned green
 `CallToActionCard` and gold `CallToActionButton`, built on the shadcn primitives.
