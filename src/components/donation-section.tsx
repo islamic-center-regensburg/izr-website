@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import BankTransferCard from "./bank-transfer-card";
 
-const transferDetails = {
+export const transferDetails = {
 	iban: "DE30 7505 0000 0026 7651 56",
 	bic: "BYLADEM1RBG",
 	holder: "Islamisches Zentrum Regensburg e.V.",
+	bankName: "Sparkasse Regensburg",
 } as const;
 
 function DonationSection() {
@@ -26,7 +27,7 @@ function DonationSection() {
 			<BankTransferCard
 				iban={transferDetails.iban}
 				bic={transferDetails.bic}
-				bankName={transferDetails.holder}
+				bankName={transferDetails.bankName}
 				reference={"Projekt SOM / Allgemeine Spende etc."}
 			/>
 		</section>
