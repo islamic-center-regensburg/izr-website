@@ -6,6 +6,7 @@ const PrayerTimesSection = lazy(
 	() => import("@/pages/home-page/prayer-times-section/prayer-times-section"),
 );
 const DonationSection = lazy(() => import("@/components/donation-section"));
+const DonationDashboard = lazy(() => import("@/pages/dashboard"));
 const PostsSection = lazy(() => import("@/components/posts-section"));
 
 function HomePage() {
@@ -13,6 +14,7 @@ function HomePage() {
 		<div className="py-10">
 			<Suspense fallback={<PendingScreen />}>
 				<Hero />
+				<DonationDashboard preview />
 				<PrayerTimesSection />
 				<DonationSection />
 				<PostsSection />

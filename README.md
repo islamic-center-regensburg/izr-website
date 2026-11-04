@@ -33,6 +33,56 @@ It is the router's default pending component (200ms delay, 400ms minimum
 display) and the fallback for lazy homepage/dashboard content and initial data
 loads. Background query refreshes keep existing content visible.
 
+## Donation dashboard
+
+`/dashboard` implements the goal-progress dashboard with a EUR 1,200,000 target.
+The query in `src/api/cms/donors/queries.ts` uses the shared Directus client at
+`${VITE_API_BASE_URL}/cms/public`: an aggregate query sums all donations, while a
+separate query fetches only the four latest entries, ordered by donation date
+(newest first). Both queries filter out null, zero, and negative amounts.
+Only amount, date, and payment method are requested; no donor identities are shown.
+Both queries include only `status = paid`; outstanding pledges are excluded.
+The shared query refreshes every two seconds while mounted in an active tab,
+updating totals and recent donations on both the homepage and dashboard.
+Cached results become stale after two seconds. Loading, empty, and retryable error states
+are localized in German, English, and Arabic. Both donation actions open the
+existing bank-transfer card. The dashboard shares the site's background and
+`public/islamic-bg.svg` pattern. All dashboard languages use 0–9 digits while
+retaining locale-specific formatting. Totals, remaining amount, and percentage
+count alongside ECharts gauge and bar charts with a shared 2.8-second quadratic ease-in, starting when
+the section enters the viewport. Reduced-motion preferences show final values
+immediately. The homepage reuses a compact preview with the latest donation and
+a link to `/dashboard`, sharing the same cached query.
+During counting, displayed amounts use magnitude-based steps (for example,
+EUR 1,000 for a six-digit total), then settle on the exact amount including cents.
+Chart motion remains smooth.
+
+The dashboard composes goal, activity, and bank-transfer action components in
+`src/pages/dashboard/components/` using shadcn Card, Badge, Table, Button, and Dialog
+primitives. Styling uses Tailwind utilities with donation color tokens in
+`src/styles.css`; there is no dashboard-specific stylesheet.
+Animation and locale formatting live in `src/pages/dashboard/hooks/`.
+Only the goal card rerenders on each
+animation frame; the donation table and action card do not.
+
+## Donor CSV scripts
+
+`data/create-donors.mjs` creates the donor schema matching the receipt-based CSV.
+It reuses the existing `campaign` collection and its SOM row without modifying them.
+Back up donor data and permissions before running
+`node data/create-donors.mjs --replace-donors`: this explicitly deletes the entire
+donors collection and all its records, then recreates it. Public permissions
+are not granted; review CMS permissions before using the website.
+
+Import with `node data/import-donors.mjs "<csv-path>" --dry-run` first, then
+remove `--dry-run` to write. Import requires an empty SOM campaign. The importer
+skips the spreadsheet's leading total and empty rows, reads UTF-8 and German
+dates (two-digit years mean 20xx), defaults blank dates to today and payment
+methods to cash. English values are `paid`/`outstanding`, `cash`/`bank`,
+`immediately`, and `contract_conclusion`. Free-text notes remain unchanged.
+UUIDs, audit fields, and the campaign relationship are retained alongside the
+eight CSV fields; old name/pledge/source fields are removed in the replacement.
+
 ## Translations
 
 Translations live in `src/i18n/locales/{de,en,ar}/`, with a JSON file for
