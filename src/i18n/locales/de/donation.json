@@ -1,5 +1,12 @@
 {
 	"dashboard": {
+		"pledgedTitle": "Eingegangen & versprochen",
+		"goalTitle": "Auf dem Weg zum Ziel",
+		"ofGoal": "von {{goal}} zugesagt",
+		"stillNeeded": "Noch benötigt",
+		"total": "Spenden gesamt",
+		"paid": "Eingegangen",
+		"outstanding": "Versprochen",
 		"eyebrow": "Projekt SOM · Spendenübersicht",
 		"title": "Gemeinsam unser Ziel erreichen",
 		"subtitle": "Jeder Beitrag bringt uns unserem gemeinsamen Ziel näher.",

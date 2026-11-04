@@ -33,7 +33,10 @@ The query in `src/api/cms/donors/queries.ts` uses the shared Directus client at
 separate query fetches only the four latest entries, ordered by donation date
 (newest first). Both queries filter out null, zero, and negative amounts.
 Only amount, date, and payment method are requested; no donor identities are shown.
-Both queries include only `status = paid`; outstanding pledges are excluded.
+The aggregate groups `paid` and `outstanding` donations by status. The interactive
+donut shows both amounts, with their combined total in the center and amounts
+and percentages on hover. Its caption lists both amounts without requiring a mouse.
+Goal progress, the remaining target, and recent donations include only paid donations.
 The shared query refreshes every two seconds while mounted in an active tab,
 updating totals and recent donations on both the homepage and dashboard.
 Cached results become stale after two seconds. Loading, empty, and retryable error states
@@ -41,7 +44,7 @@ are localized in German, English, and Arabic. Both donation actions open the
 existing bank-transfer card. The dashboard shares the site's background and
 `public/islamic-bg.svg` pattern. All dashboard languages use 0–9 digits while
 retaining locale-specific formatting. Totals, remaining amount, and percentage
-count alongside ECharts gauge and bar charts with a shared 2.8-second quadratic ease-in, starting when
+count alongside the ECharts goal-progress bar with a shared 2.8-second quadratic ease-in, starting when
 the section enters the viewport. Reduced-motion preferences show final values
 immediately. The homepage reuses a compact preview with the latest donation and
 a link to `/dashboard`, sharing the same cached query.

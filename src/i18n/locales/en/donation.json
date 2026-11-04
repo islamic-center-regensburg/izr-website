@@ -1,5 +1,12 @@
 {
 	"dashboard": {
+		"pledgedTitle": "Paid & outstanding",
+		"goalTitle": "Toward our goal",
+		"ofGoal": "of {{goal}} pledged",
+		"stillNeeded": "Still needed",
+		"total": "Total donations",
+		"paid": "Paid",
+		"outstanding": "Outstanding",
 		"eyebrow": "Project SOM · Donation overview",
 		"title": "Reaching our goal together",
 		"subtitle": "Every contribution brings us closer to our shared goal.",
