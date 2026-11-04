@@ -1,23 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
+import PendingScreen from "@/components/pending-screen";
 
-const DonationDashboard = lazy(() => import("@/components/donation-dashboard"));
-
-function DashboardFallback() {
-	return (
-		<div className="container mx-auto px-4">
-			<div className="w-full animate-pulse rounded-2xl bg-primary/10 h-screen" />
-		</div>
-	);
-}
+const DonationDashboard = lazy(() => import("@/pages/dashboard"));
 
 function DashboardPage() {
 	return (
-		<div className="py-10">
-			<Suspense fallback={<DashboardFallback />}>
-				<DonationDashboard />
-			</Suspense>
-		</div>
+		<Suspense fallback={<PendingScreen />}>
+			<DonationDashboard />
+		</Suspense>
 	);
 }
 

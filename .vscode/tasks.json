@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "dev: dashboard preview",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"dev",
+				"--",
+				"--port",
+				"3027",
+				"--mode",
+				"preview",
+				"--strictPort"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

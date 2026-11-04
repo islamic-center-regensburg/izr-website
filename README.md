@@ -25,8 +25,77 @@ This project uses [Vitest](https://vitest.dev/) for testing. You can run the tes
 npm run test
 ```
 
-## Translations
+## Donation dashboard
 
+`/dashboard` implements the goal-progress dashboard with a EUR 1,200,000 target.
+The query in `src/api/cms/donors/queries.ts` uses the shared Directus client at
+`${VITE_API_BASE_URL}/cms/public`: an aggregate query sums all donations, while a
+separate query fetches only the four latest entries, ordered by donation date
+(newest first). Both queries filter out null, zero, and negative amounts.
+Only amount, date, and payment method are requested; no donor identities are shown.
+Both queries include only `status = paid`; outstanding pledges are excluded.
+The shared query refreshes every two seconds while mounted in an active tab,
+updating totals and recent donations on both the homepage and dashboard.
+Cached results become stale after two seconds. Loading, empty, and retryable error states
+are localized in German, English, and Arabic. Both donation actions open the
+existing bank-transfer card. The dashboard shares the site's background and
+`public/islamic-bg.svg` pattern. All dashboard languages use 0–9 digits while
+retaining locale-specific formatting. Totals, remaining amount, and percentage
+count alongside ECharts gauge and bar charts with a shared 2.8-second quadratic ease-in, starting when
+the section enters the viewport. Reduced-motion preferences show final values
+immediately. The homepage reuses a compact preview with the latest donation and
+a link to `/dashboard`, sharing the same cached query.
+During counting, displayed amounts use magnitude-based steps (for example,
+EUR 1,000 for a six-digit total), then settle on the exact amount including cents.
+Chart motion remains smooth.
+
+The dashboard composes goal, activity, and bank-transfer action components in
+`src/pages/dashboard/components/` using shadcn Card, Badge, Table, Button, and Dialog
+primitives. Styling uses Tailwind utilities with donation color tokens in
+`src/styles.css`; there is no dashboard-specific stylesheet.
+Animation and locale formatting live in `src/pages/dashboard/hooks/`.
+Only the goal card rerenders on each
+animation frame; the donation table and action card do not.
+
+## Post details
+
+Post pages use an editorial reading column with a responsive campaign sidebar.
+The body remains a single CMS rich-text HTML field; no CMS schema changes are
+needed. HTML is sanitized with DOMPurify and inline presentation styles are
+removed so headings, lists, quotes, images, and tables use the site's typography.
+A leading blockquote becomes the introduction, while the remaining content keeps
+its order. The contents menu is generated from nonempty H2 headings and omitted
+when none exist. The campaign panel reuses the existing donation dialog and goal;
+it does not infer campaign data from article text. German, English, and Arabic
+labels are supported. The design ornament is stored locally.
+
+## Donor CSV scripts
+
+`data/create-donors.mjs` creates the donor schema matching the receipt-based CSV.
+It reuses the existing `campaign` collection and its SOM row without modifying them.
+Back up donor data and permissions before running
+`node data/create-donors.mjs --replace-donors`: this explicitly deletes the entire
+donors collection and all its records, then recreates it. Public permissions
+are not granted; review CMS permissions before using the website.
+
+Import with `node data/import-donors.mjs "<csv-path>" --dry-run` first, then
+remove `--dry-run` to write. Import requires an empty SOM campaign. The importer
+skips the spreadsheet's leading total and empty rows, reads UTF-8 and German
+dates (two-digit years mean 20xx), defaults blank dates to today and payment
+methods to cash. English values are `paid`/`outstanding`, `cash`/`bank`,
+`immediately`, and `contract_conclusion`. Free-text notes remain unchanged.
+UUIDs, audit fields, and the campaign relationship are retained alongside the
+eight CSV fields; old name/pledge/source fields are removed in the replacement.
+
+## Pending screens
+
+`src/components/pending-screen.tsx` provides a shared animated loading screen
+with localized text, a compact section variant, and reduced-motion support.
+It is the router's default pending component (200ms delay, 400ms minimum
+display) and the fallback for lazy homepage/dashboard content and initial data
+loads. Background query refreshes keep existing content visible.
+
+## Translations
 Translations live in `src/i18n/locales/{de,en,ar}/`, with a JSON file for
 each content section (for example, `nav.json`, `about.json`, and `linktree.json`).
 `src/i18n/index.ts` combines these files into the existing translation keys,
@@ -35,6 +104,28 @@ When adding a section, create its JSON file in all three language folders and
 register the imports in `src/i18n/index.ts`.
 
 ## Styling
+
+`CardSurface` in `src/components/card-surface.tsx` provides shared Motion hover
+feedback for cards and card-like sections. Surfaces are borderless and shadowless
+at rest; hover adds a spring lift, subtle scale, outline, and shadow. Large
+sections use gentler scaling. Keyboard focus inside a surface reveals its outline
+and shadow, and reduced-motion preferences disable the lift and scale.
+The shadcn Card uses this surface automatically; semantic sections and links
+reuse it with `asChild` without adding wrapper elements.
+
+`src/components/call-to-action-card.tsx` exports the shared patterned green
+`CallToActionCard` and gold `CallToActionButton`, built on the shadcn primitives.
+The donation CTA and news previews reuse these components; news cards remain
+single clickable links with localized read-more labels.
+
+The shared shadcn Button uses Motion (`motion/react`) for spring hover-lift and
+press feedback, including `asChild` links. Disabled buttons and reduced-motion
+preferences disable these gesture animations. CSS transitions exclude transforms
+so they do not compete with Motion.
+The navigation header expands over the page without changing its reserved height
+on hover or keyboard focus, revealing a tagline and desktop link descriptions.
+Links have individual hover/press feedback. Reduced-motion preferences make
+expansion immediate and disable link gesture animations.
 
 This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
 

@@ -3,11 +3,7 @@ interface LoadingStateProps {
 }
 
 export function LoadingState({ message }: LoadingStateProps) {
-	return (
-		<section className="mt-8 rounded-3xl border border-border/40 bg-card/70 p-6">
-			<p className="text-sm text-foreground">{message}</p>
-		</section>
-	);
+	return <PendingScreen compact className="mt-8" message={message} />;
 }
 
 interface ErrorStateProps {
@@ -21,3 +17,5 @@ export function ErrorState({ message }: ErrorStateProps) {
 		</section>
 	);
 }
+
+import PendingScreen from "@/components/pending-screen";

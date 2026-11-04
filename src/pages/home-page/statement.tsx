@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { CardSurface } from "@/components/card-surface";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -33,24 +34,26 @@ function Statement() {
 	const [showMore, setShowMore] = React.useState(false);
 	console.log("Show more value:", showMore); // Debugging line to check the current language
 	return (
-		<section className="mt-8 mb-10 flex flex-col rounded-3xl shadow-md bg-transparent p-6 backdrop-blur-md sm:p-8 space-y-4">
-			<h1 className="text-3xl font-bold text-primary text-center">
-				{statement.title}
-			</h1>
-			<p
-				dir="ltr"
-				className={cn("text-sm text-justify", !showMore && "line-clamp-6")}
-			>
-				{statement.content}
-			</p>
-			<Button
-				className="bg-primary mx-auto text-white py-2 px-4 rounded-full hover:bg-primary/80"
-				type="button"
-				onClick={() => setShowMore(!showMore)}
-			>
-				{t("common.show_more")}
-			</Button>
-		</section>
+		<CardSurface asChild section>
+			<section className="mt-8 mb-10 flex flex-col rounded-3xl bg-transparent p-6 backdrop-blur-md sm:p-8 space-y-4">
+				<h1 className="text-3xl font-bold text-primary text-center">
+					{statement.title}
+				</h1>
+				<p
+					dir="ltr"
+					className={cn("text-sm text-justify", !showMore && "line-clamp-6")}
+				>
+					{statement.content}
+				</p>
+				<Button
+					className="bg-primary mx-auto text-white py-2 px-4 rounded-full hover:bg-primary/80"
+					type="button"
+					onClick={() => setShowMore(!showMore)}
+				>
+					{t("common.show_more")}
+				</Button>
+			</section>
+		</CardSurface>
 	);
 }
 
