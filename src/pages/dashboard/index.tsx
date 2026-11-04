@@ -73,7 +73,8 @@ export default function DonationDashboard({
 						<>
 							<div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr]! gap-6">
 								<DonationGoalCard
-									total={data.totalAmount}
+									total={data.paidAmount}
+									outstanding={data.outstandingAmount}
 									preview={preview}
 									section={section}
 								/>
