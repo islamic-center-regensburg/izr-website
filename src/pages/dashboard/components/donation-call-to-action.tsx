@@ -8,7 +8,6 @@ import {
 	CallToActionButton,
 	CallToActionCard,
 } from "@/components/call-to-action-card";
-import { transferDetails } from "@/components/donation-section";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -84,17 +83,14 @@ export function DonationCallToAction({
 				</Surface>
 			</aside>
 			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogContent className="max-h-[90dvh] overflow-y-auto">
+				<DialogContent className="max-h-[90dvh] min-w-full md:min-w-2xl! overflow-y-auto">
 					<DialogHeader>
-						<DialogTitle>{t("donation.title")}</DialogTitle>
+						<DialogTitle className="text-2xl font-bold">
+							{t("donation.title")}
+						</DialogTitle>
 						<DialogDescription>{t("donation.subtitle")}</DialogDescription>
 					</DialogHeader>
-					<BankTransferCard
-						iban={transferDetails.iban}
-						bic={transferDetails.bic}
-						bankName={transferDetails.bankName}
-						reference="Projekt SOM"
-					/>
+					<BankTransferCard />
 				</DialogContent>
 			</Dialog>
 		</>
