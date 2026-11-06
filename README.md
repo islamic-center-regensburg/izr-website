@@ -9,6 +9,11 @@ npm install
 npm run dev
 ```
 
+The optional TanStack Devtools server event bus is disabled in `vite.config.ts`
+to avoid conflicts on its separate default port, `42069`, when other local apps
+are running. Browser Router and Query devtools remain available; server event
+streaming and event-bus-dependent integrations are unavailable.
+
 # Building For Production
 
 To build this application for production:
