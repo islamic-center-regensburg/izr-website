@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { DONATION_GOAL } from "@/api/cms/donors/queries";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { useAnimatedDonationTotal } from "../hooks/use-animated-donation-total";
 import { useDonationFormatters } from "../hooks/use-donation-formatters";
 import DonationProgressChart from "./donation-progress-chart";
@@ -70,11 +71,13 @@ export function DonationGoalCard({
 	outstanding,
 	preview,
 	section,
+	fullscreen = false,
 }: {
 	total: number;
 	outstanding: number;
 	preview: boolean;
 	section: RefObject<HTMLElement | null>;
+	fullscreen?: boolean;
 }) {
 	const { t } = useTranslation();
 	const { currency, percent } = useDonationFormatters();
@@ -93,7 +96,12 @@ export function DonationGoalCard({
 	return (
 		<Card
 			data-slot="donation-goal"
-			className="grid min-h-84 grid-cols-1 gap-5 rounded-2xl bg-white/40 bg-linear-to-br from-white/30 to-donation-mint/20 p-6 text-donation-primary shadow-none backdrop-blur-xl lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-10 sm:px-8 sm:pt-7 sm:pb-8"
+			className={cn(
+				"grid min-h-84 gap-5 rounded-2xl bg-white/40 bg-linear-to-br from-white/30 to-donation-mint/20 p-6 text-donation-primary shadow-none backdrop-blur-xl sm:px-8 sm:pt-7 sm:pb-8",
+				fullscreen
+					? "grid-cols-[minmax(0,1fr)_auto] gap-10"
+					: "grid-cols-1 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-10",
+			)}
 		>
 			<div className="flex min-w-0 flex-col">
 				<div className="flex items-center justify-between gap-3 text-donation-muted">
@@ -143,7 +151,14 @@ export function DonationGoalCard({
 					{t("donation.dashboard.encouragement")}
 				</p>
 			</div>
-			<div className="grid grid-cols-1 gap-8 self-center sm:grid-cols-2 sm:gap-6">
+			<div
+				className={cn(
+					"grid self-center",
+					fullscreen
+						? "grid-cols-2 gap-6"
+						: "grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-6",
+				)}
+			>
 				<DonationDonut
 					title={t("donation.dashboard.pledgedTitle")}
 					centerValue={currency.format(pledged)}
