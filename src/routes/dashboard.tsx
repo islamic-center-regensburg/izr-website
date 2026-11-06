@@ -6,7 +6,7 @@ import i18n from "@/i18n";
 const DonationDashboard = lazy(() => import("@/pages/dashboard"));
 
 function DashboardPage() {
-	const { fullscreen, callback } = Route.useSearch();
+	const { fullscreen, callback, time = 60 } = Route.useSearch();
 
 	useEffect(() => {
 		if (!fullscreen) return;
@@ -32,10 +32,10 @@ function DashboardPage() {
 
 		const timeout = window.setTimeout(() => {
 			window.location.assign(callback);
-		}, 60_000);
+		}, time * 1_000);
 
 		return () => window.clearTimeout(timeout);
-	}, [callback]);
+	}, [callback, time]);
 
 	return (
 		<Suspense fallback={<PendingScreen />}>
@@ -47,7 +47,7 @@ function DashboardPage() {
 export const Route = createFileRoute("/dashboard")({
 	validateSearch: (
 		search: Record<string, unknown>,
-	): { fullscreen?: boolean; callback?: string } => {
+	): { fullscreen?: boolean; callback?: string; time?: number } => {
 		const fullscreen = search.fullscreen ?? false;
 		if (
 			fullscreen !== true &&
@@ -56,6 +56,16 @@ export const Route = createFileRoute("/dashboard")({
 			fullscreen !== "false"
 		) {
 			throw new Error("fullscreen must be true or false.");
+		}
+
+		const rawTime = search.time === undefined ? 60 : search.time;
+		const time =
+			typeof rawTime === "number" ||
+			(typeof rawTime === "string" && rawTime.trim() !== "")
+				? Number(rawTime)
+				: Number.NaN;
+		if (!Number.isFinite(time) || time < 0.001 || time > 2_147_483.647) {
+			throw new Error("time must be between 0.001 and 2147483.647 seconds.");
 		}
 
 		let callback: string | undefined;
@@ -73,6 +83,7 @@ export const Route = createFileRoute("/dashboard")({
 		return {
 			fullscreen: fullscreen === true || fullscreen === "true",
 			callback,
+			time,
 		};
 	},
 	component: DashboardPage,
