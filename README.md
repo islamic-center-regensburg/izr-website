@@ -27,6 +27,35 @@ npm run test
 
 ## Donation dashboard
 
+The dashboard route accepts two optional query parameters:
+
+- `fullscreen=true` hides the navigation, footer, and devtools and fits the entire
+  dashboard on one screen without scrolling or requesting browser fullscreen.
+  The desktop layout scales down to fit both viewport dimensions, including
+  after resizing, font loading, or data updates; small screens show smaller text
+  rather than hiding content. Omit it or use `fullscreen=false` for the normal
+  responsive, scrollable layout.
+- `callback` redirects the browser after 60 seconds from mounting the dashboard
+  route. It accepts a relative route or an absolute HTTP(S) URL; other protocols
+  and empty values are rejected. URL-encode the value, including any query string
+  or fragment. Without it, the dashboard stays open. Leaving the dashboard cancels
+  the timer; changing the callback restarts it. Data refreshes do not restart it.
+
+For example: `/dashboard?fullscreen=true&callback=%2Flinktree` or
+`/dashboard?callback=https%3A%2F%2Fexample.com%2F`.
+The reusable dashboard component also accepts a `fullscreen` prop; redirect
+behavior belongs to the route and does not affect the homepage preview.
+The fullscreen route starts in German and cycles German → Arabic → English
+every 15 seconds, repeating while it remains open. Arabic uses right-to-left
+layout. This does not change the saved language preference; leaving fullscreen
+restores the previous language. The callback delay remains 60 seconds and is not
+restarted by language changes. The normal dashboard retains manual language
+selection.
+Changing the dashboard language replays the goal card's amount counters,
+progress bar, and donut entrance animations. Reduced-motion preferences still
+show final values immediately. Other dashboard content and route timers are
+preserved.
+
 `/dashboard` implements the goal-progress dashboard with a EUR 1,200,000 target.
 The query in `src/api/cms/donors/queries.ts` uses the shared Directus client at
 `${VITE_API_BASE_URL}/cms/public`: an aggregate query sums all donations, while a

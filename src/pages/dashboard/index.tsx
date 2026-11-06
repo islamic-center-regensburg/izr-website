@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { donationDashboardQueryOptions } from "@/api/cms/donors/queries";
 import { CardSurface } from "@/components/card-surface";
@@ -15,25 +15,56 @@ import { DonationGoalCard } from "./components/donation-goal-card";
 
 export default function DonationDashboard({
 	preview = false,
+	fullscreen = false,
 }: {
 	preview?: boolean;
+	fullscreen?: boolean;
 }) {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const section = useRef<HTMLElement>(null);
+	const viewport = useRef<HTMLDivElement>(null);
+	const [scale, setScale] = useState(1);
 	const titleId = useId();
 	const Heading = preview ? "h2" : "h1";
 	const { data, isPending, isError, isFetching, refetch } = useQuery(
 		donationDashboardQueryOptions(),
 	);
 
-	return (
+	useEffect(() => {
+		if (!fullscreen || !viewport.current || !section.current) return;
+		const frame = viewport.current;
+		const content = section.current;
+		const resize = () => {
+			setScale(
+				Math.max(
+					0,
+					Math.min(
+						1,
+						(frame.clientWidth - 16) / content.offsetWidth,
+						(frame.clientHeight - 16) / content.offsetHeight,
+					),
+				),
+			);
+		};
+		const observer = new ResizeObserver(resize);
+		observer.observe(frame);
+		observer.observe(content);
+		resize();
+		return () => observer.disconnect();
+	}, [fullscreen]);
+
+	const dashboard = (
 		<CardSurface asChild section>
 			<section
 				ref={section}
 				aria-labelledby={titleId}
 				data-slot="donation-dashboard"
 				data-preview={preview}
-				className={cn("section ", preview && "mt-8 sm:py-8")}
+				className={cn(
+					"section",
+					preview && "mt-8 sm:py-8",
+					fullscreen && "mt-0 rounded-none",
+				)}
 			>
 				<div className="relative mx-auto">
 					<header className="mb-7">
@@ -71,18 +102,28 @@ export default function DonationDashboard({
 					)}
 					{data && (
 						<>
-							<div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr]! gap-6">
+							<div
+								className={cn(
+									"grid gap-6",
+									fullscreen
+										? "grid-cols-[2fr_1fr]"
+										: "grid-cols-1 xl:grid-cols-[2fr_1fr]!",
+								)}
+							>
 								<DonationGoalCard
+									key={i18n.language}
 									total={data.paidAmount}
 									outstanding={data.outstandingAmount}
 									preview={preview}
 									section={section}
+									fullscreen={fullscreen}
 								/>
 								<DonationCallToAction />
 							</div>
 							<DonationActivity
 								donations={data.recentDonations}
 								preview={preview}
+								fullscreen={fullscreen}
 							/>
 						</>
 					)}
@@ -100,5 +141,22 @@ export default function DonationDashboard({
 				</div>
 			</section>
 		</CardSurface>
+	);
+
+	if (!fullscreen) return dashboard;
+
+	return (
+		<div
+			ref={viewport}
+			data-slot="dashboard-viewport"
+			className="relative h-dvh w-full overflow-hidden"
+		>
+			<div
+				className="absolute top-1/2 left-1/2 w-[max(1440px,100vw)] origin-center"
+				style={{ transform: `translate(-50%, -50%) scale(${scale})` }}
+			>
+				{dashboard}
+			</div>
+		</div>
 	);
 }
