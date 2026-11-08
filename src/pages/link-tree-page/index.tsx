@@ -1,4 +1,4 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, HandHeart } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { useTranslation } from "react-i18next";
 import BankTransferCard from "@/components/bank-transfer-card";
@@ -14,13 +14,13 @@ type MainLink = {
 };
 
 const mainLinks: MainLink[] = [
-	// {
-	//   label: "donation",
-	//   description: "donation_desc",
-	//   href: "#",
-	//   Icon: HandHeart,
-	//   isExternal: true,
-	// },
+	{
+		label: "zeffy",
+		description: "zeffy_donation_desc",
+		href: "https://www.zeffy.com/de-DE/donation-form/spenden-sie-um-leben-zu-veraendern-35",
+		Icon: HandHeart,
+		isExternal: true,
+	},
 ];
 
 function LinkTreePage() {
