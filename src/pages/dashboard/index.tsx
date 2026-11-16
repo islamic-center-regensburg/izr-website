@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { useId, useRef } from "react";
+import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import { donationDashboardQueryOptions } from "@/api/cms/donors/queries";
 import { CardSurface } from "@/components/card-surface";
@@ -19,7 +19,6 @@ export default function DonationDashboard({
 	preview?: boolean;
 }) {
 	const { t } = useTranslation();
-	const section = useRef<HTMLElement>(null);
 	const titleId = useId();
 	const Heading = preview ? "h2" : "h1";
 	const { data, isPending, isError, isFetching, refetch } = useQuery(
@@ -29,7 +28,6 @@ export default function DonationDashboard({
 	return (
 		<CardSurface asChild section>
 			<section
-				ref={section}
 				aria-labelledby={titleId}
 				data-slot="donation-dashboard"
 				data-preview={preview}
@@ -53,7 +51,7 @@ export default function DonationDashboard({
 					{isPending && (
 						<PendingScreen compact message={t("donation.dashboard.loading")} />
 					)}
-					{isError && (
+					{isError && !data && (
 						<Card
 							role="alert"
 							className="items-start gap-4 rounded-2xl bg-white/40 bg-linear-to-br from-white/30 to-donation-mint/20 p-8 text-donation-primary shadow-none backdrop-blur-xl"
@@ -76,7 +74,6 @@ export default function DonationDashboard({
 									total={data.paidAmount}
 									outstanding={data.outstandingAmount}
 									preview={preview}
-									section={section}
 								/>
 								<DonationCallToAction />
 							</div>
