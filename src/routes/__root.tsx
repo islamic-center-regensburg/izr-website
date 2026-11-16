@@ -4,6 +4,7 @@ import {
 	createRootRouteWithContext,
 	HeadContent,
 	Scripts,
+	useMatch,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import DocumentLanguageSync from "@/components/document-language-sync";
@@ -45,35 +46,60 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	const dashboardMatch = useMatch({ from: "/dashboard", shouldThrow: false });
+	const fullscreen = dashboardMatch?.search.fullscreen === true;
+
 	return (
 		<html lang="de-DE">
 			<head>
 				<HeadContent />
 			</head>
-			<body className="flex min-h-screen flex-col">
+			<body
+				className={
+					fullscreen
+						? "flex h-dvh flex-col overflow-hidden"
+						: "flex min-h-screen flex-col"
+				}
+			>
 				<TanStackQueryProvider>
 					<DocumentLanguageSync />
-					<Bg className="flex flex-1 flex-col">
-						<Navbar />
-						<main className="container m-auto flex-1 overflow-visible pt-20 w-full">
+					<Bg
+						className={
+							fullscreen
+								? "flex min-h-0 flex-1 flex-col overflow-hidden"
+								: "flex flex-1 flex-col"
+						}
+					>
+						{!fullscreen && <Navbar />}
+						<main
+							className={
+								fullscreen
+									? "w-full flex-1 overflow-visible"
+									: "container m-auto flex-1 overflow-visible pt-20 w-full"
+							}
+						>
 							{children}
 						</main>
-						<footer>
-							<Footer />
-						</footer>
+						{!fullscreen && (
+							<footer>
+								<Footer />
+							</footer>
+						)}
 					</Bg>
 
 					<Toaster />
-					<TanStackDevtools
-						config={{ position: "bottom-right" }}
-						plugins={[
-							{
-								name: "Tanstack Router",
-								render: <TanStackRouterDevtoolsPanel />,
-							},
-							TanStackQueryDevtools,
-						]}
-					/>
+					{!fullscreen && (
+						<TanStackDevtools
+							config={{ position: "bottom-right" }}
+							plugins={[
+								{
+									name: "Tanstack Router",
+									render: <TanStackRouterDevtoolsPanel />,
+								},
+								TanStackQueryDevtools,
+							]}
+						/>
+					)}
 				</TanStackQueryProvider>
 				<Scripts />
 			</body>

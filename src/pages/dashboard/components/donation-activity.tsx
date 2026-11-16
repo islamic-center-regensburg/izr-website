@@ -10,14 +10,17 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { useDonationFormatters } from "../hooks/use-donation-formatters";
 
 export function DonationActivity({
 	donations,
 	preview,
+	fullscreen = false,
 }: {
 	donations: Donation[];
 	preview: boolean;
+	fullscreen?: boolean;
 }) {
 	const { t } = useTranslation();
 	const { currency, dates } = useDonationFormatters();
@@ -43,7 +46,10 @@ export function DonationActivity({
 				<>
 					<ul
 						aria-labelledby={titleId}
-						className="mt-4 flex flex-col gap-2 sm:hidden"
+						className={cn(
+							"mt-4 flex-col gap-2",
+							fullscreen ? "hidden" : "flex sm:hidden",
+						)}
 					>
 						{recent.map((donation, index) => (
 							<li
@@ -71,7 +77,10 @@ export function DonationActivity({
 					</ul>
 					<Table
 						aria-labelledby={titleId}
-						className="hidden border-separate border-spacing-y-2 text-start text-[15px] sm:table"
+						className={cn(
+							"border-separate border-spacing-y-2 text-start text-[15px]",
+							fullscreen ? "table" : "hidden sm:table",
+						)}
 					>
 						<TableHeader>
 							<TableRow className="border-0 hover:bg-transparent">
