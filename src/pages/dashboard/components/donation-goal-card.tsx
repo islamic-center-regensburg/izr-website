@@ -1,10 +1,8 @@
-import type { RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { DONATION_GOAL } from "@/api/cms/donors/queries";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { useAnimatedDonationTotal } from "../hooks/use-animated-donation-total";
 import { useDonationFormatters } from "../hooks/use-donation-formatters";
 import DonationProgressChart from "./donation-progress-chart";
 
@@ -70,28 +68,18 @@ export function DonationGoalCard({
 	total,
 	outstanding,
 	preview,
-	section,
 	fullscreen = false,
 }: {
 	total: number;
 	outstanding: number;
 	preview: boolean;
-	section: RefObject<HTMLElement | null>;
 	fullscreen?: boolean;
 }) {
 	const { t } = useTranslation();
 	const { currency, percent } = useDonationFormatters();
 	const pledged = total + outstanding;
-	const { animatedTotal, displayedTotal } = useAnimatedDonationTotal(
-		pledged,
-		section,
-	);
 	const Heading = preview ? "h3" : "h2";
 	const progress = Math.min(100, Math.max(0, (pledged / DONATION_GOAL) * 100));
-	const animatedProgress = Math.min(
-		100,
-		Math.max(0, (animatedTotal / DONATION_GOAL) * 100),
-	);
 
 	return (
 		<Card
@@ -116,8 +104,7 @@ export function DonationGoalCard({
 					data-slot="donation-total"
 					className="mt-6.5 text-[40px] leading-[1.2] font-bold tabular-nums wrap-anywhere sm:text-[clamp(32px,3.2vw,46px)]"
 				>
-					<span className="sr-only">{currency.format(pledged)}</span>
-					<bdi aria-hidden="true">{currency.format(displayedTotal)}</bdi>
+					<bdi>{currency.format(pledged)}</bdi>
 				</p>
 				<p className="mt-3 font-medium">
 					{t("donation.dashboard.goal")} ·{" "}
@@ -134,17 +121,12 @@ export function DonationGoalCard({
 						percentage: percent.format(pledged / DONATION_GOAL),
 					})}
 				>
-					<DonationProgressChart progress={animatedProgress} kind="bar" />
+					<DonationProgressChart progress={progress} kind="bar" />
 				</div>
 				<div className="mt-5 flex flex-wrap justify-between gap-2 text-sm text-donation-muted tabular-nums">
 					<span>{t("donation.dashboard.remaining")}</span>
 					<strong className="text-lg text-donation-primary">
-						<span className="sr-only">
-							{currency.format(Math.max(0, DONATION_GOAL - pledged))}
-						</span>
-						<bdi aria-hidden="true">
-							{currency.format(Math.max(0, DONATION_GOAL - displayedTotal))}
-						</bdi>
+						<bdi>{currency.format(Math.max(0, DONATION_GOAL - pledged))}</bdi>
 					</strong>
 				</div>
 				<p className="mt-auto pt-7.5 text-[13px]">

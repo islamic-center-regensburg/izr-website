@@ -60,10 +60,9 @@ layout. This does not change the saved language preference; leaving fullscreen
 restores the previous language. The callback delay defaults to 60 seconds and is
 not restarted by language changes. The normal dashboard retains manual language
 selection.
-Changing the dashboard language replays the goal card's amount counters,
-progress bar, and donut entrance animations. Reduced-motion preferences still
-show final values immediately. Other dashboard content and route timers are
-preserved.
+Changing the dashboard language updates the localized goal totals and progress
+immediately; donut entrance animations replay and respect reduced-motion
+preferences. Other dashboard content and route timers are preserved.
 
 `/dashboard` implements the goal-progress dashboard with a EUR 1,200,000 target.
 The query in `src/api/cms/donors/queries.ts` uses the shared Directus client at

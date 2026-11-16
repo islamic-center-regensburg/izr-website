@@ -84,7 +84,7 @@ export default function DonationDashboard({
 					{isPending && (
 						<PendingScreen compact message={t("donation.dashboard.loading")} />
 					)}
-					{isError && (
+					{isError && !data && (
 						<Card
 							role="alert"
 							className="items-start gap-4 rounded-2xl bg-white/40 bg-linear-to-br from-white/30 to-donation-mint/20 p-8 text-donation-primary shadow-none backdrop-blur-xl"
@@ -115,7 +115,6 @@ export default function DonationDashboard({
 									total={data.paidAmount}
 									outstanding={data.outstandingAmount}
 									preview={preview}
-									section={section}
 									fullscreen={fullscreen}
 								/>
 								<DonationCallToAction />
