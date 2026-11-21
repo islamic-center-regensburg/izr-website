@@ -8,7 +8,7 @@ import {
 import type { MutationCallbackOptions } from "../utils/types";
 import { MOSQUE_QUERY_KEYS } from "./constants";
 
-export const createMosqueMutationOptions = ({
+export const useCreateMosqueMutationOptions = ({
 	onSuccess,
 	onError,
 }: MutationCallbackOptions) => {
@@ -35,7 +35,7 @@ interface updateMosqueMutationInterface {
 	id: string;
 	body: MosqueUpdate;
 }
-export const updateMosqueMutationOptions = ({
+export const useUpdateMosqueMutationOptions = ({
 	onSuccess,
 	onError,
 }: MutationCallbackOptions) => {

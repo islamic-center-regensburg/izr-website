@@ -1,12 +1,18 @@
 import type { EChartsOption } from "echarts";
 import { BarChart, PieChart } from "echarts/charts";
 import { GridComponent, TooltipComponent } from "echarts/components";
-import { init, use } from "echarts/core";
+import { init, use as registerEchartsModules } from "echarts/core";
 import { SVGRenderer } from "echarts/renderers";
 import { useEffect, useRef } from "react";
 import { useDonationFormatters } from "../hooks/use-donation-formatters";
 
-use([BarChart, PieChart, TooltipComponent, GridComponent, SVGRenderer]);
+registerEchartsModules([
+	BarChart,
+	PieChart,
+	TooltipComponent,
+	GridComponent,
+	SVGRenderer,
+]);
 
 const FONT_FAMILY = "Thmanyah, sans-serif";
 

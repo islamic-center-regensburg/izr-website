@@ -92,7 +92,7 @@ export const getAdjacentActualsQueryOptions = (
 							},
 						},
 						filter: {
-							date_updated: { _lt: currentDate } as any,
+							date_updated: { _lt: currentDate } as Record<string, unknown>,
 						},
 						sort: ["-date_updated"],
 						limit: 1,
@@ -108,7 +108,7 @@ export const getAdjacentActualsQueryOptions = (
 							},
 						},
 						filter: {
-							date_updated: { _gt: currentDate } as any,
+							date_updated: { _gt: currentDate } as Record<string, unknown>,
 						},
 						sort: ["date_updated"],
 						limit: 1,

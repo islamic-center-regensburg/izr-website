@@ -178,14 +178,14 @@ If you prefer not to use Tailwind CSS:
 3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
 4. Uninstall the packages: `npm install @tailwindcss/vite tailwindcss -D`
 
-## Linting & Formatting
+## Linting & Type Checking
 
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
+This project uses [ESLint](https://eslint.org/) for linting and `tsc` for type checking. The following scripts are available:
 
 ```bash
 npm run lint
-npm run format
-npm run check
+npm run lint:fix
+npm run typecheck
 ```
 
 ## Shadcn
