@@ -10,11 +10,7 @@ const config = defineConfig({
 		devtools({ eventBusConfig: { enabled: false } }),
 		tsconfigPaths({ projects: ["./tsconfig.json"] }),
 		tailwindcss(),
-		tanstackStart({
-			spa: {
-				enabled: true,
-			},
-		}),
+		tanstackStart(),
 		viteReact(),
 	],
 });
