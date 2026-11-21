@@ -1,4 +1,4 @@
-name: Build, Push and Deploy
+name: CI
 
 on:
   push:
@@ -9,7 +9,62 @@ on:
       - main
 
 jobs:
+  checks:
+    name: Lint, typecheck & test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test
+
+  security:
+    name: Trivy security scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Scan dependencies for vulnerabilities
+        # Non-blocking for now: surfaces pre-existing CVEs in transitive
+        # dev-tooling deps (vite/vitest/etc.) not shipped in the runtime
+        # image. Revisit once the backlog is triaged, then drop continue-on-error.
+        continue-on-error: true
+        uses: aquasecurity/trivy-action@0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          severity: CRITICAL,HIGH
+          exit-code: 1
+
+      - name: Scan Dockerfile for misconfigurations
+        uses: aquasecurity/trivy-action@0.36.0
+        with:
+          scan-type: config
+          scan-ref: .
+          severity: CRITICAL,HIGH
+          exit-code: 1
+
   build:
+    name: Build & push image
+    needs: [checks, security]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.vars.outputs.version }}
@@ -22,7 +77,6 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to Docker Hub
-        if: github.ref == 'refs/heads/main'
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -34,11 +88,11 @@ jobs:
           VERSION="${GITHUB_RUN_NUMBER}-${GITHUB_SHA::7}"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Build and (optionally) push
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/izr-website:${{ steps.vars.outputs.version }}
             ${{ secrets.DOCKER_USERNAME }}/izr-website:latest

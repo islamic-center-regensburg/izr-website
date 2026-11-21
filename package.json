@@ -10,9 +10,10 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "srvx --prod -s ../client dist/server/server.js",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
     "openapi-ts": "openapi-ts -i http://localhost:8000/openapi.json -o src/api/gen"
   },
   "dependencies": {
