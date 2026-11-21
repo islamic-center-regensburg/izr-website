@@ -31,20 +31,33 @@ ENV VITE_EMAIL_ADDRESS=${VITE_EMAIL_ADDRESS}
 ARG VITE_TIKTOK_LINK=""
 ENV VITE_TIKTOK_LINK=${VITE_TIKTOK_LINK}
 
-# Build the application
+# Build the application (client + SSR server bundles)
 RUN npm run build
 
-# Stage 2: Serve with nginx
-FROM nginx:alpine
+# Stage 2: Run the TanStack Start SSR output on a Node server
+FROM node:20-alpine AS runtime
 
-# Copy the build output from builder stage
-COPY --from=builder /app/dist/client /usr/share/nginx/html
+WORKDIR /app
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+ENV NODE_ENV=production
+# Non-privileged port so the server can run as a non-root user.
+# NOTE: the previous nginx image listened on 80; the external docker-compose
+# port mapping/reverse proxy must now target 3000 instead.
+ENV PORT=3000
 
-# Expose port 80
-EXPOSE 80
+# Install only production dependencies (includes srvx, the Node server runner)
+COPY package*.json ./
+RUN npm ci --omit=dev
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Copy the built client assets and SSR server bundle
+COPY --from=builder /app/dist ./dist
+RUN chown -R node:node /app
+
+EXPOSE 3000
+
+USER node
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD node -e "fetch('http://localhost:'+(process.env.PORT||3000)).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+
+CMD ["npm", "run", "start"]
