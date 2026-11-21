@@ -8,7 +8,7 @@ import {
 import type { MutationCallbackOptions } from "../utils/types";
 import { PRAYER_IQAMA_QUERY_KEYS } from "./constants";
 
-export const createPrayerIqamaMutationOptions = ({
+export const useCreatePrayerIqamaMutationOptions = ({
 	onSuccess,
 	onError,
 }: MutationCallbackOptions) => {
@@ -35,7 +35,7 @@ export const createPrayerIqamaMutationOptions = ({
 	};
 };
 
-export const updatePrayerIqamaMutationOptions = ({
+export const useUpdatePrayerIqamaMutationOptions = ({
 	onSuccess,
 	onError,
 }: MutationCallbackOptions) => {

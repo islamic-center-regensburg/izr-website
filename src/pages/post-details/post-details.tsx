@@ -109,7 +109,7 @@ function PostDetails() {
 				{content?.introduction && (
 					<div
 						className="post-content post-introduction mt-7 max-w-3xl"
-						// biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized with DOMPurify in usePostContent
+						// Safe: sanitized with DOMPurify in usePostContent
 						dangerouslySetInnerHTML={{ __html: content.introduction }}
 					/>
 				)}
@@ -139,7 +139,7 @@ function PostDetails() {
 					{content ? (
 						<div
 							className="post-content"
-							// biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized with DOMPurify in usePostContent
+							// Safe: sanitized with DOMPurify in usePostContent
 							dangerouslySetInnerHTML={{
 								__html: content.html,
 							}}
