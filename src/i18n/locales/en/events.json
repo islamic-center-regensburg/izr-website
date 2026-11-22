@@ -1,0 +1,8 @@
+{
+	"title": "Upcoming Events",
+	"loading": "Loading events...",
+	"error": "Failed to load events.",
+	"empty": "No events are currently planned.",
+	"untitled": "Untitled",
+	"no_description": "This event is not available in English."
+}

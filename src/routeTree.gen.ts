@@ -13,7 +13,9 @@ import { Route as LinktreeRouteImport } from './routes/linktree'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as PostIdRouteImport } from './routes/post.$id'
+import { Route as PostSlugRouteImport } from './routes/post.$slug'
+import { Route as CampaignsSlugRouteImport } from './routes/campaigns.$slug'
+import { Route as ApiAssetsIdRouteImport } from './routes/api.assets.$id'
 
 const LinktreeRoute = LinktreeRouteImport.update({
   id: '/linktree',
@@ -35,9 +37,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PostIdRoute = PostIdRouteImport.update({
-  id: '/post/$id',
-  path: '/post/$id',
+const PostSlugRoute = PostSlugRouteImport.update({
+  id: '/post/$slug',
+  path: '/post/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampaignsSlugRoute = CampaignsSlugRouteImport.update({
+  id: '/campaigns/$slug',
+  path: '/campaigns/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAssetsIdRoute = ApiAssetsIdRouteImport.update({
+  id: '/api/assets/$id',
+  path: '/api/assets/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -46,14 +58,18 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/linktree': typeof LinktreeRoute
-  '/post/$id': typeof PostIdRoute
+  '/campaigns/$slug': typeof CampaignsSlugRoute
+  '/post/$slug': typeof PostSlugRoute
+  '/api/assets/$id': typeof ApiAssetsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/linktree': typeof LinktreeRoute
-  '/post/$id': typeof PostIdRoute
+  '/campaigns/$slug': typeof CampaignsSlugRoute
+  '/post/$slug': typeof PostSlugRoute
+  '/api/assets/$id': typeof ApiAssetsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +77,38 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/linktree': typeof LinktreeRoute
-  '/post/$id': typeof PostIdRoute
+  '/campaigns/$slug': typeof CampaignsSlugRoute
+  '/post/$slug': typeof PostSlugRoute
+  '/api/assets/$id': typeof ApiAssetsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/dashboard' | '/linktree' | '/post/$id'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/linktree'
+    | '/campaigns/$slug'
+    | '/post/$slug'
+    | '/api/assets/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/dashboard' | '/linktree' | '/post/$id'
-  id: '__root__' | '/' | '/about' | '/dashboard' | '/linktree' | '/post/$id'
+  to:
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/linktree'
+    | '/campaigns/$slug'
+    | '/post/$slug'
+    | '/api/assets/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/linktree'
+    | '/campaigns/$slug'
+    | '/post/$slug'
+    | '/api/assets/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,7 +116,9 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   DashboardRoute: typeof DashboardRoute
   LinktreeRoute: typeof LinktreeRoute
-  PostIdRoute: typeof PostIdRoute
+  CampaignsSlugRoute: typeof CampaignsSlugRoute
+  PostSlugRoute: typeof PostSlugRoute
+  ApiAssetsIdRoute: typeof ApiAssetsIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -109,11 +151,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/post/$id': {
-      id: '/post/$id'
-      path: '/post/$id'
-      fullPath: '/post/$id'
-      preLoaderRoute: typeof PostIdRouteImport
+    '/post/$slug': {
+      id: '/post/$slug'
+      path: '/post/$slug'
+      fullPath: '/post/$slug'
+      preLoaderRoute: typeof PostSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campaigns/$slug': {
+      id: '/campaigns/$slug'
+      path: '/campaigns/$slug'
+      fullPath: '/campaigns/$slug'
+      preLoaderRoute: typeof CampaignsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/assets/$id': {
+      id: '/api/assets/$id'
+      path: '/api/assets/$id'
+      fullPath: '/api/assets/$id'
+      preLoaderRoute: typeof ApiAssetsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -124,7 +180,9 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   DashboardRoute: DashboardRoute,
   LinktreeRoute: LinktreeRoute,
-  PostIdRoute: PostIdRoute,
+  CampaignsSlugRoute: CampaignsSlugRoute,
+  PostSlugRoute: PostSlugRoute,
+  ApiAssetsIdRoute: ApiAssetsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

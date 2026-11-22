@@ -1,9 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { donationDashboardQueryOptions } from "@/api/cms/donors/queries";
 import { CardSurface } from "@/components/card-surface";
 import PendingScreen from "@/components/pending-screen";
 import { Button } from "@/components/ui/button";
@@ -12,12 +8,19 @@ import { cn } from "@/lib/utils";
 import { DonationActivity } from "./components/donation-activity";
 import { DonationCallToAction } from "./components/donation-call-to-action";
 import { DonationGoalCard } from "./components/donation-goal-card";
+import { useDonationDashboardData } from "./hooks/use-donation-dashboard-data";
 
+/**
+ * Full dashboard for a single campaign. Omit `campaignSlug` to show the
+ * deterministic "primary" campaign — used by the fullscreen kiosk display
+ * (`/dashboard`, `fullscreen=true`); pass a specific `campaignSlug` to show
+ * the dashboard for one campaign from the campaigns gallery (`/campaigns/$slug`).
+ */
 export default function DonationDashboard({
-	preview = false,
+	campaignSlug,
 	fullscreen = false,
 }: {
-	preview?: boolean;
+	campaignSlug?: string;
 	fullscreen?: boolean;
 }) {
 	const { t, i18n } = useTranslation();
@@ -25,10 +28,18 @@ export default function DonationDashboard({
 	const viewport = useRef<HTMLDivElement>(null);
 	const [scale, setScale] = useState(1);
 	const titleId = useId();
-	const Heading = preview ? "h2" : "h1";
-	const { data, isPending, isError, isFetching, refetch } = useQuery(
-		donationDashboardQueryOptions(),
-	);
+	const {
+		campaign,
+		projectName,
+		goal,
+		paidAmount,
+		outstandingAmount,
+		recentDonations,
+		isLoading,
+		isError,
+		isFetching,
+		refetch,
+	} = useDonationDashboardData(campaignSlug);
 
 	useEffect(() => {
 		if (!fullscreen || !viewport.current || !section.current) return;
@@ -59,32 +70,27 @@ export default function DonationDashboard({
 				ref={section}
 				aria-labelledby={titleId}
 				data-slot="donation-dashboard"
-				data-preview={preview}
-				className={cn(
-					"section",
-					preview && "mt-8 sm:py-8",
-					fullscreen && "mt-0 rounded-none",
-				)}
+				className={cn("section", fullscreen && "mt-0 rounded-none")}
 			>
 				<div className="relative mx-auto">
 					<header className="mb-7">
 						<p className="text-xs font-bold uppercase">
-							{t("donation.dashboard.eyebrow")}
+							{t("donation.dashboard.eyebrow", { project: projectName })}
 						</p>
-						<Heading
+						<h1
 							id={titleId}
 							className="my-2 text-[32px] leading-[1.2] font-black sm:text-[40px]"
 						>
 							{t("donation.dashboard.title")}
-						</Heading>
+						</h1>
 						<p className="text-donation-muted">
 							{t("donation.dashboard.subtitle")}
 						</p>
 					</header>
-					{isPending && (
+					{isLoading && (
 						<PendingScreen compact message={t("donation.dashboard.loading")} />
 					)}
-					{isError && !data && (
+					{isError && !campaign && (
 						<Card
 							role="alert"
 							className="items-start gap-4 rounded-2xl bg-white/40 bg-linear-to-br from-white/30 to-donation-mint/20 p-8 text-donation-primary shadow-none backdrop-blur-xl"
@@ -93,14 +99,14 @@ export default function DonationDashboard({
 							<Button
 								type="button"
 								disabled={isFetching}
-								onClick={() => void refetch()}
+								onClick={() => refetch()}
 								className="rounded-3xl bg-donation-primary px-5 py-2.5 text-white"
 							>
 								{t("donation.dashboard.retry")}
 							</Button>
 						</Card>
 					)}
-					{data && (
+					{campaign && (
 						<>
 							<div
 								className={cn(
@@ -112,30 +118,16 @@ export default function DonationDashboard({
 							>
 								<DonationGoalCard
 									key={i18n.language}
-									total={data.paidAmount}
-									outstanding={data.outstandingAmount}
-									preview={preview}
+									total={paidAmount}
+									outstanding={outstandingAmount}
+									goal={goal}
+									projectName={projectName ?? ""}
 									fullscreen={fullscreen}
 								/>
 								<DonationCallToAction />
 							</div>
-							<DonationActivity
-								donations={data.recentDonations}
-								preview={preview}
-								fullscreen={fullscreen}
-							/>
+							<DonationActivity donations={recentDonations} fullscreen={fullscreen} />
 						</>
-					)}
-					{preview && (
-						<Button
-							asChild
-							className="ms-auto mt-6 flex h-auto min-h-13 w-fit rounded-3xl bg-donation-gold px-5 py-3 text-[15px] font-semibold text-donation-primary whitespace-normal hover:bg-[#d9b752]"
-						>
-							<Link to="/dashboard">
-								{t("donation.dashboard.viewDashboard")}
-								<ArrowRight aria-hidden="true" className="rtl:rotate-180" />
-							</Link>
-						</Button>
 					)}
 				</div>
 			</section>

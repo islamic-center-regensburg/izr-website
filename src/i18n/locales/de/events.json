@@ -1,0 +1,8 @@
+{
+	"title": "Kommende Veranstaltungen",
+	"loading": "Veranstaltungen werden geladen...",
+	"error": "Veranstaltungen konnten nicht geladen werden.",
+	"empty": "Derzeit sind keine Veranstaltungen geplant.",
+	"untitled": "Ohne Titel",
+	"no_description": "Diese Veranstaltung ist nicht auf Deutsch verfügbar."
+}

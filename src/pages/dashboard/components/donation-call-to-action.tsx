@@ -1,7 +1,8 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { DONATION_GOAL } from "@/api/cms/donors/queries";
+import { primaryCampaignQueryOptions } from "@/api/collections/campaigns/queries";
 import {
 	CallToActionButton,
 	CallToActionCard,
@@ -18,6 +19,10 @@ export function DonationCallToAction({
 	const { currency } = useDonationFormatters();
 	const editorial = variant === "editorial";
 	const Surface = editorial ? Card : CallToActionCard;
+	// Only needed for the editorial variant's goal amount, but cheap to
+	// fetch unconditionally since it's shared/cached with the dashboard.
+	const { data: campaign } = useQuery(primaryCampaignQueryOptions());
+	const goal = campaign?.target_amount ? Number.parseFloat(campaign.target_amount) : undefined;
 
 	return (
 		<aside className="h-full">
@@ -35,10 +40,10 @@ export function DonationCallToAction({
 					{t("donation.dashboard.ctaTitle")}
 				</h2>
 				<p className="text-sm">{t("donation.dashboard.ctaDescription")}</p>
-				{editorial && (
+				{editorial && goal !== undefined && (
 					<>
 						<p className="text-3xl font-bold tabular-nums">
-							<bdi>{currency.format(DONATION_GOAL)}</bdi>
+							<bdi>{currency.format(goal)}</bdi>
 						</p>
 						<p className="text-xs text-donation-muted">
 							{t("donation.dashboard.goal")}

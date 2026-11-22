@@ -6,8 +6,9 @@ import { Card } from "./ui/card";
 export function CallToActionCard({
 	children,
 	className,
+	thumbnailUrl,
 	...props
-}: ComponentProps<typeof Card>) {
+}: ComponentProps<typeof Card> & { thumbnailUrl?: string }) {
 	return (
 		<Card
 			data-slot="call-to-action-card"
@@ -17,12 +18,24 @@ export function CallToActionCard({
 			)}
 			{...props}
 		>
-			<img
-				src="/islamic-bg.svg"
-				alt=""
-				aria-hidden="true"
-				className="pointer-events-none absolute right-0 bottom-0 -z-10 h-auto w-[70%] opacity-11"
-			/>
+			{thumbnailUrl ? (
+				<>
+					<img
+						src={thumbnailUrl}
+						alt=""
+						aria-hidden="true"
+						className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover"
+					/>
+					<div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-donation-primary via-donation-primary/80 to-donation-primary/40" />
+				</>
+			) : (
+				<img
+					src="/islamic-bg.svg"
+					alt=""
+					aria-hidden="true"
+					className="pointer-events-none absolute right-0 bottom-0 -z-10 h-auto w-[70%] opacity-11"
+				/>
+			)}
 			{children}
 		</Card>
 	);

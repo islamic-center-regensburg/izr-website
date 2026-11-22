@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { DONATION_GOAL } from "@/api/cms/donors/queries";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -67,19 +66,22 @@ function DonationDonut({
 export function DonationGoalCard({
 	total,
 	outstanding,
-	preview,
+	goal,
+	projectName,
 	fullscreen = false,
 }: {
 	total: number;
 	outstanding: number;
-	preview: boolean;
+	goal: number;
+	projectName: string;
 	fullscreen?: boolean;
 }) {
 	const { t } = useTranslation();
 	const { currency, percent } = useDonationFormatters();
 	const pledged = total + outstanding;
-	const Heading = preview ? "h3" : "h2";
-	const progress = Math.min(100, Math.max(0, (pledged / DONATION_GOAL) * 100));
+	// `goal` can be 0 while the campaign is still loading.
+	const goalRatio = goal > 0 ? pledged / goal : 0;
+	const progress = Math.min(100, Math.max(0, goalRatio * 100));
 
 	return (
 		<Card
@@ -93,11 +95,11 @@ export function DonationGoalCard({
 		>
 			<div className="flex min-w-0 flex-col">
 				<div className="flex items-center justify-between gap-3 text-donation-muted">
-					<Heading className="font-sans text-xs font-bold uppercase">
+					<h2 className="font-sans text-xs font-bold uppercase">
 						{t("donation.dashboard.total")}
-					</Heading>
+					</h2>
 					<Badge className="rounded-3xl bg-donation-mint px-3.5 py-2 text-[11px] font-bold text-donation-primary">
-						{t("donation.dashboard.project")}
+						{projectName}
 					</Badge>
 				</div>
 				<p
@@ -107,8 +109,7 @@ export function DonationGoalCard({
 					<bdi>{currency.format(pledged)}</bdi>
 				</p>
 				<p className="mt-3 font-medium">
-					{t("donation.dashboard.goal")} ·{" "}
-					<bdi>{currency.format(DONATION_GOAL)}</bdi>
+					{t("donation.dashboard.goal")} · <bdi>{currency.format(goal)}</bdi>
 				</p>
 				<div
 					className="mt-6 h-3 overflow-hidden rounded-3xl bg-donation-mint"
@@ -118,7 +119,7 @@ export function DonationGoalCard({
 					aria-valuemax={100}
 					aria-valuenow={progress}
 					aria-valuetext={t("donation.dashboard.progress", {
-						percentage: percent.format(pledged / DONATION_GOAL),
+						percentage: percent.format(goalRatio),
 					})}
 				>
 					<DonationProgressChart progress={progress} kind="bar" />
@@ -126,7 +127,7 @@ export function DonationGoalCard({
 				<div className="mt-5 flex flex-wrap justify-between gap-2 text-sm text-donation-muted tabular-nums">
 					<span>{t("donation.dashboard.remaining")}</span>
 					<strong className="text-lg text-donation-primary">
-						<bdi>{currency.format(Math.max(0, DONATION_GOAL - pledged))}</bdi>
+						<bdi>{currency.format(Math.max(0, goal - pledged))}</bdi>
 					</strong>
 				</div>
 				<p className="mt-auto pt-7.5 text-[13px]">
@@ -156,9 +157,9 @@ export function DonationGoalCard({
 				/>
 				<DonationDonut
 					title={t("donation.dashboard.goalTitle")}
-					centerValue={percent.format(pledged / DONATION_GOAL)}
+					centerValue={percent.format(goalRatio)}
 					centerLabel={t("donation.dashboard.ofGoal", {
-						goal: currency.format(DONATION_GOAL),
+						goal: currency.format(goal),
 					})}
 					segments={[
 						{ key: "paid", value: total, color: PAID_COLOR },
@@ -169,7 +170,7 @@ export function DonationGoalCard({
 						},
 						{
 							key: "stillNeeded",
-							value: Math.max(0, DONATION_GOAL - pledged),
+							value: Math.max(0, goal - pledged),
 							color: NEEDED_COLOR,
 						},
 					]}

@@ -15,6 +15,7 @@ export default tseslint.config(
 			".wrangler",
 			"src/routeTree.gen.ts",
 			"src/api/gen/**",
+			"src/api/generated/**",
 		],
 	},
 	{
