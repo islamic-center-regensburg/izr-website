@@ -1,27 +1,34 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import { MosqueProvider } from "@/contexts";
 
-let context:
-	| {
-			queryClient: QueryClient;
-			mosqueName: string;
-	  }
-	| undefined;
+type Context = {
+	queryClient: QueryClient;
+};
 
-export function getContext() {
-	if (context) {
-		return context;
+let clientContext: Context | undefined;
+
+function createContext(): Context {
+	return {
+		queryClient: new QueryClient(),
+	};
+}
+
+export function getContext(): Context {
+	// On the server, every request must get its own fresh QueryClient —
+	// memoizing it here would leak one user's cached data (and their
+	// server-only Directus reads) into every other request handled by the
+	// same Node process. In the browser there's only one "request" (the
+	// page load), so we memoize once and reuse it across client-side
+	// navigation to keep the cache warm.
+	if (typeof document === "undefined") {
+		return createContext();
 	}
 
-	const queryClient = new QueryClient();
+	if (!clientContext) {
+		clientContext = createContext();
+	}
 
-	context = {
-		queryClient,
-		mosqueName: import.meta.env.VITE_MOSQUE_NAME,
-	};
-
-	return context;
+	return clientContext;
 }
 
 export default function TanStackQueryProvider({
@@ -29,11 +36,8 @@ export default function TanStackQueryProvider({
 }: {
 	children: ReactNode;
 }) {
-	const { queryClient, mosqueName } = getContext();
+	const { queryClient } = getContext();
 
-	return (
-		<QueryClientProvider client={queryClient}>
-			<MosqueProvider mosqueName={mosqueName}>{children}</MosqueProvider>
-		</QueryClientProvider>
-	);
+	return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
+

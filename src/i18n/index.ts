@@ -3,6 +3,7 @@ import { initReactI18next } from "react-i18next";
 import arAbout from "./locales/ar/about.json";
 import arCommon from "./locales/ar/common.json";
 import arDonation from "./locales/ar/donation.json";
+import arEvents from "./locales/ar/events.json";
 import arFooter from "./locales/ar/footer.json";
 import arHero from "./locales/ar/hero.json";
 import arHome from "./locales/ar/home.json";
@@ -13,6 +14,7 @@ import arPrayerTimes from "./locales/ar/prayer_times.json";
 import deAbout from "./locales/de/about.json";
 import deCommon from "./locales/de/common.json";
 import deDonation from "./locales/de/donation.json";
+import deEvents from "./locales/de/events.json";
 import deFooter from "./locales/de/footer.json";
 import deHero from "./locales/de/hero.json";
 import deHome from "./locales/de/home.json";
@@ -23,6 +25,7 @@ import dePrayerTimes from "./locales/de/prayer_times.json";
 import enAbout from "./locales/en/about.json";
 import enCommon from "./locales/en/common.json";
 import enDonation from "./locales/en/donation.json";
+import enEvents from "./locales/en/events.json";
 import enFooter from "./locales/en/footer.json";
 import enHero from "./locales/en/hero.json";
 import enHome from "./locales/en/home.json";
@@ -43,6 +46,7 @@ const resources = {
 			footer: deFooter,
 			prayer_times: dePrayerTimes,
 			posts: dePosts,
+			events: deEvents,
 			donation: deDonation,
 			home: deHome,
 			about: deAbout,
@@ -57,6 +61,7 @@ const resources = {
 			footer: enFooter,
 			prayer_times: enPrayerTimes,
 			posts: enPosts,
+			events: enEvents,
 			donation: enDonation,
 			home: enHome,
 			about: enAbout,
@@ -71,6 +76,7 @@ const resources = {
 			footer: arFooter,
 			prayer_times: arPrayerTimes,
 			posts: arPosts,
+			events: arEvents,
 			donation: arDonation,
 			home: arHome,
 			about: arAbout,

@@ -6,17 +6,21 @@ const PrayerTimesSection = lazy(
 	() => import("@/pages/home-page/prayer-times-section/prayer-times-section"),
 );
 const DonationSection = lazy(() => import("@/components/donation-section"));
-const DonationDashboard = lazy(() => import("@/pages/dashboard"));
+const CampaignsGallery = lazy(
+	() => import("@/pages/home-page/campaigns-gallery/campaigns-gallery"),
+);
 const PostsSection = lazy(() => import("@/components/posts-section"));
+const EventsSection = lazy(() => import("@/components/events-section"));
 
 function HomePage() {
 	return (
 		<div className="py-10">
 			<Suspense fallback={<PendingScreen />}>
 				<Hero />
-				<DonationDashboard preview />
+				<CampaignsGallery />
 				<PrayerTimesSection />
 				<DonationSection />
+				<EventsSection />
 				<PostsSection />
 			</Suspense>
 		</div>
@@ -24,3 +28,4 @@ function HomePage() {
 }
 
 export default HomePage;
+

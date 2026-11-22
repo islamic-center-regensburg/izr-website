@@ -3,10 +3,7 @@ import { CardSurface } from "@/components/card-surface";
 import { PrayerCard } from "./components/prayer-card";
 import { SectionHeader } from "./components/section-header";
 import { ErrorState, LoadingState } from "./components/states";
-import {
-	EMPTY_VALUE,
-	usePrayerTimesData,
-} from "./hooks/user-prayer-times-data";
+import { usePrayerTimesData } from "./hooks/user-prayer-times-data";
 import type { PrayerKey } from "./types";
 
 const PRAYER_ORDER: PrayerKey[] = [
@@ -20,7 +17,7 @@ const PRAYER_ORDER: PrayerKey[] = [
 
 function PrayerTimesSection() {
 	const { t } = useTranslation();
-	const { prayerTimes, getPrayerTime, getIqamaTimes, isLoading, error } =
+	const { prayerTimes, gregorianDate, hijriDate, shuruq, getPrayerTime, getIqamaTimes, isLoading, error } =
 		usePrayerTimesData();
 
 	if (isLoading) {
@@ -46,10 +43,6 @@ function PrayerTimesSection() {
 	if (!hasPrayerTimes) {
 		return null;
 	}
-
-	const gregorianDate = prayerTimes.gregorian_date ?? EMPTY_VALUE;
-	const hijriDate = prayerTimes.hijri_date ?? EMPTY_VALUE;
-	const shuruq = prayerTimes.shuruq ?? EMPTY_VALUE;
 
 	return (
 		<CardSurface asChild section>

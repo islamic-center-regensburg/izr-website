@@ -7,7 +7,7 @@
 		"total": "Spenden gesamt",
 		"paid": "Eingegangen",
 		"outstanding": "Versprochen",
-		"eyebrow": "Projekt SOM · Spendenübersicht",
+		"eyebrow": "{{project}} · Spendenübersicht",
 		"title": "Gemeinsam unser Ziel erreichen",
 		"subtitle": "Jeder Beitrag bringt uns unserem gemeinsamen Ziel näher.",
 		"loading": "Spendendaten werden geladen …",
@@ -37,8 +37,20 @@
 		"privacy": "Die letzten vier Beiträge · Zum Schutz der Privatsphäre werden keine Namen angezeigt.",
 		"paymentMethods": {
 			"cash": "Bar",
-			"bank": "Banküberweisung"
+			"bank_transfer": "Banküberweisung",
+			"online": "Online"
 		}
+	},
+	"gallery": {
+		"title": "Unsere Spendenprojekte",
+		"subtitle": "Unterstütze eines unserer aktuellen Projekte.",
+		"loading": "Projekte werden geladen …",
+		"error": "Die Projekte konnten nicht geladen werden.",
+		"empty": "Aktuell sind keine Spendenprojekte aktiv.",
+		"goal": "Spendenziel",
+		"ofGoal": "von {{goal}} Ziel",
+		"raisedSoFar": "Bisher gesammelt",
+		"viewDetails": "Projekt ansehen"
 	},
 	"title": "Spenden",
 	"subtitle": "Unterstützen Sie unsere Moschee per Banküberweisung",

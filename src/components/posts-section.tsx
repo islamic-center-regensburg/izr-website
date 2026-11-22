@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { getAllActualsQueryOptions } from "@/api/cms/actuals/queries";
+import { newsListQueryOptions } from "@/api/collections/news/queries";
+import { pickTranslation } from "@/api/collections/translations";
 import { CardSurface } from "./card-surface";
 import PendingScreen from "./pending-screen";
 import PostCard from "./post-card";
@@ -8,15 +9,9 @@ import PostCard from "./post-card";
 function PostsSection() {
 	const { t, i18n } = useTranslation();
 
-	const actualsQuery = useQuery(
-		getAllActualsQueryOptions({
-			lang: i18n.language,
-			limit: 6,
-			sort: "-date_updated",
-		}),
-	);
+	const newsQuery = useQuery(newsListQueryOptions({ limit: 6 }));
 
-	if (actualsQuery.isLoading) {
+	if (newsQuery.isLoading) {
 		return (
 			<div id="posts" className="scroll-mt-44">
 				<PendingScreen compact className="mt-8" message={t("posts.loading")} />
@@ -24,7 +19,7 @@ function PostsSection() {
 		);
 	}
 
-	if (actualsQuery.error) {
+	if (newsQuery.error) {
 		return (
 			<section
 				id="posts"
@@ -35,7 +30,7 @@ function PostsSection() {
 		);
 	}
 
-	const actuals = actualsQuery.data ?? [];
+	const news = newsQuery.data ?? [];
 
 	return (
 		<CardSurface asChild section>
@@ -49,23 +44,20 @@ function PostsSection() {
 					</h2>
 				</div>
 
-				{actuals.length === 0 ? (
+				{news.length === 0 ? (
 					<p className="text-sm text-foreground">{t("posts.empty")}</p>
 				) : (
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-						{actuals.map((actual) => {
-							// Translations are already filtered by language from the API,
-							// but keep a safe fallback just in case
-							const translation = actual.translations?.[0];
+						{news.map((item) => {
+							const translation = pickTranslation(item.translations, i18n.language);
 
 							return (
 								<PostCard
-									key={actual.id}
-									id={actual.id}
+									key={item.id}
+									slug={translation?.slug ?? ""}
 									title={translation?.title || t("posts.untitled")}
-									description={
-										translation?.content || t("posts.no_description")
-									}
+									description={translation?.body || t("posts.no_description")}
+									thumbnailId={typeof item.thumbnail === "string" ? item.thumbnail : undefined}
 								/>
 							);
 						})}

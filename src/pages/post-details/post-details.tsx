@@ -2,10 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import {
-	getActualByIdQueryOptions,
-	getAdjacentActualsQueryOptions,
-} from "@/api/cms/actuals/queries";
+import { adjacentNewsQueryOptions, newsDetailQueryOptions } from "@/api/collections/news/queries";
+import { pickTranslation } from "@/api/collections/translations";
 import {
 	CallToActionButton,
 	CallToActionCard,
@@ -51,25 +49,20 @@ function ContentsLinks({
 }
 
 function PostDetails() {
-	const { id } = useParams({ from: "/post/$id" });
+	const { slug } = useParams({ from: "/post/$slug" });
 	const { t, i18n } = useTranslation();
 
-	const actualQuery = useQuery(getActualByIdQueryOptions(id, i18n.language));
-	const translation = actualQuery.data?.translations?.[0];
-	const content = usePostContent(translation?.content || "");
+	const newsQuery = useQuery(newsDetailQueryOptions(slug));
+	const translation = pickTranslation(newsQuery.data?.translations, i18n.language);
+	const content = usePostContent(translation?.body || "");
 
-	const adjacentQuery = useQuery(
-		getAdjacentActualsQueryOptions(
-			actualQuery.data?.date_updated ?? "",
-			i18n.language,
-		),
-	);
+	const adjacentQuery = useQuery(adjacentNewsQueryOptions(newsQuery.data?.published_at ?? undefined));
 
-	if (actualQuery.isLoading) {
+	if (newsQuery.isLoading) {
 		return <PendingScreen message={t("posts.loading")} />;
 	}
 
-	if (actualQuery.error || !actualQuery.data) {
+	if (newsQuery.error || !newsQuery.data) {
 		return (
 			<section className="rounded-3xl border border-border/40 bg-card/70 p-6">
 				<p className="text-sm text-destructive">{t("posts.error")}</p>
@@ -188,8 +181,8 @@ function PostDetails() {
 					{previous ? (
 						<CardSurface asChild>
 							<Link
-								to="/post/$id"
-								params={{ id: previous.id }}
+								to="/post/$slug"
+								params={{ slug: pickTranslation(previous.translations, i18n.language)?.slug ?? "" }}
 								className="group flex flex-col gap-1 rounded-2xl bg-background/40 p-4 transition-colors hover:bg-accent/30 sm:col-start-1"
 							>
 								<span className="flex items-center gap-1 text-xs text-foreground/60">
@@ -201,7 +194,8 @@ function PostDetails() {
 									{t("posts.navigation.previous")}
 								</span>
 								<span className="line-clamp-1 text-sm font-semibold tracking-tight group-hover:text-primary">
-									{previous.translations?.[0]?.title ?? t("posts.untitled")}
+									{pickTranslation(previous.translations, i18n.language)?.title ??
+										t("posts.untitled")}
 								</span>
 							</Link>
 						</CardSurface>
@@ -212,8 +206,8 @@ function PostDetails() {
 					{next ? (
 						<CardSurface asChild>
 							<Link
-								to="/post/$id"
-								params={{ id: next.id }}
+								to="/post/$slug"
+								params={{ slug: pickTranslation(next.translations, i18n.language)?.slug ?? "" }}
 								className="group flex flex-col gap-1 rounded-2xl bg-background/40 p-4 transition-colors hover:bg-accent/30 sm:col-start-2 sm:text-end"
 							>
 								<span className="flex items-center gap-1 text-xs text-foreground/60 sm:justify-end">
@@ -225,7 +219,8 @@ function PostDetails() {
 									)}
 								</span>
 								<span className="line-clamp-1 text-sm font-semibold tracking-tight group-hover:text-primary">
-									{next.translations?.[0]?.title ?? t("posts.untitled")}
+									{pickTranslation(next.translations, i18n.language)?.title ??
+										t("posts.untitled")}
 								</span>
 							</Link>
 						</CardSurface>
