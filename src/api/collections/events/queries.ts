@@ -19,7 +19,7 @@ export const eventsKeys = {
 	lists: () => [...eventsKeys.all, "list"] as const,
 	upcoming: () => [...eventsKeys.lists(), "upcoming"] as const,
 	details: () => [...eventsKeys.all, "detail"] as const,
-	detail: (id: number) => [...eventsKeys.details(), id] as const,
+	detail: (id: string) => [...eventsKeys.details(), id] as const,
 };
 
 // "published" visibility is not enforced by the backend
@@ -52,7 +52,7 @@ const fetchUpcomingEvents = createServerFn({ method: "GET" }).handler(async () =
 });
 
 const fetchEventDetail = createServerFn({ method: "GET" })
-	.inputValidator((id: number) => id)
+	.inputValidator((id: string) => id)
 	.handler(async ({ data: id }) => {
 		const { data: body } = await readSingleItemsEvents({
 			path: { id },
@@ -68,9 +68,9 @@ export const upcomingEventsQueryOptions = () =>
 		queryFn: () => fetchUpcomingEvents(),
 	});
 
-export const eventDetailQueryOptions = (id: number) =>
+export const eventDetailQueryOptions = (id: string) =>
 	queryOptions({
 		queryKey: eventsKeys.detail(id),
 		queryFn: () => fetchEventDetail({ data: id }),
-		enabled: Number.isFinite(id),
+		enabled: Boolean(id),
 	});

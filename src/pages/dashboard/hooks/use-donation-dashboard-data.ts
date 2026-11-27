@@ -11,7 +11,7 @@ const STALE_TIME_MS = 2_000;
 const REFETCH_INTERVAL_MS = 10_000;
 
 export type RecentDonation = {
-	id: number;
+	id: string;
 	amount: string;
 	donatedAt: string;
 	method: string;
@@ -47,7 +47,7 @@ export function useDonationDashboardData(campaignSlug?: string) {
 	const campaign = campaignQuery.data;
 
 	const donationsQuery = useQuery({
-		...dashboardDonationsForCampaignQueryOptions(campaign?.id ?? Number.NaN),
+		...dashboardDonationsForCampaignQueryOptions(campaign?.id ?? ""),
 		staleTime: STALE_TIME_MS,
 		refetchInterval: REFETCH_INTERVAL_MS,
 	});
@@ -67,7 +67,7 @@ export function useDonationDashboardData(campaignSlug?: string) {
 		if (donation.status === "confirmed") {
 			paidAmount += amount;
 			recentConfirmed.push({
-				id: donation.id ?? 0,
+				id: donation.id ?? "",
 				amount: donation.amount,
 				donatedAt: donation.donated_at,
 				method: donation.method,

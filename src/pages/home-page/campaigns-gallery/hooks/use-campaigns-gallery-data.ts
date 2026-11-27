@@ -5,7 +5,7 @@ import { dashboardDonationsForCampaignsQueryOptions } from "@/api/collections/do
 import { pickTranslation } from "@/api/collections/translations";
 
 export type CampaignSummary = {
-	id: number | undefined;
+	id: string | undefined;
 	slug: string | undefined;
 	name: string;
 	description?: string;
@@ -23,7 +23,7 @@ export function useCampaignsGalleryData() {
 	const campaigns = campaignsQuery.data ?? [];
 	const campaignIds = campaigns
 		.map((campaign) => campaign.id)
-		.filter((id): id is number => id !== undefined);
+		.filter((id): id is string => id !== undefined);
 
 	const donationsQuery = useQuery(dashboardDonationsForCampaignsQueryOptions(campaignIds));
 	const donations = donationsQuery.data ?? [];
@@ -31,11 +31,11 @@ export function useCampaignsGalleryData() {
 	// Decided scope (matches the single-campaign dashboard): confirmed
 	// donations count as "paid", pending ones as "outstanding" (not yet
 	// confirmed), general (uncampaigned) donations are out of scope.
-	const totalsByCampaign = new Map<number, { paid: number; outstanding: number }>();
+	const totalsByCampaign = new Map<string, { paid: number; outstanding: number }>();
 	for (const donation of donations) {
 		// `campaign` isn't expanded (no nested fields requested), so it's
 		// always the raw foreign-key number here, never an object.
-		const campaignId = typeof donation.campaign === "number" ? donation.campaign : null;
+		const campaignId = typeof donation.campaign === "string" ? donation.campaign : null;
 		if (campaignId === null) continue;
 		const amount = Number.parseFloat(donation.amount);
 		if (!Number.isFinite(amount)) continue;

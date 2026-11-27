@@ -14,11 +14,11 @@ type DonationItem = Omit<ItemsDonations, "campaign"> & { campaign?: number | nul
 
 export const donationsKeys = {
 	all: ["donations"] as const,
-	confirmedForCampaign: (campaignId: number) =>
+	confirmedForCampaign: (campaignId: string) =>
 		[...donationsKeys.all, "confirmed-for-campaign", campaignId] as const,
-	dashboardForCampaign: (campaignId: number) =>
+	dashboardForCampaign: (campaignId: string) =>
 		[...donationsKeys.all, "dashboard-for-campaign", campaignId] as const,
-	dashboardForCampaigns: (campaignIds: readonly number[]) =>
+	dashboardForCampaigns: (campaignIds: readonly string[]) =>
 		[...donationsKeys.all, "dashboard-for-campaigns", campaignIds] as const,
 };
 
@@ -26,7 +26,7 @@ export const donationsKeys = {
 // confirmed donations. `pending`/`refunded` donations must be excluded
 // entirely, not just zero-weighted (izr-cms-discovery.md §5).
 function confirmedDonationsForCampaignFilter(
-	campaignId: number,
+	campaignId: string,
 ): QueryFilter<DirectusSchema, DirectusSchema["donations"][number]> {
 	return {
 		campaign: { _eq: campaignId },
@@ -35,7 +35,7 @@ function confirmedDonationsForCampaignFilter(
 }
 
 const fetchConfirmedDonationsForCampaign = createServerFn({ method: "GET" })
-	.inputValidator((campaignId: number) => campaignId)
+	.inputValidator((campaignId: string) => campaignId)
 	.handler(async ({ data: campaignId }) => {
 		const { data: body } = await readItemsDonations({
 			query: {
@@ -46,7 +46,7 @@ const fetchConfirmedDonationsForCampaign = createServerFn({ method: "GET" })
 				// validation fail (every field Directus doesn't return
 				// comes back as `undefined`, which fails a required
 				// `z.string()`). Always select every required field.
-				fields: ["amount", "currency", "donated_at", "method"],
+				fields: ["id", "amount", "currency", "donated_at", "method"],
 				limit: -1,
 			},
 			throwOnError: true,
@@ -57,7 +57,7 @@ const fetchConfirmedDonationsForCampaign = createServerFn({ method: "GET" })
 // For the donation dashboard: confirmed + pending (never `refunded`) so it
 // can show both received and still-outstanding amounts for the campaign.
 function dashboardDonationsForCampaignFilter(
-	campaignId: number,
+	campaignId: string,
 ): QueryFilter<DirectusSchema, DirectusSchema["donations"][number]> {
 	return {
 		campaign: { _eq: campaignId },
@@ -66,7 +66,7 @@ function dashboardDonationsForCampaignFilter(
 }
 
 const fetchDashboardDonationsForCampaign = createServerFn({ method: "GET" })
-	.inputValidator((campaignId: number) => campaignId)
+	.inputValidator((campaignId: string) => campaignId)
 	.handler(async ({ data: campaignId }) => {
 		const { data: body } = await readItemsDonations({
 			query: {
@@ -80,24 +80,24 @@ const fetchDashboardDonationsForCampaign = createServerFn({ method: "GET" })
 		return (body?.data ?? []) as DonationItem[];
 	});
 
-export const confirmedDonationsForCampaignQueryOptions = (campaignId: number) =>
+export const confirmedDonationsForCampaignQueryOptions = (campaignId: string) =>
 	queryOptions({
 		queryKey: donationsKeys.confirmedForCampaign(campaignId),
 		queryFn: () => fetchConfirmedDonationsForCampaign({ data: campaignId }),
-		enabled: Number.isFinite(campaignId),
+		enabled: Boolean(campaignId),
 	});
 
-export const dashboardDonationsForCampaignQueryOptions = (campaignId: number) =>
+export const dashboardDonationsForCampaignQueryOptions = (campaignId: string) =>
 	queryOptions({
 		queryKey: donationsKeys.dashboardForCampaign(campaignId),
 		queryFn: () => fetchDashboardDonationsForCampaign({ data: campaignId }),
-		enabled: Number.isFinite(campaignId),
+		enabled: Boolean(campaignId),
 	});
 
 // Bulk variant of the above, for the campaigns gallery: computes every
 // card's progress from one request instead of one per campaign.
 function dashboardDonationsForCampaignsFilter(
-	campaignIds: readonly number[],
+	campaignIds: readonly string[],
 ): QueryFilter<DirectusSchema, DirectusSchema["donations"][number]> {
 	return {
 		campaign: { _in: [...campaignIds] },
@@ -106,7 +106,7 @@ function dashboardDonationsForCampaignsFilter(
 }
 
 const fetchDashboardDonationsForCampaigns = createServerFn({ method: "GET" })
-	.inputValidator((campaignIds: number[]) => campaignIds)
+	.inputValidator((campaignIds: string[]) => campaignIds)
 	.handler(async ({ data: campaignIds }) => {
 		if (campaignIds.length === 0) return [];
 		const { data: body } = await readItemsDonations({
@@ -121,9 +121,9 @@ const fetchDashboardDonationsForCampaigns = createServerFn({ method: "GET" })
 		return (body?.data ?? []) as DonationItem[];
 	});
 
-export const dashboardDonationsForCampaignsQueryOptions = (campaignIds: readonly number[]) => {
+export const dashboardDonationsForCampaignsQueryOptions = (campaignIds: readonly string[]) => {
 	// Sort for a stable query key regardless of the caller's array order.
-	const sortedIds = [...campaignIds].sort((a, b) => a - b);
+	const sortedIds = [...campaignIds].sort((a, b) => a.localeCompare(b));
 	return queryOptions({
 		queryKey: donationsKeys.dashboardForCampaigns(sortedIds),
 		queryFn: () => fetchDashboardDonationsForCampaigns({ data: sortedIds }),

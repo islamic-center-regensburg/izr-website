@@ -86,12 +86,9 @@ const fetchNewsDetail = createServerFn({ method: "GET" })
 const fetchAdjacentNews = createServerFn({ method: "GET" })
 	.inputValidator((publishedAt: string) => publishedAt)
 	.handler(async ({ data: publishedAt }) => {
-		const minimalFields = [
-			"id",
-			"translations.title",
-			"translations.slug",
-			"translations.languages_code",
-		];
+		// The generated Zod schema requires every translation field that is not
+		// optional (id, news_id, body, ...), so ask for all translation fields.
+		const minimalFields = ["id", "translations.*"];
 
 		const [previous, next] = await Promise.all([
 			readItemsNews({
